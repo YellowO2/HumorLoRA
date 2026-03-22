@@ -1,0 +1,13 @@
+model,output_file,accuracy_percent,correct,total
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_hrk1_38g.csv,64.286,45,70
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_c7dcp3gp.csv,64.286,45,70
+qwen3:4b (thinking),llm_eval_qwen3-4b_thinking_tzybf1f9.csv,74.286,52,70
+qwen3:8b,llm_eval_qwen3-8b_j7lrwzfi.csv,61.429,43,70
+qwen3:8b,llm_eval_qwen3-8b__11cugzl.csv,61.429,43,70
+qwen3:8b,llm_eval_qwen3-8b_t_z2ncg_.csv,61.429,43,70
+qwen3:8b-thinking,llm_eval_qwen3-8b_20260321_221024.csv,68.6,,70
+qwen3:14b,llm_eval_qwen3-14b_58sltbfb.csv,72.857,51,70
+qwen3:14b,llm_eval_qwen3-14b_nred4iun.csv,72.857,51,70
+qwen3:14b (thinking),llm_eval_qwen3-14b_thinking_y1_a_fzn.csv,64.286,45,70
+qwen3:32b,llm_eval_qwen3-32b_8c9qs44y.csv,52.857,37,70
+qwen3:32b,llm_eval_qwen3-32b_owxsjozz.csv,57.143,40,70
