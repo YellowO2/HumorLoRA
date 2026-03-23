@@ -1,0 +1,240 @@
+dataset,sample_id,meta,expected,llm_response,llm_thinking,is_correct
+newyorker,fde4151fcca492b42336d3a3dfe8e0dc,NYCC validation fde4151fcca492b42336d3a3dfe8e0dc,B,Caption <B> is funnier for this image.,,True
+newyorker,1214b37425713590e915e3af0b1e6e6a,NYCC validation 1214b37425713590e915e3af0b1e6e6a,B,Caption <B> is funnier for this image.,,True
+newyorker,953ca7ee0c0673ebc51e6147f68f0233,NYCC validation 953ca7ee0c0673ebc51e6147f68f0233,A,Caption <B> is funnier for this image.,,False
+newyorker,b8ecd62018bbd057aaa22277ed24fd68,NYCC validation b8ecd62018bbd057aaa22277ed24fd68,B,"Caption B: Is it weird that we have a pet?
+
+This caption is funnier because it plays on the unexpected and somewhat absurd situation in the image—having a bird in a cage on an upper branch while the mother bird is tending to her nest. It highlights the irony and the unusual situation in a way that's both humorous and relatable.",,False
+newyorker,ce15e7d5a2b0446c455a20b2f97e72a1,NYCC validation ce15e7d5a2b0446c455a20b2f97e72a1,B,Caption <B> is funnier for this image.,,True
+newyorker,71c3de544184b953bb9c5cd0660e7574,NYCC validation 71c3de544184b953bb9c5cd0660e7574,B,Caption <B> is funnier for this image.,,True
+newyorker,bba482e3fb83f469575fd8706f39dc4c,NYCC validation bba482e3fb83f469575fd8706f39dc4c,A,Caption <B> is funnier for this image.,,False
+newyorker,004a0d86afd22c6e8b30b384b73595c1,NYCC validation 004a0d86afd22c6e8b30b384b73595c1,B,"Caption B: Any red flags?
+
+<>Caption B<>",,False
+newyorker,3156dfd78b55850670c84341bdc764ee,NYCC validation 3156dfd78b55850670c84341bdc764ee,B,Caption <B> is funnier for this image.,,True
+newyorker,24acecce90ff5aa46459a6488fbb2f58,NYCC validation 24acecce90ff5aa46459a6488fbb2f58,B,Caption <B> is funnier for this image.,,True
+newyorker,3e3b3aa676233fdac6b86b2af0087643,NYCC validation 3e3b3aa676233fdac6b86b2af0087643,B,Caption <B> is funnier for this image.,,True
+newyorker,dfb2eb87fd3df151bc7dfaa07a6cec21,NYCC validation dfb2eb87fd3df151bc7dfaa07a6cec21,B,Caption <B> is funnier for this image.,,True
+newyorker,6fb70ee002349b33248e5160e504c527,NYCC validation 6fb70ee002349b33248e5160e504c527,B,Caption <B> is funnier for this image.,,True
+newyorker,74bccf1627c9412ccbb060349d704fbd,NYCC validation 74bccf1627c9412ccbb060349d704fbd,B,Caption <B> is funnier for this image.,,True
+newyorker,9c2da2e3f1de974c57703585ec53b190,NYCC validation 9c2da2e3f1de974c57703585ec53b190,A,Caption <B> is funnier for this image.,,False
+newyorker,f0b498930fdb580def55aef651e9c2ac,NYCC validation f0b498930fdb580def55aef651e9c2ac,A,Caption <B> is funnier for this image.,,False
+newyorker,419c0a690d0c1fadd3db94c3c607e6ba,NYCC validation 419c0a690d0c1fadd3db94c3c607e6ba,A,Caption <B> is funnier for this image.,,False
+newyorker,623ef2993e22b718b1b2b7767f3c20e8,NYCC validation 623ef2993e22b718b1b2b7767f3c20e8,B,Caption <B> is funnier for this image.,,True
+newyorker,73ef5d12327336c4dc364d683188f329,NYCC validation 73ef5d12327336c4dc364d683188f329,A,Caption <A> is funnier for this image.,,True
+newyorker,61133892a8fcdcb6ed3dbd003d52e928,NYCC validation 61133892a8fcdcb6ed3dbd003d52e928,B,"Caption B: Do you seek alignment?
+
+Explanation: The image shows two men at the top of a mountain, with one sitting on a green yoga ball. The caption ""Do you seek alignment?"" is more humorous because it plays on the idea of seeking alignment with something (like a mountain, a yoga ball, or even a philosophical concept), which is a funny and unexpected twist. It's also more engaging and thought-provoking compared to ""Where the hell is the cartoon??"" which is more confusing and less funny.",,False
+newyorker,e0c8974c26b6486774326c0686534d57,NYCC validation e0c8974c26b6486774326c0686534d57,B,Caption <B> is funnier for this image.,,True
+newyorker,ca1bf4dd9457abc5ea771b0939d7ebf0,NYCC validation ca1bf4dd9457abc5ea771b0939d7ebf0,A,"Caption B: They don't even make Westerns any more!
+
+This caption is funnier because it plays on the stereotype of Westerns and the image of a train drinking beer and sitting next to a man, which is a humorous contrast to the typical Western setting. The caption adds a twist and a bit of irony, making it more engaging and funny.",,False
+newyorker,b9b16f0018da976281f1d9a6d38bf314,NYCC validation b9b16f0018da976281f1d9a6d38bf314,B,Caption <B> is funnier for this image.,,True
+newyorker,edd3dc219a51ce33f26384b1093c571f,NYCC validation edd3dc219a51ce33f26384b1093c571f,A,Caption <B> is funnier for this image.,,False
+newyorker,cba4ef1ebecfa549028e03dc024a3c1f,NYCC validation cba4ef1ebecfa549028e03dc024a3c1f,A,Caption <A> is funnier.,,True
+newyorker,94efe525fe6cf97f338010c85c970c76,NYCC validation 94efe525fe6cf97f338010c85c970c76,A,"Caption B: Three more paces to the double arrr.
+
+This caption is funnier because it adds a humorous twist to the image by exaggerating the situation with a playful, exaggerated phrase (""double arrr"") and suggesting that the man is still moving forward, which contrasts with the danger and tension of being on a plank behind pirates. It adds a lighthearted, almost absurd element that makes the image more amusing. 
+
+Final Answer: Caption <B>",,False
+newyorker,212eed650de8719be5760da5104329c3,NYCC validation 212eed650de8719be5760da5104329c3,A,"Caption B: Pretend not to see her.
+
+This caption is funnier because it plays on the contrast between the woman waiting to get on the elevator and the people in the elevator on fire. It adds a humorous element by suggesting the caption is ""pretending not to see her,"" which is a clever and unexpected twist.",,False
+newyorker,f77affeb77a3988d29f23f2af2abf14d,NYCC validation f77affeb77a3988d29f23f2af2abf14d,B,Caption <B> is funnier for this image.,,True
+newyorker,bd7059bb5e67113acd756b9d42af9ee2,NYCC validation bd7059bb5e67113acd756b9d42af9ee2,B,Caption B is funnier for this image.,,False
+newyorker,19977b15ed1e09c17d38caf609701ac6,NYCC validation 19977b15ed1e09c17d38caf609701ac6,A,Caption <B> is funnier for this image.,,False
+newyorker,d5741d3702608dc0a5fe4592fa3d5b9d,NYCC validation d5741d3702608dc0a5fe4592fa3d5b9d,B,Caption <B> is funnier for this image.,,True
+newyorker,5a592c1d9ac2528dbc6c1927412e4c2d,NYCC validation 5a592c1d9ac2528dbc6c1927412e4c2d,A,"Caption B: Get me room service.
+
+This caption is funnier because it's a playful, sarcastic response to the image of a man sitting in a playpen holding a communicator. It adds a layer of humor through the unexpected and absurd scenario, making it more relatable and amusing.",,False
+newyorker,fbc5af1e09f332c0afbceae0f1cd8a68,NYCC validation fbc5af1e09f332c0afbceae0f1cd8a68,A,Caption B is funnier for this image.,,False
+newyorker,d3a53f6c23045c19b64e597841e64ac5,NYCC validation d3a53f6c23045c19b64e597841e64ac5,B,Caption <B>,,True
+newyorker,cdf21e60f665cab91fb22ee273c4fc2e,NYCC validation cdf21e60f665cab91fb22ee273c4fc2e,A,Caption B is funnier for this image.,,False
+newyorker,bde891696ceb3212eba91340fd7872cc,NYCC validation bde891696ceb3212eba91340fd7872cc,A,Caption <B> is funnier for this image.,,False
+newyorker,813d014ace16ff772e747ff66b1dfbea,NYCC validation 813d014ace16ff772e747ff66b1dfbea,A,Caption <B> is funnier for this image.,,False
+newyorker,117337fccf8187a6c3f2be4507dd1ba4,NYCC validation 117337fccf8187a6c3f2be4507dd1ba4,A,Caption <B> is funnier for this image.,,False
+newyorker,a1dfd3cf07deb5b4cf711266881f2b19,NYCC validation a1dfd3cf07deb5b4cf711266881f2b19,B,"Caption B: I think the weather's turning on us.
+
+This caption is funnier because it adds a playful and relatable twist to the situation—suggesting that the weather is changing in a way that's unexpected and possibly annoying, which makes it more humorous compared to Caption A, which is more of a question and less comedic.",,False
+newyorker,a2e2a6c72b343cdd37c8b7f4de34d5b2,NYCC validation a2e2a6c72b343cdd37c8b7f4de34d5b2,A,Caption B is funnier for this image.,,False
+newyorker,df5f88b998cf24cca3e4a73f0d6568a8,NYCC validation df5f88b998cf24cca3e4a73f0d6568a8,A,Caption <B> is funnier for this image.,,False
+newyorker,2430c35c0d4c9bd987f62482b45c3d04,NYCC validation 2430c35c0d4c9bd987f62482b45c3d04,B,"Caption B: I usually wake up at this point.
+
+This caption is funnier because it adds a humorous and unexpected twist to the image—two chefs inside a giant creature, seeing the ribs, and the caption says they ""usually wake up at this point."" It creates a funny contrast between the surreal, absurd setting and the mundane statement, making it more humorous and relatable.",,False
+newyorker,7b8f2af80ccc31d175ed24d2aab5fb65,NYCC validation 7b8f2af80ccc31d175ed24d2aab5fb65,A,Caption B is funnier for this image.,,False
+newyorker,84fe897623b973d5b8d1a3cbc260fc5f,NYCC validation 84fe897623b973d5b8d1a3cbc260fc5f,B,Caption <B> is funnier for this image.,,True
+newyorker,ac1e35b31312e8aff6a92e70b07b7146,NYCC validation ac1e35b31312e8aff6a92e70b07b7146,A,Caption B is funnier for this image.,,False
+newyorker,e9690ed139c9661cb07c6e4337d50ff7,NYCC validation e9690ed139c9661cb07c6e4337d50ff7,A,"Caption B: I promise not to look up
+
+This caption is funnier because it plays on the absurdity of the situation—having a referee between two giant boxers and then ""promising not to look up,"" which is a humorous contradiction. It adds a layer of irony and absurdity that makes the image more amusing.",,False
+newyorker,6da66bb3cb5afc958ad83435faa9ca3c,NYCC validation 6da66bb3cb5afc958ad83435faa9ca3c,A,Caption B is funnier for this image.,,False
+newyorker,e05d8eaee07cadd59131a236d410fdd2,NYCC validation e05d8eaee07cadd59131a236d410fdd2,B,"Caption B is funnier for this image. 
+
+The caption ""Best decaf in town, Dolores"" adds a humorous twist by suggesting that the waitress is serving a decaf version of coffee, which is not typical for a diner. It creates a light-hearted, unexpected twist that contrasts with the man's violent shaking and the waitress's professional demeanor. 
+
+Therefore, the answer is:  
+Caption <B>",,True
+newyorker,1992e5e39fa548c02a231aff682a231a,NYCC validation 1992e5e39fa548c02a231aff682a231a,B,Caption <B> is funnier for this image.,,True
+newyorker,99140ff14c72b1d5766763235bae3b7c,NYCC validation 99140ff14c72b1d5766763235bae3b7c,B,Caption <B> is funnier for this image.,,True
+newyorker,30662fa9c0364c6af43d9c9a0173c41e,NYCC validation 30662fa9c0364c6af43d9c9a0173c41e,B,"Caption B: It's a Toy!
+
+Explanation: Caption B is funnier because it highlights the unexpected and humorous element of the image—something as simple as a tiny car being handed to a lady in a hospital bed. It plays on the contrast between the serious setting (a hospital) and the unexpected, childlike object (a toy), making it more surprising and amusing.",,False
+newyorker,ec860e23ef9a9f1d265cd376c3794a02,NYCC validation ec860e23ef9a9f1d265cd376c3794a02,B,Caption B is funnier for this image.,,False
+newyorker,679097d2d25dfe732c9726fc773c85cf,NYCC validation 679097d2d25dfe732c9726fc773c85cf,B,Caption B is funnier for this image.,,False
+newyorker,27d7064beb992d5dd528e146946d72d4,NYCC validation 27d7064beb992d5dd528e146946d72d4,B,Caption <B> is funnier for this image.,,True
+newyorker,59a9d6cc434ab3035072f86c6f497779,NYCC validation 59a9d6cc434ab3035072f86c6f497779,B,Caption B is funnier for this image.,,False
+newyorker,28e1dbaaa8d4570613d0d567293eb7ac,NYCC validation 28e1dbaaa8d4570613d0d567293eb7ac,B,Caption <B> is funnier for this image.,,True
+newyorker,c5ff85cfdaff7798a3a84c73dc9e9399,NYCC validation c5ff85cfdaff7798a3a84c73dc9e9399,B,Caption B is funnier for this image.,,False
+newyorker,48d6283be77ee807708e75c3ee6ca9fe,NYCC validation 48d6283be77ee807708e75c3ee6ca9fe,A,"Caption B: I met a lawyer.
+
+This caption is funnier because it plays on the absurdity of the image—two fish speaking underwater, one of which is just bones—by turning it into a humorous anecdote about meeting a lawyer, which is completely unrelated to the image.",,False
+newyorker,09717fb8938c5bf264c4daade86e9504,NYCC validation 09717fb8938c5bf264c4daade86e9504,A,Caption B is funnier for this image.,,False
+newyorker,e02e882ba97e6fc4bb13f18c364aa780,NYCC validation e02e882ba97e6fc4bb13f18c364aa780,A,Caption <A> is funnier for this image.,,True
+newyorker,a8695e21766a8768264994fc2db7605f,NYCC validation a8695e21766a8768264994fc2db7605f,B,Caption <B>,,True
+newyorker,8f0e104f4fdeed08e80df69f7e478675,NYCC validation 8f0e104f4fdeed08e80df69f7e478675,B,Caption <B> is funnier for this image.,,True
+newyorker,f9ebfffbc5e4ce081a2962a0600ff2b2,NYCC validation f9ebfffbc5e4ce081a2962a0600ff2b2,A,Caption <A> is funnier for this image.,,True
+newyorker,bf7ac3a3454830a3f6ed333f2acd71b0,NYCC validation bf7ac3a3454830a3f6ed333f2acd71b0,A,Caption <B> is funnier for this image.,,False
+newyorker,1563f7828afe918f98dd503ed2fb609e,NYCC validation 1563f7828afe918f98dd503ed2fb609e,B,Caption <B> is funnier for this image.,,True
+newyorker,ef8b23c192fa9325a80a6bb0aa847c28,NYCC validation ef8b23c192fa9325a80a6bb0aa847c28,A,Caption <A>,,True
+newyorker,09933edc3d9000f51d31ae5b3d7dc77c,NYCC validation 09933edc3d9000f51d31ae5b3d7dc77c,B,Caption <B> is funnier for this image.,,True
+newyorker,ce2441ae8a19f10effdef9d812cabfb0,NYCC validation ce2441ae8a19f10effdef9d812cabfb0,B,"Caption B: They do say results will vary.
+
+This caption is funnier because it plays on the irony of the image—two people sitting in front of a TV, one of whom is a ""grandma"" and the other is someone with lots of hair. The caption ""They do say results will vary"" is a humorous take on the idea that the person with the lots of hair might be a ""results person"" or someone who is not necessarily reliable, which contrasts with the ""grandma"" who seems to be more grounded. It adds a layer of humor through the contrast between the two individuals and the phrase ""results will vary,"" which is a common expression used in contexts where outcomes are uncertain.",,False
+newyorker,35e2f9562cddf17ab0c246b5f16af3bc,NYCC validation 35e2f9562cddf17ab0c246b5f16af3bc,A,Caption <A> is funnier for this image.,,True
+newyorker,0e3af52d3d18e30417986c4a33c9f39c,NYCC validation 0e3af52d3d18e30417986c4a33c9f39c,B,Caption B is funnier for this image.,,False
+newyorker,c37960a3515ceac9b2b646547f5830e8,NYCC validation c37960a3515ceac9b2b646547f5830e8,B,Caption <B> is funnier for this image.,,True
+newyorker,f53590986a09b35214db04b54e137736,NYCC validation f53590986a09b35214db04b54e137736,B,Caption B is funnier for this image.,,False
+newyorker,3e9e821c5a3bb0d074c296ee0b55a5e3,NYCC validation 3e9e821c5a3bb0d074c296ee0b55a5e3,A,Caption <B> is funnier for this image.,,False
+newyorker,05d21bbe4c6f7825199c96a1561d921f,NYCC validation 05d21bbe4c6f7825199c96a1561d921f,A,"Caption A: He only wanted me for my body.
+
+This caption is funnier because it plays on the unexpected and ironic twist of the image—two fish speaking underwater, with one being just bones. It highlights the absurdity of the situation and the unexpected nature of the fish's conversation, making it more humorous than Caption B, which is more straightforward and less surprising.",,False
+newyorker,a856920dc543a8ed190617e61539e710,NYCC validation a856920dc543a8ed190617e61539e710,A,Caption B is funnier for this image.,,False
+newyorker,aa00333d49bcec6c54af306e36e1b68a,NYCC validation aa00333d49bcec6c54af306e36e1b68a,A,Caption <B> is funnier for this image.,,False
+newyorker,25518f4362fe30474b5b13f4c211e1c1,NYCC validation 25518f4362fe30474b5b13f4c211e1c1,A,Caption B is funnier for this image.,,False
+newyorker,c6ccf79d6bcb55c23922a33c4e825d86,NYCC validation c6ccf79d6bcb55c23922a33c4e825d86,A,Caption B is funnier for this image.,,False
+newyorker,bb76d4275e3e03ef83998c873d8221bf,NYCC validation bb76d4275e3e03ef83998c873d8221bf,B,Caption <B> is funnier for this image.,,True
+newyorker,0b159ee32f3c02fcb453d5b9b91f31ba,NYCC validation 0b159ee32f3c02fcb453d5b9b91f31ba,B,Caption A is funnier for this image.,,False
+newyorker,abdb31ede530645f617a5f069c4084a2,NYCC validation abdb31ede530645f617a5f069c4084a2,B,"Caption B: They say jolliness skips a generation. 
+
+This caption is funnier because it adds a humorous and unexpected twist to the image—implying that the green giant is not just a destructive force, but also a source of ""jolliness,"" which suggests a sense of fun or excitement that can skip generations. It adds a layer of irony and humor that is not present in Caption A, which is more straightforward. 
+
+Final Answer: Caption <B>",,True
+newyorker,491214913b3b493297ef4f2ece08d53a,NYCC validation 491214913b3b493297ef4f2ece08d53a,A,Caption <A> is funnier for this image.,,True
+newyorker,cd1dc047feeb9c6ee99e668d4e36fb04,NYCC validation cd1dc047feeb9c6ee99e668d4e36fb04,B,Caption <B> is funnier for this image.,,True
+newyorker,06e0c88cfb9e56e58677eb1a18f8deca,NYCC validation 06e0c88cfb9e56e58677eb1a18f8deca,B,"Caption B: This little piggy owns the market.
+
+This image is funnier because Caption B plays on the classic ""Little Piggy"" joke, which is a well-known and humorous anecdote. The caption adds a twist by suggesting the pig ""owns the market,"" which is a clever and unexpected pun on the original joke. Caption A is less humorous and doesn't fit the image as well. 
+
+Final Answer: Caption <B>",,True
+newyorker,8d2538003895ef5719c746e52a4fd1a6,NYCC validation 8d2538003895ef5719c746e52a4fd1a6,A,Caption <B> is funnier for this image.,,False
+newyorker,2efa6821d2d6595e5e927e1c65ef9077,NYCC validation 2efa6821d2d6595e5e927e1c65ef9077,B,Caption B is funnier for this image.,,False
+newyorker,5636ac685a1fe1e02e6608c6efbc88af,NYCC validation 5636ac685a1fe1e02e6608c6efbc88af,A,Caption <A> is funnier for this image.,,True
+newyorker,01b645d57ebc816ce2f29af5483b38db,NYCC validation 01b645d57ebc816ce2f29af5483b38db,A,Caption <B> is funnier for this image.,,False
+newyorker,d72a4de4ccd33f6f20cabe9824a06abb,NYCC validation d72a4de4ccd33f6f20cabe9824a06abb,A,"Caption B: Don't worry, we've got a killer strategy.
+
+This caption is funnier because it suggests a clever or unexpected solution to the legal dilemma, which adds a layer of humor and implies that the lawyer is being playful or clever in their approach. It contrasts with Caption A, which is more sarcastic and ironic but less humorous in tone.",,False
+newyorker,2276a048b2a175a6c39a61d5fe1c538d,NYCC validation 2276a048b2a175a6c39a61d5fe1c538d,B,Caption B: Every time I wash the car.,,False
+newyorker,aa83b70a75b619466301c920b7d1a765,NYCC validation aa83b70a75b619466301c920b7d1a765,A,Caption <B> is funnier for this image.,,False
+newyorker,115a64741baf8e5da2544ae910cbc7cc,NYCC validation 115a64741baf8e5da2544ae910cbc7cc,B,Caption <B> is funnier for this image.,,True
+newyorker,0602e1c864237ba0f95b39fc30635e39,NYCC validation 0602e1c864237ba0f95b39fc30635e39,B,Caption <B> is funnier for this image.,,True
+newyorker,9bc96ebf3cb4ffce4bc342c32952e368,NYCC validation 9bc96ebf3cb4ffce4bc342c32952e368,B,Caption <A>,,False
+newyorker,161579311782d470d9a7050a81a3357f,NYCC validation 161579311782d470d9a7050a81a3357f,A,"Caption B: Do you know if your warranty covers Prozac?
+
+This caption is funnier because it's a clever play on words and a humorous twist on the situation. It implies that the car is somehow related to the person's mental health (via Prozac), which is a common issue in the mental health field, and it adds a layer of irony and humor to the image.",,False
+newyorker,77d08da4c93fd48c937143c3c055fcfa,NYCC validation 77d08da4c93fd48c937143c3c055fcfa,B,Caption <B> is funnier for this image.,,True
+newyorker,c116fa39999be62b08d5a1540c0183df,NYCC validation c116fa39999be62b08d5a1540c0183df,A,Caption B is funnier for this image.,,False
+newyorker,95ffe4c475db103c0103be5ba932f0d9,NYCC validation 95ffe4c475db103c0103be5ba932f0d9,B,Caption <B> is funnier for this image.,,True
+newyorker,13e8af76efed4134c206f029ed863e79,NYCC validation 13e8af76efed4134c206f029ed863e79,A,"Caption B: Spare some plane fare?
+
+This caption is funnier because it plays on the idea of ""spare some plane fare"" as a humorous way to suggest that the man in the suit is waiting to buy a ticket to the beach, which is a common joke in American culture. It adds a layer of humor by implying that the man in the suit is waiting to pay for a trip to the beach, which is a funny and relatable scenario.",,False
+newyorker,3bb70947d86984aa327820322edbc8ea,NYCC validation 3bb70947d86984aa327820322edbc8ea,A,"Caption B: No thanks. I already have boat insurance.
+
+This caption is funnier because it adds a humorous twist by implying that the boy doesn't need to catch a businessman, and the fact that he already has boat insurance suggests a bit of irony or self-deprecation. It's light-hearted and plays on the idea of being caught in a situation that's not exactly what it seems.",,False
+newyorker,0f11874d3f0e99d8e477b308d92c567d,NYCC validation 0f11874d3f0e99d8e477b308d92c567d,B,Caption <B> is funnier for this image.,,True
+newyorker,d7105dbfea9a3906291b99ccd45ca11d,NYCC validation d7105dbfea9a3906291b99ccd45ca11d,B,Caption B is funnier for this image.,,False
+newyorker,36444cb91166ac925a839677ad9a1a87,NYCC validation 36444cb91166ac925a839677ad9a1a87,B,"Caption B: Now I'm getting a signal.
+
+This caption is funnier because it adds a humorous and unexpected twist to the scene—listening to a heart with a stethoscope in a crowded street. It creates a funny contrast between the doctor's professional role and the casual, unexpected situation.",,False
+newyorker,e54a756b4f6eb7e6ecaba5fff975a75a,NYCC validation e54a756b4f6eb7e6ecaba5fff975a75a,B,Caption B is funnier for this image.,,False
+newyorker,ab1135a0867aca137f86197fdc977f8c,NYCC validation ab1135a0867aca137f86197fdc977f8c,A,Caption <B> is funnier for this image.,,False
+newyorker,b0f067ce6ad4d6782af94cff2afe1ee4,NYCC validation b0f067ce6ad4d6782af94cff2afe1ee4,A,Caption B is funnier for this image.,,False
+newyorker,8cc744dd5d9e9aed5f0153a7e49b4d05,NYCC validation 8cc744dd5d9e9aed5f0153a7e49b4d05,B,Caption <B> is funnier for this image.,,True
+newyorker,cb1401a42da4d98c137cc4d8f1a905d5,NYCC validation cb1401a42da4d98c137cc4d8f1a905d5,B,Caption B is funnier for this image.,,False
+newyorker,84b4c156b1067e829f7b89685fc68c85,NYCC validation 84b4c156b1067e829f7b89685fc68c85,A,Caption B is funnier for this image.,,False
+newyorker,d3b4dce1e5bb49fcfb47534c4a1c9763,NYCC validation d3b4dce1e5bb49fcfb47534c4a1c9763,A,Caption <B> is funnier for this image.,,False
+newyorker,b2c69c3c1107eac224c130edadeffc4c,NYCC validation b2c69c3c1107eac224c130edadeffc4c,B,Caption B is funnier for this image.,,False
+newyorker,2288d5aa66d83c2ebbf58433b4c96999,NYCC validation 2288d5aa66d83c2ebbf58433b4c96999,A,Caption <B> is funnier for this image.,,False
+newyorker,354735bda76aa6b1049dc068563f7a3f,NYCC validation 354735bda76aa6b1049dc068563f7a3f,A,"Caption B: ""Ishmael is on his way."" 
+
+This caption is funnier because it creates a humorous and unexpected situation—someone (Ishmael) is on his way, but the image shows a man being rescued by a giant tentacle, which is both absurd and funny in contrast. It plays on the idea of a heroic figure (Ishmael) being pulled from danger, but in a bizarre and ridiculous way.",,False
+newyorker,8ab87a73680ba70abcd1fdc4267def58,NYCC validation 8ab87a73680ba70abcd1fdc4267def58,A,"Caption A: It's out of the bag.
+
+This caption is funnier because it plays on the idea of something being ""out of the bag,"" which is a common idiom meaning something is revealed or obvious. The image shows a man watching TV and a cat looking in the window, which doesn't directly relate to the idiom. However, the caption adds a humorous twist by implying that the man is ""out of the bag"" in some way, which is unexpected and amusing. 
+
+Caption B: We got 14 million hits so far.
+
+This caption is more straightforward and doesn't add the same level of unexpected humor as Caption A. It's factual and doesn't play on an idiom in a way that's as surprising or funny.
+
+Final Answer: Caption <A>",,True
+newyorker,8e3aca565f88df21605dbe5c6108c0ef,NYCC validation 8e3aca565f88df21605dbe5c6108c0ef,B,Caption B is funnier for this image.,,False
+newyorker,d99442cb6c763370636698d477683f3f,NYCC validation d99442cb6c763370636698d477683f3f,B,Caption B is funnier for this image.,,False
+newyorker,08957c35c2e73440d4fc83f93636d26f,NYCC validation 08957c35c2e73440d4fc83f93636d26f,A,Caption <A> is funnier for this image.,,True
+newyorker,8e1eb46b47bb7be3852307880a0cec01,NYCC validation 8e1eb46b47bb7be3852307880a0cec01,A,"Caption B: They were supposed to eat the moths.
+
+This caption is funnier because it adds a humorous twist to the situation. The image shows a man and woman in a bedroom with suitcases, one of which is open and full of water and fish. The caption suggests that they were supposed to eat the moths, which is a funny and unexpected twist. It plays on the idea of packing and the absurdity of trying to eat moths in a suitcase full of fish and water.",,False
+newyorker,8db0dde544e02825e1653260330bce64,NYCC validation 8db0dde544e02825e1653260330bce64,B,Caption <B> is funnier for this image.,,True
+newyorker,0eb5337bab98e46c811792525bbae63f,NYCC validation 0eb5337bab98e46c811792525bbae63f,A,Caption B is funnier for this image.,,False
+newyorker,8dc59c808dc47640328e71557ed546bb,NYCC validation 8dc59c808dc47640328e71557ed546bb,A,Caption <B> is funnier for this image.,,False
+newyorker,e099ed8923bcf1a73dd84d027c58f36b,NYCC validation e099ed8923bcf1a73dd84d027c58f36b,B,Caption <B> is funnier for this image.,,True
+newyorker,8de0608aa38cba6362bdde597b6a317d,NYCC validation 8de0608aa38cba6362bdde597b6a317d,B,"Caption B: Put him through.
+
+This caption is funnier because it adds a layer of humor through the word ""put him through,"" which implies a challenging or awkward situation, contrasting with the initial reaction of the two men being startled. It creates a comedic twist by suggesting they are being forced into a difficult situation, which is more humorous than the straightforward statement in Caption A.",,False
+newyorker,35e85701110364b9f58c73bcdaf7a2f8,NYCC validation 35e85701110364b9f58c73bcdaf7a2f8,A,"Caption B: Do you guys happen to know the way out?
+
+This caption is funnier because it plays on the unexpected and humorous situation of the image—two backpackers being startled by a large honey bottle shaped like a bear. The caption adds a light-hearted, absurd twist by asking if they know the way out, which contrasts with the surprising and potentially scary scene. It creates a funny contrast between the unexpected event and the mundane question, making it more amusing.",,False
+newyorker,8d10076acddbaef0c0ad0283c73879bc,NYCC validation 8d10076acddbaef0c0ad0283c73879bc,B,"Caption B: I have a hunch I'm in the placebo group. 
+
+This caption is funnier because it plays on the absurdity of the situation—being in a hospital bed with a beverage strapped to your head and IVs—while also hinting at a psychological or medical context that's not immediately clear. It adds a layer of humor through the juxtaposition of the bizarre scenario and the uncertain, possibly misleading nature of the situation (placebo effect). 
+
+Final answer: Caption <B>",,True
+newyorker,08e71b4f8b04bf866d4fabf6c6d54f82,NYCC validation 08e71b4f8b04bf866d4fabf6c6d54f82,A,"Caption B: I consider it in poor taste.
+
+Explanation: The image shows a woman and a man observing a corpse in a casket with an IV stand nearby. Caption B, ""I consider it in poor taste,"" is more humorous because it plays on the irony of the situation—someone commenting on the apparent inappropriateness of the scene, which is a common and relatable topic in media and everyday life. Caption A, ""We'll eventually miss him,"" is more somber and less humorous.",,False
+newyorker,ac160b5d3149cb28be92443cee1a2de6,NYCC validation ac160b5d3149cb28be92443cee1a2de6,B,Caption B is funnier for this image.,,False
+newyorker,2771a19efd2e4137d0b0d0c7d8f6552c,NYCC validation 2771a19efd2e4137d0b0d0c7d8f6552c,B,Caption <A> is funnier.,,False
+newyorker,200186603eacc8c9f8e9e7c39cf706ba,NYCC validation 200186603eacc8c9f8e9e7c39cf706ba,B,Caption <B> is funnier for this image.,,True
+newyorker,a496cf6d6671a1a2fc705bee96cf8084,NYCC validation a496cf6d6671a1a2fc705bee96cf8084,B,Caption B is funnier for this image.,,False
+newyorker,6a316114759eea1d6fd341458d483c98,NYCC validation 6a316114759eea1d6fd341458d483c98,A,Caption <B> is funnier for this image.,,False
+newyorker,466e80090dc0ddfce306830edd03ba9b,NYCC validation 466e80090dc0ddfce306830edd03ba9b,A,"Caption B: It is time for a little philosophy.
+
+Explanation: The image depicts two men in distress, one happy and one sad, next to a skull in the desert. Caption B plays on the philosophical theme of the situation—how the two men are in a tragic, life-threatening situation, and it's time to reflect on life, death, and the meaning of existence. This adds a layer of humor and irony, making it more engaging and funny compared to Caption A, which is a straightforward promotion of a product (waterproofing).",,False
+newyorker,7c112f04ea6e1679018177acd9c7500f,NYCC validation 7c112f04ea6e1679018177acd9c7500f,B,"Caption B: No, you grow up
+
+Caption B is funnier because it plays on the idea of growing up in a humorous and relatable way, especially in the context of cowboys riding through the desert on rocking horses. It adds a lighthearted and unexpected twist to the image, making it more amusing.",,False
+newyorker,0e3379e8dfbf37b0e34ad643034ee267,NYCC validation 0e3379e8dfbf37b0e34ad643034ee267,B,Caption <B> is funnier for this image.,,True
+newyorker,7934332dd1561fa7e93478e2bdafaf40,NYCC validation 7934332dd1561fa7e93478e2bdafaf40,B,Caption B is funnier for this image.,,False
+newyorker,2917514e8692e59b15c9a18706e35def,NYCC validation 2917514e8692e59b15c9a18706e35def,A,"Caption B: So who gives a hoot?
+
+This caption is funnier because it adds a humorous twist by questioning the audience's interest in the situation, which contrasts with the serious context of the image (a woman talking to a man in an office with owls). It creates a light-hearted, ironic tone that is more engaging and unexpected.",,False
+newyorker,e80deaccfbc0fb6b9966eae4a81b738c,NYCC validation e80deaccfbc0fb6b9966eae4a81b738c,A,Caption <B> is funnier for this image.,,False
+newyorker,08d0b314c7f2f7248e6744653f6ffc75,NYCC validation 08d0b314c7f2f7248e6744653f6ffc75,A,Caption <B> is funnier for this image.,,False
+newyorker,3dbbd33e6e2004747f608954a2d95561,NYCC validation 3dbbd33e6e2004747f608954a2d95561,A,Caption B is funnier for this image.,,False
+newyorker,53fcc05af501e10348309cd86d2f996e,NYCC validation 53fcc05af501e10348309cd86d2f996e,B,"Caption B is funnier for this image. 
+
+The caption ""I hear he's got 100 percent coverage ... parts and labor"" plays on the absurdity of the situation—someone being covered in parts and labor while being pushed around in a wheelchair. It highlights the irony and humor of the scenario, making it more engaging and funny compared to Caption A, which is more literal and less humorous. 
+
+Final answer: Caption <B>",,True
+newyorker,72eeb3b892d3374f61de177a1dbde5e3,NYCC validation 72eeb3b892d3374f61de177a1dbde5e3,A,Caption <B> is funnier for this image.,,False
+newyorker,09928bf0cbba50d2a805ed48a4bd6098,NYCC validation 09928bf0cbba50d2a805ed48a4bd6098,A,Caption <B> is funnier for this image.,,False
+newyorker,c311768fcc7ee7f35142169c7c57b9dc,NYCC validation c311768fcc7ee7f35142169c7c57b9dc,A,"Caption B: Guess what happens if you say ANYTHING!
+
+<>Caption B<>",,False
+newyorker,6fb0887ae703e2e7e5c1ae5edaa8d863,NYCC validation 6fb0887ae703e2e7e5c1ae5edaa8d863,B,Caption <B> is funnier for this image.,,True
+newyorker,e12119096bee28fff42f28010b23ad20,NYCC validation e12119096bee28fff42f28010b23ad20,A,Caption <B> is funnier for this image.,,False
+newyorker,cc2bfd6c0ccce34052ab6b3520744b54,NYCC validation cc2bfd6c0ccce34052ab6b3520744b54,A,Caption <B> is funnier for this image.,,False
+newyorker,cdce133a5031acef25943f676d309f1a,NYCC validation cdce133a5031acef25943f676d309f1a,A,"Caption B: Pandemic? What Pandemic?
+
+Explanation: The image shows grim reapers having a meeting, with a man in a suit talking to them. Caption B is funnier because it creates a humorous and unexpected situation—someone in a suit talking to grim reapers during a pandemic. It adds a layer of absurdity and surprise, making it more amusing than Caption A, which is more straightforward and less humorous.",,False
+newyorker,e8f75ffefe0d90aca99bb43094d9a115,NYCC validation e8f75ffefe0d90aca99bb43094d9a115,B,Caption <B> is funnier for this image.,,True
+newyorker,cd88cacd2cc781faaa7eab86b3e2a252,NYCC validation cd88cacd2cc781faaa7eab86b3e2a252,B,Caption B is funnier for this image.,,False
+newyorker,88100c811591f72bf13d712ce306e81f,NYCC validation 88100c811591f72bf13d712ce306e81f,A,Caption B is funnier for this image.,,False

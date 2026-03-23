@@ -1,0 +1,1324 @@
+dataset,sample_id,meta,expected,llm_response,llm_thinking,is_correct
+newyorker,fde4151fcca492b42336d3a3dfe8e0dc,NYCC validation fde4151fcca492b42336d3a3dfe8e0dc,B,<B>,,True
+newyorker,1214b37425713590e915e3af0b1e6e6a,NYCC validation 1214b37425713590e915e3af0b1e6e6a,B,"The image shows two men in winter garb attempting to ski on sand in the desert — a surreal and absurd situation. 
+
+- Caption A: ""Don't worry, it's cyclical"" is a dry, somewhat philosophical line that could imply the situation is repeating or inevitable. It's vague and slightly meta, but doesn't directly connect to the absurdity of the scene. It might be clever, but it feels underdeveloped and not clearly funny in context.
+
+- Caption B: ""Worst Groupon ever!"" is a sharp, relatable, and exaggerated statement. It's a common internet joke about bad deals, and the absurdity of skiing in the desert with winter gear makes the joke land even better. The contrast between the ridiculous situation and the mundane complaint about a Groupon is humorous and instantly recognizable.
+
+Given the absurdity of the scene, the humor works best when it's grounded in a relatable, ironic critique — and ""Worst Groupon ever!"" delivers that.
+
+Therefore, the funnier caption is <B>.",,True
+newyorker,953ca7ee0c0673ebc51e6147f68f0233,NYCC validation 953ca7ee0c0673ebc51e6147f68f0233,A,"The image shows two cowboys in the middle of a desert, with chess pieces — specifically, the knight piece (which looks like a horse) — suggesting a playful fusion of cowboys and chess. The humor comes from the absurdity of cowboys playing chess in the desert, blending Western imagery with chess tropes.
+
+Now, let's evaluate the captions:
+
+- **Caption A**: ""I suggest you slowly back up two paces and take one step to the side.""  
+  This sounds like a literal chess move (a knight's move), but it's phrased in a cowboy-style, almost like a command from a Western. It's a bit awkward and doesn't clearly connect to the image in a humorous way. It feels like a mechanical instruction, not a joke.
+
+- **Caption B**: ""Nobody executes a fork on the Chaturanga kid and lives to tell about it.""  
+  ""Chaturanga"" is an ancient Indian form of chess, and ""fork"" is a chess tactic. The phrase is a pun — ""Chaturanga kid"" is a play on ""chess kid,"" and ""fork"" is a chess move. The humor comes from the absurdity of a ""kid"" being attacked in chess and dying, which is a ridiculous exaggeration. It also references a real chess concept in a silly, dramatic way. The allusion to a ""kid"" being attacked and dying is both absurd and funny, especially in a cowboy desert setting.
+
+Given the image's theme — cowboys, chess, desert — Caption B uses a clever, pun-filled chess reference that fits the absurd, ironic tone of the scene. It's a more layered, witty joke.
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,b8ecd62018bbd057aaa22277ed24fd68,NYCC validation b8ecd62018bbd057aaa22277ed24fd68,B,<B>,,True
+newyorker,ce15e7d5a2b0446c455a20b2f97e72a1,NYCC validation ce15e7d5a2b0446c455a20b2f97e72a1,B,<B>,,True
+newyorker,71c3de544184b953bb9c5cd0660e7574,NYCC validation 71c3de544184b953bb9c5cd0660e7574,B,"The image shows a man in his house, angry at an alligator coming through the pet door. This scenario is absurd — an alligator entering a house through a pet door is highly unlikely and comically out of place.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""Well? The swamp closed up over two hours ago.""  
+  This is a bit of a stretch — the swamp closing up is not something that would logically happen, and the man is reacting to an alligator entering, which suggests the swamp is still open. This line seems to imply a contradiction or a misunderstanding. It's a bit awkward and doesn't clearly land as a joke.
+
+- **Caption B**: ""Yes, they're new shoes, but it's no one you know.""  
+  This is a classic joke structure — it sounds like a casual comment about shoes, but then pivots to a humorous implication that the person is someone unfamiliar. It’s a dry, witty line that plays on the absurdity of a situation (like meeting a stranger in a strange context). It’s more relatable and funny in tone, especially if the man is reacting to something unexpected.
+
+But in this image — a man reacting to an alligator — the humor comes from the absurdity of the situation. Caption A, while awkward, ties into the absurdity of the alligator coming through a pet door, suggesting the swamp is closed (which would make the alligator's presence even more bizarre). It creates a punchline that makes sense in context: the swamp closed, so how is there an alligator? That’s a funny contradiction.
+
+Caption B, about new shoes, is completely unrelated to the alligator or the scene — it’s a non sequitur.
+
+Therefore, **Caption A** is funnier because it directly relates to the absurd situation and creates a logical contradiction that is both unexpected and humorous.
+
+< A >",,False
+newyorker,bba482e3fb83f469575fd8706f39dc4c,NYCC validation bba482e3fb83f469575fd8706f39dc4c,A,"<Caption A> is funnier for this image because it introduces a lighthearted, unexpected moment of doubt in a casual setting — a waitress checking if ""mousse"" is a typo. This creates a playful, relatable, and slightly absurd humor that fits well with the scene of a restaurant order. The idea of a customer possibly mispronouncing or miswriting a dish like ""mousse"" adds a touch of whimsy and human error, which is more naturally funny in a real-world context.
+
+In contrast, Caption B (""I've been wanting to eat out here for years"") is sincere and heartfelt, but it's more of a romantic or nostalgic statement, which doesn't create humor in this context.
+
+Thus, the humor is stronger and more aligned with the image in Caption A.
+
+<A>",,True
+newyorker,004a0d86afd22c6e8b30b384b73595c1,NYCC validation 004a0d86afd22c6e8b30b384b73595c1,B,<A>,,False
+newyorker,3156dfd78b55850670c84341bdc764ee,NYCC validation 3156dfd78b55850670c84341bdc764ee,B,"The image shows Snow White and the seven dwarfs playing in a field, with the dwarfs on roller skates and Snow White in regular shoes. The scene is whimsical and playful, with a lighthearted, cartoonish tone.
+
+Now, analyzing the captions:
+
+- **Caption A**: ""Come on Grumpy...Happy was right. Tomorrow, Sunrise Yoga!""  
+  This is a playful, absurd twist on the dwarfs’ personalities. ""Happy was right"" is a nod to the character Happy, who is known for being cheerful. ""Sunrise Yoga"" is a surreal, slightly ridiculous activity for a group of dwarfs, especially one like Grumpy who might not be into yoga. It fits the whimsical tone and plays on the characters' names and quirks. It's funny because it's absurd and character-appropriate.
+
+- **Caption B**: ""Don't tell me. Let me guess. Creepy is behind me.""  
+  This is a joke that relies on a pun and a play on the name ""Creepy."" In the original Snow White story, there's no character named ""Creepy,"" and it's not a known dwarf. The caption is a bit of a stretch — it assumes someone named ""Creepy"" is present, which isn't in the original or this scene. It's also a bit creepy in tone, which might undermine the lightheartedness of the image. The humor comes from a misdirection, but it's less grounded and feels more like a joke that doesn't quite fit the scene.
+
+Given that the image is cheerful and playful, and the characters are in a fun, non-threatening setting, **Caption A** fits better in tone and humor. It maintains the whimsy and character dynamics, while Caption B introduces a potentially unsettling element that doesn't match the scene.
+
+Therefore, the funnier caption for this image is:
+
+<A>",,False
+newyorker,24acecce90ff5aa46459a6488fbb2f58,NYCC validation 24acecce90ff5aa46459a6488fbb2f58,B,"The humor in this image relies on the contrast between a serious, official-looking scene (a cop stopping a man in a car) and a witty, sarcastic statement about a ""radar gun"" — a tool used by law enforcement to measure vehicle speeds.
+
+Caption A: ""I lost my radar gun to budget cuts.""  
+This is a plausible, relatable statement. It suggests the man (perhaps a cop) lost a tool due to financial constraints, which is a real-world issue. It's grounded and slightly ironic.
+
+Caption B: ""Let that be a lesson to you.""  
+This is a direct, dramatic statement that follows from the first. It adds a tone of warning or satire, implying the man’s loss of a radar gun is a cautionary tale. The phrase ""let that be a lesson to you"" is over-the-top and fits well with the absurdity of a cop being stopped for a sign with a math equation — suggesting a surreal or comedic situation.
+
+While both are funny, **Caption B** is funnier because it adds a punchy, dramatic, and ironic tone that plays on the absurdity of the scene. It turns a simple situation into a humorous, exaggerated lesson — which is the hallmark of good comedic writing.
+
+Therefore, the funnier caption is:  
+<B>",,True
+newyorker,3e3b3aa676233fdac6b86b2af0087643,NYCC validation 3e3b3aa676233fdac6b86b2af0087643,B,"The image shows a rat with wings strapped to it on a city roof, alongside a pigeon. The absurdity of a rat having wings—especially in a context where it's implying a ""test"" or ""experiment""—adds a surreal and humorous twist.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""You really think this will make people want to feed you in the park?""  
+  This is a sarcastic, self-deprecating line implying the rat (or the creature) is trying to get food through appearance. It's a bit of a stretch, but the humor comes from irony—suggesting that having wings would make someone want to feed it, which is absurd. Still, it's grounded in a plausible (if silly) social scenario.
+
+- **Caption B**: ""Believe me, I've tested a lot worse things when I was in pharmaceuticals.""  
+  This is a dry, deadpan joke that plays on the idea of ""testing"" and the absurdity of what might be tested in pharmaceuticals. It's a classic ""I've seen worse"" joke, and it works well with the image of a rat with wings—implying that this is just one of many bizarre things tested. The humor is in the contrast between the ridiculous image and the serious tone of a pharmaceutical professional.
+
+Given the absurdity of the image (a rat with wings), **Caption B** is funnier because it leverages a well-known, relatable joke structure (""I've tested worse things"") and makes the absurdity feel both credible and witty—like a scientist making a dry, professional joke about something bizarre.
+
+< B >",,False
+newyorker,dfb2eb87fd3df151bc7dfaa07a6cec21,NYCC validation dfb2eb87fd3df151bc7dfaa07a6cec21,B,"The image shows two people in a backyard at a grill, with a briefcase being cooked on the grill. 
+
+Caption A: ""I'm beginning to suspect that the Russians hacked my recipe site."" — This is a stretch, as the image shows a briefcase on a grill, not a digital hack or a recipe site being compromised. The idea of Russians hacking a recipe site is over-the-top and absurd, but it's not directly connected to the visual. It's a bit of a farce, but the connection is weak.
+
+Caption B: ""Something tells me that there are two prime rib steaks sitting on my desk."" — This is a humorous misdirection. The image shows a grill, not a desk, and the object being cooked is a briefcase, not a steak. The idea of prime rib steaks on a desk is absurd and plays on the visual of something being cooked (a briefcase) and misinterprets it as food. The joke hinges on a ridiculous inference, making it more absurd and therefore funnier in a comedic, surreal way.
+
+Between the two, Caption B is funnier because it creates a more absurd, unexpected, and silly inference from the image — turning a briefcase on a grill into a literal steak on a desk — which is a classic comedic setup.
+
+<B>",,True
+newyorker,6fb70ee002349b33248e5160e504c527,NYCC validation 6fb70ee002349b33248e5160e504c527,B,<A>,,False
+newyorker,74bccf1627c9412ccbb060349d704fbd,NYCC validation 74bccf1627c9412ccbb060349d704fbd,B,"The image shows a rat and a pigeon on a roof in a city, with the rat having wings strapped to him. This suggests a comedic, absurd scenario—likely a parody of romantic or relationship dynamics, with the rat (a typically small, unimpressive creature) being outfitted with wings to match a pigeon, implying a playful attempt to be equal or romantic.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""I've had it with the Turtles getting all the credit.""  
+  This references the popular cartoon ""Teenage Mutant Ninja Turtles,"" which is a well-known pop culture reference. However, in this image, there are no turtles visible. The reference is out of context and doesn't directly relate to the rat or pigeon. It’s a bit of a non sequitur—funny only if the viewer is deeply familiar with the Turtles and expects a rivalry or joke, but it feels disconnected.
+
+- **Caption B**: ""Fine, but for our second date you are coming sewer rafting.""  
+  This is a much more absurd and playful line. The idea of ""sewer rafting"" is ridiculous and vivid—especially with a rat and a pigeon on a city roof. The humor comes from the surrealism of the situation: a romantic date involving a sewer raft, which is both bizarre and oddly specific. It fits the absurdity of the image (a rat with wings on a city roof), and the phrase ""sewer rafting"" is delightfully ridiculous and unexpected.
+
+Therefore, **Caption B** is funnier because it directly plays off the absurdity of the image and creates a more coherent, whimsical, and unexpected joke.
+
+<B>",,True
+newyorker,9c2da2e3f1de974c57703585ec53b190,NYCC validation 9c2da2e3f1de974c57703585ec53b190,A,"The image shows executives around a boardroom table, staring at a plant at the end. 
+
+- Caption A: ""We hired him to appeal to perennials"" is a pun on ""perennials"" (plants that grow year after year) and ""perennials"" (a type of business strategy or long-term appeal). It's clever and plays on wordplay, but it's a bit abstract and may not land immediately.
+
+- Caption B: ""The day marijuana became legal in New York"" is a factual event (2021), and the image of executives staring at a plant could imply they're discussing cannabis — which is a funny, absurd, and unexpected context for a boardroom. The humor comes from the juxtaposition of serious executives and a plant, especially one related to marijuana. The caption is more grounded and absurd, making it funnier in a satirical, ironic way.
+
+Given the context of executives in a boardroom and a plant, Caption B creates a more immediate and absurd humor through irony and cultural relevance.
+
+Final answer: <B>",,False
+newyorker,f0b498930fdb580def55aef651e9c2ac,NYCC validation f0b498930fdb580def55aef651e9c2ac,A,<A>,,True
+newyorker,419c0a690d0c1fadd3db94c3c607e6ba,NYCC validation 419c0a690d0c1fadd3db94c3c607e6ba,A,<B>,,False
+newyorker,623ef2993e22b718b1b2b7767f3c20e8,NYCC validation 623ef2993e22b718b1b2b7767f3c20e8,B,"The image shows a man confronting another man while still in his bed — a surreal and absurd situation. The captions play on irony and contradiction.
+
+- Caption A: ""You don't want to see the wrong side."" — This is vague and somewhat ominous, suggesting a moral or emotional dilemma, but it doesn’t clearly connect to the absurdity of the scene. It feels more like a general warning.
+
+- Caption B: ""And yet you embraced the standing desk."" — This is funnier because it directly references a mundane, modern object (a standing desk), which is absurdly out of place in the context of a man in bed confronting someone. The phrase ""embraced"" implies a strong, positive acceptance, but it's juxtaposed with the ridiculousness of being in bed and confronting someone. The irony is heightened — you don’t *want* to see the wrong side, yet you’ve committed to a standing desk, which is a symbol of productivity and posture, while still lying in bed.
+
+Thus, the humor comes from the absurd contrast between the action (confronting) and the setting (bed), and Caption B makes that contrast more vivid and ironic.
+
+< B >",,False
+newyorker,73ef5d12327336c4dc364d683188f329,NYCC validation 73ef5d12327336c4dc364d683188f329,A,<A>,,True
+newyorker,61133892a8fcdcb6ed3dbd003d52e928,NYCC validation 61133892a8fcdcb6ed3dbd003d52e928,B,"The image shows two men at the top of a mountain, with one sitting on a green yoga ball. This setup is absurd and surreal — a yoga ball on a mountain is not a typical or expected scene, which makes it ripe for a humorous or ironic caption.
+
+Let’s evaluate the captions:
+
+- **Caption A**: ""Where the hell is the cartoon??""  
+  This is a sarcastic, incredulous question. It implies the viewer is confused — why is there a cartoon in this scene? But the image isn’t actually a cartoon; it’s a real-looking photo with a surreal element (a yoga ball on a mountain). So the caption is poking fun at the absurdity of the scene, suggesting the image is out of place or not a cartoon. It’s a clever, ironic jab — it works well because it plays into the viewer’s expectation of what a ""cartoon"" should look like.
+
+- **Caption B**: ""Do you seek alignment?""  
+  This is more abstract and philosophical. ""Alignment"" could refer to physical alignment (like yoga), or spiritual/mental alignment. While it's poetic, it’s vague and doesn’t clearly connect to the image. The yoga ball is a visual clue, but ""alignment"" doesn’t land with the absurdity of the scene. It feels like a buzzword or a vague metaphor, not something that makes the image funnier.
+
+Given that the image is absurd (a man on a yoga ball at the top of a mountain), the humor comes from the unexpectedness and the clash of expectations. Caption A directly addresses that absurdity with a humorous, sarcastic tone — it’s witty, unexpected, and fits the scene.
+
+Therefore, the funnier caption is:
+
+<A>",,False
+newyorker,e0c8974c26b6486774326c0686534d57,NYCC validation e0c8974c26b6486774326c0686534d57,B,<Caption B>,,False
+newyorker,ca1bf4dd9457abc5ea771b0939d7ebf0,NYCC validation ca1bf4dd9457abc5ea771b0939d7ebf0,A,<A>,,True
+newyorker,b9b16f0018da976281f1d9a6d38bf314,NYCC validation b9b16f0018da976281f1d9a6d38bf314,B,"The image shows a man walking a plank off a subway train, with pirates behind him and a blindfold — a surreal, absurd scenario that blends real-world elements (subway, walking a plank) with fantasy (pirates, blindfold). The humor comes from the ridiculousness of the situation.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""It could be worse. I could insult you on Twitter.""  
+  This is a dry, self-deprecating joke, but it's out of place in the context. The absurdity of the scene doesn't connect to Twitter insults. It feels like a generic, unrelated punchline. It doesn't leverage the visual absurdity of the image.
+
+- **Caption B**: ""Wait till he finds out this isn't his stop.""  
+  This is a much better fit. It plays on the absurdity of a subway train scenario — a man on a plank, blindfolded, with pirates — and ties it to a plausible, relatable situation (a subway passenger missing his stop). It creates a comedic contrast between the dangerous, fantastical scene and the mundane reality of public transit. It's witty, grounded, and builds on the image's inherent absurdity.
+
+Therefore, the caption that is funnier in this context is:
+
+<B>",,True
+newyorker,edd3dc219a51ce33f26384b1093c571f,NYCC validation edd3dc219a51ce33f26384b1093c571f,A,"The image shows construction workers sitting on a high beam pole, with the Grim Reaper beside them — a surreal and absurd scene. The caption that plays on the absurdity of the situation and adds a layer of dark, ironic humor is more likely to be funnier.
+
+Caption A: ""Yes, we all had the potato salad. Why?""  
+— This is a strange, almost absurd statement, implying that everyone at a high, dangerous location (on a beam above buildings) had potato salad, which is oddly mundane and out of place. It creates a jarring contrast between the setting and the mundane food, which is funny in a dry, ironic way.
+
+Caption B: ""I really hope my wife packed LifeSavers.""  
+— This is a more personal, everyday joke, but in this context, it's undercut by the absurdity of the scene. LifeSavers are candy, and the idea of someone hoping their wife packed them in a dangerous, high-altitude construction setting feels more like a trivial, mundane thought in a surreal situation. It’s a bit of a stretch.
+
+Between the two, **Caption A** is funnier because it directly ties a mundane, common food (potato salad) to a bizarre, high-risk environment, creating a jarring and humorous contrast. The absurdity of ""we all had potato salad"" in such a dangerous setting is more unexpected and impactful.
+
+Therefore, the funnier caption is:
+
+<A>",,True
+newyorker,cba4ef1ebecfa549028e03dc024a3c1f,NYCC validation cba4ef1ebecfa549028e03dc024a3c1f,A,"The humor in this image relies on wordplay and irony. Let's analyze both captions:
+
+Caption A: ""You the Ponzi varmint that lost our nest egg?""  
+- ""Ponzi"" is a reference to a Ponzi scheme — a fraudulent investment scheme.  
+- ""Varmint"" is a term for a pest, often used humorously.  
+- ""Nest egg"" refers to savings or investments.  
+- The caption sarcastically accuses the executive of being a ""Ponzi varmint"" who stole the farm’s savings.  
+- This is clever, absurd, and plays on double meanings — it's a pun on ""Ponzi"" and ""varmint,"" and ties into the idea of financial fraud.  
+- The image shows farmers coming in with a donkey, which might be a visual pun on ""donkey"" as a symbol of something slow or untrustworthy — adding to the absurdity.
+
+Caption B: ""Looking for new management consultants?""  
+- This is a dry, professional-sounding line.  
+- It's generic and lacks humor.  
+- It doesn’t interact with the image or the absurdity of the scene (farmers with a donkey).  
+- It reads more like a corporate memo than a joke.
+
+While both have potential, Caption A is funnier because it combines absurdity, wordplay, and irony — especially with the unexpected pairing of ""Ponzi varmint"" and ""nest egg"" in a farm setting with a donkey.
+
+Final answer: <A>",,True
+newyorker,94efe525fe6cf97f338010c85c970c76,NYCC validation 94efe525fe6cf97f338010c85c970c76,A,"The image depicts a man walking a plank off a subway train, with pirates behind him and him blindfolded — a surreal, absurd mix of real-world setting and pirate tropes. The humor comes from the ridiculousness of the situation: pirates at a subway station, a man on a plank, blindfolded, and the ground being close below.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""No one crosses the Pirates of Penn Station.""  
+  This is a clever play on ""Pirates of the Caribbean"" and ""Penn Station,"" but the phrase ""Pirates of Penn Station"" is a nonsense construction. It's a pun that works only if you're familiar with the idea of ""Pirates of the Caribbean"" and the real-world ""Penn Station."" However, it's a bit vague and doesn't fully capitalize on the absurdity of the scene.
+
+- **Caption B**: ""Three more paces to the double arrr.""  
+  This is a much more playful, in-character pirate-style line. ""Double arrr"" is a ridiculous, exaggerated pirate phrase that sounds like something out of a movie or cartoon. It’s absurd, rhythmic, and fits the tone of a pirate scene. The phrase ""three more paces"" adds a humorous, literal progression — like the man is walking toward doom, and the pirates are counting it down. It’s more engaging, witty, and directly responds to the absurdity of the image.
+
+Therefore, the caption that is funnier and better matches the absurd, satirical tone of the image is:
+
+<B>",,False
+newyorker,212eed650de8719be5760da5104329c3,NYCC validation 212eed650de8719be5760da5104329c3,A,"The image shows a woman waiting to get on an elevator, while the people inside are on fire. This creates a surreal and absurd situation — a person is about to enter a burning elevator, which is both visually striking and potentially alarming.
+
+Now, let's evaluate the captions:
+
+- **Caption A: ""I just pressed 2020""**  
+  This is a reference to the year 2020, which was a year of global upheaval — the pandemic, social movements, etc. It could be interpreted as a joke about how things went wrong or how the world ""exploded"" in that year. The humor comes from irony and absurdity — the idea that someone just pressed 2020 and now the elevator is on fire. It’s a satirical, meta-joke that ties a real-world event to a ridiculous situation. It's clever, ironic, and fits the absurdity of the image.
+
+- **Caption B: ""Pretend not to see her.""**  
+  This is a passive, socially awkward suggestion — implying someone should ignore a person in a dangerous situation. It’s dry, but it lacks humor in this context. The situation is already absurd (people on fire), and this caption feels like a subtle critique of social indifference, but it doesn’t match the absurdity of the scene in a funny way. It's more like a moral or social comment than a joke.
+
+Between the two, **Caption A** uses a clever, ironic reference to a real-world event (2020) to create a humorous contrast with the absurd image. The juxtaposition is witty and unexpected.
+
+Therefore, the funnier caption is:
+
+<A>",,True
+newyorker,f77affeb77a3988d29f23f2af2abf14d,NYCC validation f77affeb77a3988d29f23f2af2abf14d,B,"The image shows executives in a boardroom, all staring at a plant at the end of the table. This setting implies a serious, corporate environment, and the plant is a subtle, almost absurd detail.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""You may be questioning whether I'm qualified to be here.""  
+  This is a self-deprecating line, but it's more suited to someone who is speaking to a group—like a junior employee or a new hire. In a boardroom of executives, this line feels out of place and slightly awkward. It doesn’t land well because the audience is not likely to be questioning someone’s qualifications in such a setting.
+
+- **Caption B**: ""It's amazing to think he started out in the lobby.""  
+  This is more relatable and humorous in context. The idea of someone starting in the lobby (a very ordinary, non-elite space) and now being in a boardroom is a classic ""rise from the bottom"" joke. It contrasts the mundane with the elite, and the plant at the end of the table becomes a symbol of that journey. The humor comes from irony and contrast—something so simple (a plant in the lobby) now being part of a high-level meeting.
+
+Therefore, **Caption B** is funnier because it plays on irony and the absurdity of a corporate journey, which fits the image better and lands more naturally.
+
+<B>",,True
+newyorker,bd7059bb5e67113acd756b9d42af9ee2,NYCC validation bd7059bb5e67113acd756b9d42af9ee2,B,<B>,,True
+newyorker,19977b15ed1e09c17d38caf609701ac6,NYCC validation 19977b15ed1e09c17d38caf609701ac6,A,<A>,,True
+newyorker,d5741d3702608dc0a5fe4592fa3d5b9d,NYCC validation d5741d3702608dc0a5fe4592fa3d5b9d,B,"The humor in this image relies on the unexpected and absurd juxtaposition of a woman climbing a rock wall, seeing a face on the wall, and then the addition of a racket ball court on the other side.
+
+Caption A: ""Sure I can give you a heads up, but it won't be pleasant for either of us"" — this is a plausible, slightly ominous line, implying something unsettling is about to happen. It has a dark, ironic tone, which could be funny in a surreal or absurd way, especially given the context of a face on the wall.
+
+Caption B: ""What makes this worse is that there is a racket ball court on the other side"" — this is absurd and ridiculous. A rock climbing wall with a face on it, and then a racket ball court on the other side? That’s a surreal, illogical setup. The addition of a racket ball court (a sport involving rackets and balls) next to a rock wall is completely out of place and absurd, making it a punchline of pure comedic incongruity.
+
+Between the two, Caption B introduces a ridiculous, unexpected element that plays on absurdity and visual mismatch — a much stronger source of humor in this context.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,5a592c1d9ac2528dbc6c1927412e4c2d,NYCC validation 5a592c1d9ac2528dbc6c1927412e4c2d,A,<B>,,False
+newyorker,fbc5af1e09f332c0afbceae0f1cd8a68,NYCC validation fbc5af1e09f332c0afbceae0f1cd8a68,A,<B>,,False
+newyorker,d3a53f6c23045c19b64e597841e64ac5,NYCC validation d3a53f6c23045c19b64e597841e64ac5,B,"The image shows two dogs with cone collars that have been combined, making it look like their heads are attached — a surreal and absurd visual. 
+
+Caption A: ""You're sure they can't hear or see us, right?""  
+— This is a humorous, slightly ironic line that implies the viewer is being watched or noticed by the dogs, which is absurd given the context. It plays on the idea that the dogs might be aware of the scene, which is ridiculous, making it a witty and relatable joke.
+
+Caption B: ""This was more romantic in Lady and the Tramp.""  
+— This references a classic film, but the image is absurd and not romantic at all. The contrast between the actual image and the romantic idea of ""Lady and the Tramp"" is ironic, but the humor is more about a false comparison than a direct joke with the image.
+
+While both are funny, Caption A is more directly tied to the absurdity of the image — the idea that dogs might be aware of the viewer — and it's a sharper, more immediate joke.
+
+Therefore, the funnier caption for this image is:
+
+<A>",,False
+newyorker,cdf21e60f665cab91fb22ee273c4fc2e,NYCC validation cdf21e60f665cab91fb22ee273c4fc2e,A,"The humor in this image relies on a blend of absurdity and wordplay. Let's analyze both captions:
+
+- **Caption A**: ""Oh, no. I have its little one in my backpack.""  
+  This is a pun on ""little one"" — it could refer to a baby, but in context, it's a play on ""honey"" (a bear's ""little one"" might be a bear cub). The phrase ""I have its little one"" sounds like a literal possession, but the twist is that the bear-shaped bottle is full of honey, and the backpacker has a bear cub (or a honeycomb) in their backpack. It's a clever pun, but it might be a bit confusing or less immediately funny without clear context.
+
+- **Caption B**: ""I am never going on another Bumble date ever again.""  
+  This is a much more relatable and humorous joke. ""Bumble"" is a dating app, and the caption implies the backpackers were on a date with a bear (or a person named Bumble), and now they're angry and traumatized. The absurdity of being ""startled by a bear-shaped honey bottle"" combined with a literal ""Bumble date"" is a strong, punchy joke. It's self-aware, ironic, and taps into internet culture (dating apps, absurdity). The humor is sharper and more accessible.
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,bde891696ceb3212eba91340fd7872cc,NYCC validation bde891696ceb3212eba91340fd7872cc,A,<B>,,False
+newyorker,813d014ace16ff772e747ff66b1dfbea,NYCC validation 813d014ace16ff772e747ff66b1dfbea,A,"The image shows a man about to shoot himself with a gun inside a wrecked house, which suggests a dramatic and potentially tragic moment. 
+
+Caption A — ""Just come to bed and kill yourself in the morning"" — is absurd and ironic because it implies a routine, almost comically mundane way to die (like going to bed and dying in the morning), which contrasts sharply with the actual action of shooting oneself in the present. The humor comes from the exaggeration and irony of a trivial, everyday action being the method of suicide.
+
+Caption B — ""Let's face it George, success has never come easy"" — is more of a philosophical or motivational statement. While it might be relatable, it doesn’t directly connect to the scene or the action of shooting himself. It lacks the absurdity or situational irony that makes something funny in this context.
+
+Therefore, the caption that is funnier in this context is:
+
+<A>",,True
+newyorker,117337fccf8187a6c3f2be4507dd1ba4,NYCC validation 117337fccf8187a6c3f2be4507dd1ba4,A,"The image shows two people playing in a sandbox and building a giant tower. The humor in the captions hinges on the absurdity and irony of applying human-sized concerns (like self-quarantine or height) to a playful, childlike activity.
+
+- **Caption A** (""This is all very well, but where are YOU going to self-quarantine?"") is a stretch. It mocks the idea of self-quarantine in a context where there's no pandemic, and the ""you"" is likely referring to the children, which makes it feel forced and out of place. The reference to self-quarantine is overly serious and doesn't fit the lighthearted scene.
+
+- **Caption B** (""This would have been a lot easier if you weren't so tall"") is funnier because it plays on the absurdity of a child building a tower and then being ""tall"" — a physical trait that doesn't apply to children in a sandbox. It's a witty, ironic comment that turns a simple activity into a humorous exaggeration, suggesting that being tall (like a grown-up) makes it harder to play in a sandbox. It's more in tune with the scene and uses a relatable, playful contradiction.
+
+Therefore, the caption that is funnier for this image is:
+
+<B>",,False
+newyorker,a1dfd3cf07deb5b4cf711266881f2b19,NYCC validation a1dfd3cf07deb5b4cf711266881f2b19,B,<B>,,True
+newyorker,a2e2a6c72b343cdd37c8b7f4de34d5b2,NYCC validation a2e2a6c72b343cdd37c8b7f4de34d5b2,A,"The image shows two men in a life raft talking, with a skeleton dressed as a Mexican waitress. This setup is absurd and satirical—especially the skeleton as a Mexican waitress, which is a visually humorous and unexpected element.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""I didn't expect to gain weight on this cruise.""  
+  This is a mild, somewhat mundane joke. It's plausible, but doesn't interact well with the absurdity of the scene. It's not particularly funny in context.
+
+- **Caption B**: ""Do you like pina coladas and taking walks in the rain?""  
+  This is more absurd and ironic. Pina coladas are tropical, associated with beaches and parties, while ""taking walks in the rain"" is a bizarre, contradictory image. The juxtaposition is absurd and witty—especially when paired with a skeleton dressed as a Mexican waitress. The joke feels more in tune with the surreal, satirical tone of the image.
+
+Therefore, the caption that best matches and amplifies the humor of the image is:
+
+<B>",,False
+newyorker,df5f88b998cf24cca3e4a73f0d6568a8,NYCC validation df5f88b998cf24cca3e4a73f0d6568a8,A,"The image shows two firefighters ready to slide down poles at a firehouse. 
+
+Caption A says: ""Whoa, the new recruit went down the laundry chute."" This is a playful, humorous statement — it implies a new firefighter is going down a laundry chute, which is absurd and unexpected. The phrase ""went down the laundry chute"" is a funny misdirection, as laundry chutes aren't something firefighters would use, and it's a clever pun on ""went down"" (as in descending) and ""laundry chute"" (a literal, mundane object).
+
+Caption B says: ""Don't worry about the shape. That one goes up."" This is more ambiguous and less clearly connected to the image. ""That one goes up"" could imply something ascending, but without context, it's less funny and doesn't clearly relate to the scene of firefighters sliding down poles.
+
+Given that the image shows firefighters sliding down poles, and Caption A uses a humorous, absurd twist (a new recruit going down a laundry chute), it creates a more vivid, unexpected, and funny scenario.
+
+Therefore, the funnier caption is:
+
+<A>",,True
+newyorker,2430c35c0d4c9bd987f62482b45c3d04,NYCC validation 2430c35c0d4c9bd987f62482b45c3d04,B,<A>,,False
+newyorker,7b8f2af80ccc31d175ed24d2aab5fb65,NYCC validation 7b8f2af80ccc31d175ed24d2aab5fb65,A,"The image shows a woman being interviewed by an angry bull, which creates a surreal and absurd situation. The humor arises from the incongruity between a serious job interview and a bull — a typically aggressive, non-human, and animalistic figure — conducting it.
+
+Now, let's evaluate the captions:
+
+- **Caption A**: ""Not so fun when you're the one being charged, is it?""  
+  This is a play on ""being charged"" (as in, being financially charged or fined), and it's a clever pun. However, it's a bit vague and doesn't clearly connect to the absurdity of a bull interviewing a woman. It might work in a financial context, but it's not immediately funny in this surreal scene.
+
+- **Caption B**: ""Of course I knew your dad. We worked together at Merrill.""  
+  This is a classic setup for a joke — a human (the bull) claiming a personal connection to the woman's father through a workplace. ""Merrill"" (Merrill Lynch) is a real financial firm, so the line is plausible and oddly specific. The humor comes from the absurdity of a bull knowing your dad and working at Merrill — it's a witty, believable, and ironic twist. It fits the absurdity of the scene perfectly.
+
+Given that the image is absurd and the humor is best served by a joke that plays on the ridiculousness of the situation, **Caption B** is funnier because it directly ties into the surreal context with a clever, believable, and ironic line.
+
+Final answer: <B>",,False
+newyorker,84fe897623b973d5b8d1a3cbc260fc5f,NYCC validation 84fe897623b973d5b8d1a3cbc260fc5f,B,"The humor in this image relies on absurdity and irony — a man dying of thirst is approached by a man in a suit who is perfectly fine, suggesting the situation is surreal or satirical. 
+
+Caption A — ""No. Our Water Resources Department is in the home office"" — is a bureaucratic, dry response that feels out of place in the context of someone dying of thirst. It's a bit of a stretch, but it's plausible in a bureaucratic tone.
+
+Caption B — ""Just so we're straight, this is a billable mirage"" — is funnier because it turns a literal, desperate situation into a financial or administrative one. ""Billable mirage"" is a clever, absurd phrase that combines the idea of something false (a mirage) with the concept of something that can be charged (billable), implying that the scene is not real — it's just a fictional, chargeable expense. This plays on corporate jargon in a ridiculous way, making it more satirical and humorous.
+
+Therefore, the caption that is funnier for this image is:
+
+<B>",,True
+newyorker,ac1e35b31312e8aff6a92e70b07b7146,NYCC validation ac1e35b31312e8aff6a92e70b07b7146,A,<A>,,True
+newyorker,e9690ed139c9661cb07c6e4337d50ff7,NYCC validation e9690ed139c9661cb07c6e4337d50ff7,A,"The image shows two giant boxers in a ring with a ref between them. The captions are:
+
+- Caption A: ""But, first, a word on foot odor.""  
+- Caption B: ""I promise not to look up""
+
+Given the context — two giant boxers in a ring — the humor comes from the absurdity and physical scale of the scene. 
+
+Caption A introduces a mundane, bodily detail (""foot odor"") in a context where nothing about the scene suggests anything about feet or smell. This is a jarring, unexpected, and somewhat ridiculous addition — like a sudden, unearned detour into the personal hygiene of boxers — which could be funny in a dry, deadpan way.
+
+Caption B, ""I promise not to look up,"" is more in line with the visual setup. It implies the viewer might be looking up at something — perhaps the fighters' heads or the ceiling — and the promise to not do so adds a playful, self-aware, almost comedic tone. It's a classic joke structure (""I promise not to look up"") that works well in a visual context where the viewer might be expecting something dramatic or surprising.
+
+Between the two, **Caption B** feels more naturally connected to the image and creates a more believable, relatable, and humorous moment — especially in a scene where the viewer might be ""looking up"" at the fighters.
+
+Therefore, the funnier caption for this image is:
+
+<B>",,False
+newyorker,6da66bb3cb5afc958ad83435faa9ca3c,NYCC validation 6da66bb3cb5afc958ad83435faa9ca3c,A,<B>,,False
+newyorker,e05d8eaee07cadd59131a236d410fdd2,NYCC validation e05d8eaee07cadd59131a236d410fdd2,B,"The humor in this image relies on contrast and absurdity. 
+
+Caption A — ""My hobby? Jackhammering. Why?"" — is inherently funny because ""jackhammering"" is a violent, heavy-duty activity, and the image shows a man shaking violently, which could be interpreted as a literal physical reaction to the action. The absurdity of someone claiming ""jackhammering"" as a hobby while shaking violently creates a punchline that fits the scene. It’s a surreal, exaggerated, and slightly grotesque image that matches the caption.
+
+Caption B — ""Best decaf in town, Dolores."" — is a clever, dry, and witty line, but it's more of a generic diner slogan. While it might be funny in context, it lacks a direct connection to the image or the characters' actions. It doesn't exploit the visual elements or create a comedic contrast.
+
+Therefore, the caption that best matches and enhances the humor of the image — especially with the man shaking violently — is:
+
+<A>",,False
+newyorker,1992e5e39fa548c02a231aff682a231a,NYCC validation 1992e5e39fa548c02a231aff682a231a,B,"The humor in a caption depends on how well it matches the context and tone of the image — especially when it comes to irony, absurdity, or social commentary.
+
+In this image, two scientists are conferring in a lab, and one has a mouse head. This suggests a setting that might involve experiments, possibly related to animals or research.
+
+Now, let’s evaluate the captions:
+
+- **Caption A**: ""I made sure to put your friends in the placebo group""  
+  This is a play on the idea of a placebo group in medical experiments — where participants are given a fake treatment. Saying ""your friends"" implies a humorous suggestion that the scientist included friends in the experiment, which could be seen as both cheeky and absurd. It's a plausible, slightly sarcastic line that fits a lab setting.
+
+- **Caption B**: ""I bet you also had to be twice as smart as the men.""  
+  This is a loaded, potentially offensive statement — it makes a sexist claim about intelligence, and it's phrased in a dismissive, mocking tone. While it might be a jab at gender bias in science, it's more likely to feel awkward or inappropriate, especially in a lab setting with two scientists. The tone feels more like a stereotype than a funny observation.
+
+Between the two, **Caption A** is more likely to land as a witty, absurd, and socially aware joke — especially since it uses a scientific term (placebo group) in a playful, ironic way. The mouse head adds a surreal touch, and the idea of putting ""your friends"" in a placebo group is absurd and funny.
+
+Therefore, the funnier caption is:
+
+<A>",,False
+newyorker,99140ff14c72b1d5766763235bae3b7c,NYCC validation 99140ff14c72b1d5766763235bae3b7c,B,"The image shows a couple having a picnic in a park with threatening storm clouds approaching. 
+
+Caption A: ""So, how long will your mother stay?"" — this is a play on words, referencing a ""mother"" staying, which could be interpreted as a pun on ""storm front"" (a weather front), but it's a bit awkward and potentially insensitive or confusing, especially since it's about a mother and a picnic.
+
+Caption B: ""Don't worry, it's just a front."" — this is a clever pun on ""weather front"" and ""a front"" in the sense of someone being a ""front"" (a person who is pretentious or unapproachable), but here it's a double meaning. The phrase ""it's just a front"" is a classic joke that works well in a situation involving storm clouds. It's witty, relatable, and uses the literal weather front to make a humorous, light-hearted comment.
+
+Given the context of storm clouds and a picnic, Caption B is more natural, clever, and fits the image better — making it funnier.
+
+<B>",,True
+newyorker,30662fa9c0364c6af43d9c9a0173c41e,NYCC validation 30662fa9c0364c6af43d9c9a0173c41e,B,"The humor in this image relies on the contrast between the serious hospital setting and the whimsical action of someone handing a tiny car to a patient.
+
+Caption A: ""He raced out"" — This suggests a person quickly leaving a scene, which might be interpreted as dramatic or action-oriented, but it doesn't clearly connect to the image of a lady in a hospital bed receiving a toy car. It feels out of place and lacks a clear link to the visual.
+
+Caption B: ""It's a Toy!"" — This is a playful, unexpected comment that fits the absurdity of a toy car being given to someone in a hospital. It creates a lighthearted, childlike moment in a serious environment, making it more humorous and relatable.
+
+Therefore, the caption that is funnier for this image is:
+
+<B>",,True
+newyorker,ec860e23ef9a9f1d265cd376c3794a02,NYCC validation ec860e23ef9a9f1d265cd376c3794a02,B,"The humor in this image relies on visual puns and wordplay. The man is shaped like the number 6, and the woman is presumably shaped like a different number — but the captions refer to numbers in a playful, visual way.
+
+- Caption A: ""7, 8, 9... Get it? 7, 8, 9!"" — This is a simple, straightforward joke that plays on the sequence of numbers, but it's a bit generic and doesn't directly connect to the visual of the man being shaped like a 6.
+
+- Caption B: ""It's me....'9'....from yoga class."" — This is funnier because it introduces a character (a ""9"") who is specifically from yoga class, which is a quirky, unexpected detail. The fact that someone shaped like a 9 is from yoga class adds absurdity and personality. It also subtly contrasts with the man being shaped like a 6, making the visual pun more layered and witty.
+
+Moreover, the caption implies a character (the ""9"") who is self-aware and speaks directly, which makes it more engaging and humorous than a simple number sequence.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,679097d2d25dfe732c9726fc773c85cf,NYCC validation 679097d2d25dfe732c9726fc773c85cf,B,"The image shows a woman talking to a man at a desk, with a bunch of owls perched on the desk. This creates a whimsical, surreal, or absurd scenario — owls on a desk in an office — which suggests a playful or humorous tone.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""They flew early in for Sid's 10:00.""  
+  This is grammatically awkward and unclear. ""They flew early in for Sid's 10:00"" is confusing and doesn't clearly connect to the image. It might refer to owls flying early for a meeting, but the phrasing is clumsy and doesn't land with humor.
+
+- **Caption B**: ""Gladys, get me a BLT and nine mice.""  
+  This is absurd and humorous — a request for a BLT (a sandwich) and ""nine mice"" in a human office setting with owls. The inclusion of ""nine mice"" is ridiculous and unexpected, especially with owls already present. The absurdity plays well with the image, creating a surreal, comedic contrast.
+
+Given that the image features owls on a desk, the request for ""nine mice"" is a playful, absurd twist — especially since owls are predators of mice — making it a clever and funny juxtaposition.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,27d7064beb992d5dd528e146946d72d4,NYCC validation 27d7064beb992d5dd528e146946d72d4,B,"The image shows two lions talking in a field, with doctor's instruments strewn on the ground. This creates a surreal and absurd scenario — lions, medical tools, and a conversation.
+
+Let’s evaluate the captions:
+
+- **Caption A**: ""I didn't even know that you liked French food.""  
+  This is a mild, light-hearted comment, but it's a bit out of place in a lion context. Lions don't typically eat French food, and the idea of lions liking food is a stretch. Still, it's a relatively plausible, if odd, human-like interaction.
+
+- **Caption B**: ""If he wasn't an internist he is now.""  
+  This is a humorous, pun-based line. It plays on the word ""internist"" (a doctor who specializes in internal medicine) and the idea that the lion is now ""an internist"" — implying a complete absurdity. The wordplay is clever, and the image of lions with medical instruments makes this joke land even better. The absurdity of a lion being an internist is ridiculous and funny.
+
+Given the surreal setting (lions with medical tools), **Caption B** fits better with the absurdity and uses wordplay effectively.
+
+< B >",,False
+newyorker,59a9d6cc434ab3035072f86c6f497779,NYCC validation 59a9d6cc434ab3035072f86c6f497779,B,"The image shows a couple walking in the rain, with the man carrying a huge umbrella that dwarfs both of them — a visual that suggests an exaggerated, almost absurd effort to protect against rain. 
+
+Caption A: ""Don't ask what I'm overcompensating for."" — This is a bit of a play on the idea of overcompensation, implying the man is trying to compensate for something (like being insecure or shy), but the humor comes from the irony of a massive umbrella being used to cover a small couple. It's a subtle, slightly sarcastic line, but it doesn't quite land as clearly in the context of the image.
+
+Caption B: ""They said, 'widespread showers.'"" — This is funnier because it's a literal, dry, and slightly absurd statement that matches the image perfectly. The phrase ""widespread showers"" suggests the rain is everywhere, yet the umbrella is so large it seems to cover the entire sky — a humorous exaggeration. It's a witty, ironic twist that makes the viewer laugh at the mismatch between the forecast and the actual situation. The humor is grounded, absurd, and directly tied to the visual.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,28e1dbaaa8d4570613d0d567293eb7ac,NYCC validation 28e1dbaaa8d4570613d0d567293eb7ac,B,"The image shows a mother bird tending to her nest and babies, with another bird in a cage on an upper branch. This creates a visual metaphor: the mother bird is caring for her young, while the caged bird is isolated and perhaps powerless.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""That's what happens to whistle-blowers"" – This suggests that whistleblowers (people who expose wrongdoing) are treated like the caged bird, being isolated or silenced. It's a dark, satirical take, implying whistleblowers are punished or marginalized. It's clever and ironic, but somewhat heavy.
+
+- **Caption B**: ""Never ever put me in assisted living"" – This is a humorous, absurd statement, especially when applied to a bird. Birds aren't typically associated with assisted living, and the phrase is a ridiculous exaggeration. It plays on human stereotypes and absurdity, making it more playful and accessible in humor.
+
+Given the whimsical nature of the image (a bird in a cage, a mother bird tending her young), the humor works best when it's absurd and light-hearted.
+
+Therefore, **Caption B** is funnier because it leans into absurdity and irony in a way that fits the whimsical image.
+
+<B>",,True
+newyorker,c5ff85cfdaff7798a3a84c73dc9e9399,NYCC validation c5ff85cfdaff7798a3a84c73dc9e9399,B,<B>,,True
+newyorker,48d6283be77ee807708e75c3ee6ca9fe,NYCC validation 48d6283be77ee807708e75c3ee6ca9fe,A,"The image shows two fish speaking underwater, with one of them being just bones. This creates a surreal and absurd scenario — a bone fish talking underwater, which is both bizarre and visually humorous.
+
+Now, consider the captions:
+
+- **Caption A**: ""It’s mostly water weight.""  
+  This is a dry, sarcastic, and slightly absurd line — it plays on the idea of ""water weight"" (a common phrase in fitness), implying the fish is just water. It fits the absurdity of a bone fish, suggesting it's just ""water weight"" and nothing more. It's witty, ironic, and directly relates to the image.
+
+- **Caption B**: ""I met a lawyer.""  
+  This is a much more generic, unrelated joke. It doesn't connect to the image at all — there's no indication of a lawyer, nor any context for such a meeting. It feels out of place and lacks relevance.
+
+Therefore, the humor is stronger and more directly tied to the image when the caption is relevant and absurd.
+
+< A >",,False
+newyorker,09717fb8938c5bf264c4daade86e9504,NYCC validation 09717fb8938c5bf264c4daade86e9504,A,"The humor in this image relies on the contrast between the serious or dramatic tone of the situation and the unexpected or absurd details.
+
+- Caption A: ""Oh, did I mention that Timmy fell down the well?"" — This is a dramatic, potentially absurd statement. A dog falling down a well is a bizarre and unlikely event, especially for a dog. The fact that it's being mentioned *after* the scene (and the dog has a book) makes it seem like a punchline that doesn't quite fit the setting. It's absurd, but the dog having a book makes it even more ridiculous — a dog reading a book while a human is reading a newspaper and a man is sitting with a newspaper, and then someone says ""Timmy fell down the well"" — it's a surreal, possibly unintentionally funny moment.
+
+- Caption B: ""I prefer a hard-cover book for its solidness."" — This is a dry, literal, and slightly awkward statement. It's a cliché, but it's not absurd. It's a bit of a mundane observation, and while it might be funny in a dry, deadpan way, it doesn't really interact with the image in a surprising or unexpected way.
+
+Between the two, **Caption A** is funnier because it introduces an absurd, unexpected event (a dog falling down a well) that is both ridiculous and oddly poignant — especially given the setting of a calm, domestic scene with a dog and a woman on a couch. The absurdity of the statement, especially coming from a dog (or someone talking about a dog), creates a comedic contrast.
+
+Thus, the funnier caption is:
+
+<A>",,True
+newyorker,e02e882ba97e6fc4bb13f18c364aa780,NYCC validation e02e882ba97e6fc4bb13f18c364aa780,A,"The image shows a man dying of thirst, approached by a man in a suit carrying a suitcase. The situation is absurd and surreal — a man in distress is met by a perfectly fine man in a suit, who seems out of place and possibly out of touch with the immediate crisis.
+
+Now, let's evaluate the captions:
+
+- **Caption A**: ""First we discuss my percentage of any water you find, real or imagined.""  
+  This is absurd and satirical. It suggests a financial or contractual negotiation over water — something that makes no literal sense. The idea of ""percentage of any water"" is ridiculous, especially for someone dying of thirst. It plays on the absurdity of the situation with a bureaucratic tone, which fits the surreal image.
+
+- **Caption B**: ""This is your final notice. Your car warranty is about to expire!""  
+  This is out of place. A man dying of thirst is not a car owner, and a car warranty has no relevance to a person suffering from dehydration. It’s a jarring, irrelevant message that doesn't connect to the scene at all. It feels like a parody of a corporate notice, but it fails to interact with the absurdity of the image.
+
+While both are jokes, **Caption A** is more thematically connected to the image — it turns the desperate situation into a bizarre negotiation, matching the surreal tone. It's a clever, absurd, and ironic twist.
+
+Therefore, the funnier caption is:
+
+<A>",,True
+newyorker,a8695e21766a8768264994fc2db7605f,NYCC validation a8695e21766a8768264994fc2db7605f,B,"The image shows two people playing in a sandbox and building a giant tower. This is a whimsical, childlike scene — playful and innocent.
+
+Now let's evaluate the captions:
+
+- **Caption A**: ""This is not what trust looks like.""  
+  This is a sarcastic or ironic statement, implying that the sandbox tower doesn't represent trust. But in reality, building a tower together in a sandbox is a symbolic act of cooperation and trust — so this caption could be a clever, ironic twist. It's witty and plays on the idea of trust being visible in everyday actions.
+
+- **Caption B**: ""I can still vote by mail, you know.""  
+  This is a dry, politically aware line, but it's completely disconnected from the image. There's no mention of voting, mail, or politics in the scene. It's a statement that feels out of place and lacks connection to the sandbox activity. It might be funny in a specific context (e.g., a political satire), but in this image, it’s jarring and doesn't create a humorous link.
+
+Between the two, **Caption A** is more thematically relevant and ironic — it turns a simple, joyful activity into a commentary on trust, which is both relatable and amusing. The humor comes from the contrast between the innocent scene and the serious idea of ""trust.""
+
+Therefore, the funnier caption for this image is:
+
+<A>",,False
+newyorker,8f0e104f4fdeed08e80df69f7e478675,NYCC validation 8f0e104f4fdeed08e80df69f7e478675,B,"The image shows a couple having a picnic in a park with threatening storm clouds approaching. 
+
+Caption A — ""I think we've been inside too long"" — is a dry, relatable observation that fits the scene, implying the people have been indoors and are now suddenly exposed to the outdoors, especially with storm clouds. It's a subtle, realistic comment that could be funny in context.
+
+Caption B — ""A bunny. Seriously. You see a bunny."" — is absurd and unexpected. In a picnic scene with storm clouds, the idea of seeing a bunny is bizarre and out of place. It's a humorous, surreal statement that plays on disbelief and absurdity.
+
+Given the setting, the presence of a bunny is not only unexpected but also seems to contradict the natural environment (a park with storm clouds), making it a more absurd and therefore funnier joke.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,f9ebfffbc5e4ce081a2962a0600ff2b2,NYCC validation f9ebfffbc5e4ce081a2962a0600ff2b2,A,"<Cupid> is funnier for this image.
+
+The image shows Cupid, a traditionally symbol of love, being angry and having his arms crossed — a dramatic and unexpected reaction. The caption ""Not O.K., Cupid!"" plays on the idea that Cupid, usually associated with love and charm, is now emotionally unstable or upset. This subverts expectations and adds humor through irony.
+
+Meanwhile, ""I can't stop loving myself"" is a self-affirming statement that, while clever, feels more like a sincere or philosophical quote than something that fits the absurd, comedic context of Cupid being angry and shot by arrows. It doesn’t match the absurdity of the scene as well.
+
+Therefore, the humor comes from Cupid's anger and the irony of a god of love being hurt and upset — making the caption ""Not O.K., Cupid!"" more fitting and funnier in this context.
+
+<Not O.K., Cupid!>",,False
+newyorker,bf7ac3a3454830a3f6ed333f2acd71b0,NYCC validation bf7ac3a3454830a3f6ed333f2acd71b0,A,"The image shows a woman talking to a man at a desk, with a bunch of owls perched on the desk. Owls are often associated with nighttime activity, and the presence of many owls on a desk adds a surreal, whimsical, and slightly absurd element.
+
+Now, evaluating the captions:
+
+- **Caption A: ""They're willing to work nights.""**  
+  This is a plausible statement, especially if the owls are the workers. It plays on the idea that owls work at night, so it's a clever, slightly absurd twist. It's funny because it turns a literal animal into a worker, and the phrase ""they're willing"" gives it a mock-serious tone.
+
+- **Caption B: ""I'm not mad, I'm just disappointed.""**  
+  This is a common expression, often used to downplay anger. However, in this context—especially with owls on a desk—it doesn't quite land as funny. It lacks a connection to the absurdity of the scene. It feels more generic and less tied to the image.
+
+Therefore, the humor comes from the absurdity of owls working at night, and Caption A directly plays into that with a believable, ironic line.
+
+< A >",,False
+newyorker,1563f7828afe918f98dd503ed2fb609e,NYCC validation 1563f7828afe918f98dd503ed2fb609e,B,"The image shows a couple at a restaurant with a trough on the table and a farmer pouring slop into it. This creates a visual that plays on the idea of ""farm-to-table"" food, but with a humorous twist — slop is typically seen as something unappetizing, and the scene is oddly literal.
+
+Caption A: ""Shaken not stirred"" is a well-known phrase from the James Bond movie, associated with a drink (a martini), and is inherently ironic or absurd when applied to a farm scene. It's a pun that works only if the viewer is familiar with the reference — it's a clever, witty joke, but it doesn't directly relate to the image.
+
+Caption B: ""Best farm-to-table in town"" is a direct, literal match to the scene — a farmer pouring slop into a trough at a restaurant. It's a play on the real-world concept of farm-to-table dining, but with a ridiculous twist. The absurdity of ""slop"" being served at a restaurant makes this caption more absurd and thus funnier in context.
+
+While both are puns, Caption B is more directly tied to the image and creates a stronger visual joke through irony and exaggeration.
+
+Final answer: <B>",,True
+newyorker,ef8b23c192fa9325a80a6bb0aa847c28,NYCC validation ef8b23c192fa9325a80a6bb0aa847c28,A,"The image shows two firefighters ready to slide down poles at a firehouse — a scenario that is both physically active and inherently playful, with a sense of camaraderie and routine.
+
+Now, let’s evaluate the captions:
+
+- **Caption A**: ""Apparently, the one you use says a lot about your personality.""  
+  This is a general, somewhat vague statement. It could apply to many things (like a phone, a brand, a drink), and while it might be witty, it doesn't directly connect to the image or the scene. It feels more like a generic life observation and lacks humor in this specific context.
+
+- **Caption B**: ""This is the point when I realize I'm still asleep in my bunk.""  
+  This is a humorous, self-aware, and ironic statement. It implies that the person is not actually awake — they're still asleep — yet they're in a situation (sliding down poles) that should only happen when fully awake. It creates a comedic contrast between reality and expectation. The image of firefighters sliding down poles is a real activity, but the idea that someone is asleep *while* doing it is absurd and funny — especially because it suggests the person is imagining or dreaming it.
+
+Given that the image is of firefighters sliding down poles, and the caption plays on the absurdity of being asleep while doing something physically active, **Caption B** is more directly tied to the scene and creates a stronger, more relatable, and humorous contrast.
+
+< B >",,False
+newyorker,09933edc3d9000f51d31ae5b3d7dc77c,NYCC validation 09933edc3d9000f51d31ae5b3d7dc77c,B,"The image shows cowboys riding through the desert on rocking horses, which is absurd and satirical—cowboys on rocking horses is a ridiculous scenario, especially in a desert. The captions play on irony and expectations.
+
+- Caption A: ""Hope PETA's happy now!"" — This is a joke about PETA (an animal rights organization) being pleased that animals are being used in a ridiculous way (rocking horses), but it's a bit of a stretch. It's sarcastic, but the premise is a bit weak because rocking horses aren't typically seen as ""animal abuse"" in a way that would make PETA react.
+
+- Caption B: ""No, you grow up."" — This is more effective because it directly mocks the absurdity of the scene. It implies that the image is childish or ridiculous, and the viewer is being told to ""grow up"" — which is a sharp, witty, and relatable response to something absurd. It's more grounded and delivers a punchline that fits the ridiculousness of cowboys on rocking horses.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,ce2441ae8a19f10effdef9d812cabfb0,NYCC validation ce2441ae8a19f10effdef9d812cabfb0,B,"The humor in this image relies on the visual contrast between the two people and the absurdity of what might be happening on the TV.
+
+- The older woman is gesturing, suggesting she's reacting to something on the screen — possibly a political figure or candidate.
+- The other person has a lot of hair growing all over their face and arms, which is unusual and could be interpreted as either a joke or a surreal detail.
+
+Now, consider the captions:
+
+- **Caption A**: ""I just love that Green Party candidate.""  
+  This is a direct, enthusiastic statement about a political figure. Given that the woman is gesturing, it could imply she’s emotionally reacting to a candidate on TV. However, the Green Party is generally not a major political force in many Western countries, and such a statement might seem out of place or oddly specific without context. It’s not inherently funny.
+
+- **Caption B**: ""They do say results will vary.""  
+  This is a generic, almost bureaucratic phrase — common in advertising or polling — and it's often used to downplay certainty. The humor comes from the absurdity of someone with a full beard or hair growth (which is visually striking) saying something so dry and mundane. The contrast between the person's exaggerated appearance and the dry, cliché line makes it absurd and funny.
+
+Therefore, the **funnier caption** is the one that plays on visual absurdity and irony.
+
+< B >",,False
+newyorker,35e2f9562cddf17ab0c246b5f16af3bc,NYCC validation 35e2f9562cddf17ab0c246b5f16af3bc,A,"The humor in this image relies on the contrast between the sheep's simple, repetitive ""ewe"" and the dogs' serious, human-like conversation. 
+
+Caption A — ""Ewe, ewe. ewe. That's all we ever talk about"" — is funny because it plays on the literal sound sheep make, turning it into a comically exaggerated, repetitive human-style dialogue. It's absurd and self-aware, fitting the scene perfectly.
+
+Caption B — ""Just be cool - Max got his vaccine this way"" — is less clear and seems to suggest a bizarre method of vaccination (e.g., by being ""talked to""), which might not make sense or could be confusing. It lacks the immediate, relatable absurdity of the first.
+
+Therefore, the funnier caption is:
+
+<A>",,True
+newyorker,0e3af52d3d18e30417986c4a33c9f39c,NYCC validation 0e3af52d3d18e30417986c4a33c9f39c,B,"The image shows two people standing in a backyard at a grill, with a briefcase being cooked on the grill. 
+
+Caption A: ""I got tired of my work being grilled at the office."" — This is a play on words: ""grilled"" as in being criticized at work, and ""grilled"" as in cooking on a grill. It's clever and self-aware, but the context is a bit abstract and doesn't directly connect to the image of a briefcase on a grill.
+
+Caption B: ""Ask the kids how they want their backpacks."" — This is a pun on ""backpacks"" and ""grilled"" (as in ""grilled cheese""), but the image shows a briefcase, not a backpack. Also, the idea of asking kids about backpacks is a bit out of place and doesn’t clearly connect to the scene. It's more of a random pun than a well-aligned joke.
+
+However, the briefcase on the grill is a clear visual pun on ""being grilled"" (as in being questioned) and ""cooking on a grill."" Caption A directly plays on that double meaning and ties the image to the phrase in a coherent, witty way.
+
+Therefore, Caption A is funnier because it better connects to the visual and uses wordplay effectively.
+
+<A>",,False
+newyorker,c37960a3515ceac9b2b646547f5830e8,NYCC validation c37960a3515ceac9b2b646547f5830e8,B,"The image shows two people at a backyard grill, with a briefcase being cooked. This creates a visual pun — a ""briefcase"" on a grill could be interpreted as a literal object being grilled, but also as a play on ""briefcase"" meaning a job or a career.
+
+Now, let's evaluate the captions:
+
+- **Caption A**: ""It looked so much better on Masterchef.""  
+  This is a joke that plays on the name ""Masterchef"" — implying the briefcase looked better when it was on a show. However, it's a bit vague and doesn't clearly connect to the image. It's a mild pun, but the connection is weak.
+
+- **Caption B**: ""Did I mention I quit my job today?""  
+  This is more humorous because it directly ties to the image — a briefcase is a common symbol of a job. The person is now standing at a grill with a briefcase being cooked, which could be a humorous metaphor for quitting their job and now enjoying a relaxed, outdoor lifestyle. The irony and absurdity of a person who just quit their job being at a grill with a briefcase on fire (or being grilled) is both relatable and funny.
+
+Thus, **Caption B** creates a stronger, more relatable, and more absurdly funny connection to the image.
+
+< B >",,False
+newyorker,f53590986a09b35214db04b54e137736,NYCC validation f53590986a09b35214db04b54e137736,B,<B>,,True
+newyorker,3e9e821c5a3bb0d074c296ee0b55a5e3,NYCC validation 3e9e821c5a3bb0d074c296ee0b55a5e3,A,"The image shows cowboys riding rocking horses through the desert — a surreal and absurd scenario. 
+
+- **Caption A**: ""I think they're toying with us"" — this suggests the cowboys are playing a trick on the viewers, which fits the absurdity of the scene. It's a plausible, slightly witty interpretation.
+
+- **Caption B**: ""I think we're beating a dead horse"" — this is a well-known idiom meaning something is pointless or futile. However, in this context, it's a play on words: ""beating a dead horse"" literally refers to a horse that's already dead, which makes it a stretch to apply to cowboys riding *rocking* horses. The humor comes from the irony of the idiom being used in a literal, absurd situation.
+
+But here's the key: the image is absurd — cowboys on rocking horses in the desert. The phrase ""beating a dead horse"" is a metaphor, and using it in a literal setting makes it absurd and ironic. That irony is funnier than a simple ""toying with us"" because it twists a common expression into a ridiculous, literal scenario.
+
+Therefore, the humor is stronger when the idiom is applied absurdly.
+
+< B >",,False
+newyorker,05d21bbe4c6f7825199c96a1561d921f,NYCC validation 05d21bbe4c6f7825199c96a1561d921f,A,"The image shows two fish speaking underwater, with one fish being just bones. This creates a surreal, absurd scenario — a bone fish talking to a living fish. The captions then add layers of meaning:
+
+- Caption A: ""He only wanted me for my body"" — this is a direct, almost romantic or tragic line, reminiscent of the famous quote ""He only wanted me for my body"" from the movie *The Graduate*, or more broadly, a line about being valued only for physical form. It's poignant and ironic, especially given the fish is just bones.
+
+- Caption B: ""Stay away from Wall Street"" — this is a classic, witty, and ironic warning, often used in satire. It's absurd when applied to fish underwater, especially since Wall Street is a human institution. The juxtaposition of a fish in an underwater world giving a human financial warning is absurd and humorous.
+
+Given that the image is absurd (a fish made of bones talking), the humor comes from the incongruity of the content. ""Stay away from Wall Street"" is more absurd and satirical in a way that plays on expectations — a fish giving a human financial advice — making it funnier in a comedic, surreal context.
+
+Therefore, the funnier caption for this image is:
+
+<B>",,False
+newyorker,a856920dc543a8ed190617e61539e710,NYCC validation a856920dc543a8ed190617e61539e710,A,"The humor in this image relies on absurdity and unexpected elements. The woman looking upset and the man having ""colored claws"" is inherently strange and surreal. 
+
+Caption A — ""Do that again and I'll put the rubber bands back on"" — is a bit of a stretch, as it introduces a physical object (rubber bands) and a threat that doesn't clearly connect to the image. It feels like a joke about a previous interaction, but without context, it's vague.
+
+Caption B — ""Yeah, your profile said you are from Maine"" — is funnier because it plays on a common internet joke: people often say ""I'm from Maine"" as a way to imply they're rugged, unpretentious, or weirdly serious. The absurdity of someone with colored claws being from Maine is a punchline that combines the surreal image with a culturally recognized meme.
+
+Thus, the caption that better leverages the image's absurdity and connects to a shared internet humor is:
+
+<B>",,False
+newyorker,aa00333d49bcec6c54af306e36e1b68a,NYCC validation aa00333d49bcec6c54af306e36e1b68a,A,"The image shows a man talking to another man in an office, with many chairs in a line in front of him. 
+
+Caption A: ""Are you willing to relocate?"" – This is a plausible and slightly awkward question in a workplace setting, but it doesn't clearly connect to the visual of many chairs in a line. It might imply a job relocation, but it's generic and lacks a humorous twist.
+
+Caption B: ""My assistant is on a Feng Shui kick."" – This is funnier because it introduces an absurd, culturally specific concept (Feng Shui) in a mundane office setting. The idea of an assistant being ""on a Feng Shui kick"" is whimsical and unexpected. The visual of many chairs in a line could be interpreted as a literal Feng Shui arrangement (e.g., chair placement for energy flow), making the caption both absurd and oddly relevant. The humor comes from the juxtaposition of a serious office scene with a bizarre, pseudo-mystical detail.
+
+Therefore, the caption that is funnier for this image is:
+
+<B>",,False
+newyorker,25518f4362fe30474b5b13f4c211e1c1,NYCC validation 25518f4362fe30474b5b13f4c211e1c1,A,"The humor in this image relies on the contrast between the serious, authoritative setting of a police interrogation and the absurdity of a cop in clown makeup with a balloon animal. 
+
+Caption A — ""We are authorized to use farce, if necessary"" — is a dry, bureaucratic-sounding statement that plays on the idea of using absurdity as a tool in authority. It's clever and sets up a tone of irony, suggesting that farce (like a clown) is an officially sanctioned tool.
+
+Caption B — ""What part of 20 years to life do you find so funny?"" — is more direct and absurd. It directly challenges the suspect's sense of humor in a prison sentence, which is both ironic and absurd. The question itself is ridiculous — someone serving 20 years to life wouldn’t find a part of it funny — but it's a sharp, witty jab at the seriousness of the situation.
+
+Between the two, Caption B is funnier because it’s more pointed, more absurd, and more directly subversive in tone. It turns the gravity of a life sentence into a joke, which is the kind of humor that lands well in a satirical image.
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,c6ccf79d6bcb55c23922a33c4e825d86,NYCC validation c6ccf79d6bcb55c23922a33c4e825d86,A,"The image shows two women chatting in a living room, and a man in another room considering a giant donut. The captions are:
+
+- Caption A: ""I hope he discovers fire soon. Dinner is at six.""  
+- Caption B: ""It's not so much a reinvention as it is a reimagining.""
+
+Caption A is absurd and humorous because it juxtaposes a man contemplating a giant donut with the idea of ""discovering fire,"" which is a surreal and over-the-top exaggeration. The idea of someone ""discovering fire"" in the context of a donut is both ridiculous and whimsical, and the line ""Dinner is at six"" adds a grounded, mundane contrast—making it feel like a comedic twist. It's playful and absurd, which fits the visual of someone just sitting and considering a donut.
+
+Caption B is vague and overly intellectual—“reinvention” vs. “reimagining”—but it lacks connection to the image. It doesn't reference the donut, the setting, or any humor derived from the scene. It feels like a dry, pretentious phrase with no clear comedic link.
+
+Therefore, the funnier caption for the image is:
+
+<A>",,True
+newyorker,bb76d4275e3e03ef83998c873d8221bf,NYCC validation bb76d4275e3e03ef83998c873d8221bf,B,"The image shows a man speaking to the Supreme Court, but the ""booths"" are all beds — implying a surreal, absurd situation. The humor arises from the contrast between the serious, formal setting of the Supreme Court and the ridiculous, domestic image of beds instead of judicial chambers.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""I don't know protocol...should I wait for everyone to be awake?""  
+  This is funny because it introduces a realistic concern about protocol, but in a context where the court is literally asleep — a absurd situation. The man is trying to navigate a bureaucratic situation with a literal, physical impossibility. It’s a gentle, deadpan absurdity that fits the image well.
+
+- **Caption B**: ""O.K., counsellor, we heard your argument. Now tell us a story.""  
+  This is a classic courtroom line, but it's delivered with a tone that suggests the court is not just unresponsive, but actually *willing* to hear a story — which is absurd given the setting. The phrase ""tell us a story"" is a play on the idea that the court is not judging arguments, but instead expecting narrative entertainment. It's a clever twist, turning a serious legal process into something whimsical.
+
+Between the two, **Caption B** is funnier because it subverts the entire expectation of a courtroom — instead of a serious judgment, the court asks for a story. This creates a more absurd and unexpected humor that aligns better with the surreal image of beds instead of booths.
+
+< B >",,False
+newyorker,0b159ee32f3c02fcb453d5b9b91f31ba,NYCC validation 0b159ee32f3c02fcb453d5b9b91f31ba,B,"The image shows two firefighters ready to slide down poles at a firehouse, which is a lighthearted, physical activity that might suggest a playful or comedic scene. 
+
+Caption A: ""This is how it starts. Next thing you know, they'll try putting a Beagle in the truck."" — This is a joke that plays on absurdity and escalation, suggesting a ridiculous progression from a simple activity to an unreasonable one (a beagle in a truck). It's a classic comedic trope (like a chain of absurd events), and it's funny because it's unexpected and silly.
+
+Caption B: ""I'm not sure the department knows what diversity in the workplace really means."" — This is a serious, politically charged statement that, while potentially insightful, feels out of place with the playful, physical scene of firefighters sliding down poles. It doesn't connect well with the image and seems more like a critique than humor.
+
+Given that the image is visual and lighthearted, the humor works best when it matches the tone — absurdity, physical comedy, and unexpected twists.
+
+Therefore, Caption A is funnier in this context.
+
+<A>",,False
+newyorker,abdb31ede530645f617a5f069c4084a2,NYCC validation abdb31ede530645f617a5f069c4084a2,B,"The image shows a green giant rampaging through a city, which is absurd and exaggerated—perfect for a humorous, surreal scenario. 
+
+- Caption A: ""He's certainly showing his true colors"" is a play on the phrase ""showing his true colors,"" often used to mean revealing his real, unmasked nature. In this context, it fits well with the green giant's chaotic, violent behavior—making it a clever and believable joke in a cartoonish setting.
+
+- Caption B: ""They say jolliness skips a generation"" is a pun on ""jollity"" (joyfulness), but it's oddly specific and vague. ""Jolliness skips a generation"" doesn't clearly connect to the green giant or the situation. It sounds like a dry, philosophical observation, not a punchline to a chaotic, violent monster. It lacks the absurdity and immediacy of the scene.
+
+Therefore, the caption that better fits and is funnier in this context is:
+
+<A>",,False
+newyorker,491214913b3b493297ef4f2ece08d53a,NYCC validation 491214913b3b493297ef4f2ece08d53a,A,"The humor in this image depends on the context and the absurdity of the captions.
+
+Caption A: ""Let's meet in my office, weather permitting.""  
+This is a plausible, slightly awkward phrase — it's reasonable that someone might say this, especially if they're on a roof. But ""weather permitting"" is a bit of a stretch for a rooftop office, which is already a weather-sensitive location. Still, it's not particularly funny.
+
+Caption B: ""Other than me, the entire 12th floor was downsized.""  
+This is absurd and witty. It's a hyperbolic, ironic statement that implies the man is jokingly saying that only he remains — everyone else on the 12th floor was eliminated or reduced. The absurdity of ""downsized"" applied to an entire floor of a building, especially when he's on the roof, creates a humorous contrast. It also plays on the idea of office downsizing, which is a real-world phenomenon, making it relatable and funny.
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,cd1dc047feeb9c6ee99e668d4e36fb04,NYCC validation cd1dc047feeb9c6ee99e668d4e36fb04,B,<A>,,False
+newyorker,06e0c88cfb9e56e58677eb1a18f8deca,NYCC validation 06e0c88cfb9e56e58677eb1a18f8deca,B,"The image shows three pigs in front of a trough, with one pig about to eat from it. 
+
+- Caption A: ""We voted against bored meetings."" – This is a dry, bureaucratic statement that doesn’t clearly connect to the image. It's somewhat abstract and lacks a clear link to the pigs or the trough. While it might be witty in a political context, it doesn’t play on the visual or create a humorous juxtaposition.
+
+- Caption B: ""This little piggy owns the market."" – This is a playful, punny statement. ""Little piggy"" directly references the image (pigs), and ""owns the market"" is absurd and exaggerated, creating a humorous contrast between a small animal and a large market. It’s a clear, silly, and visually relevant joke.
+
+Therefore, the caption that is funnier in the context of the image is:
+
+<B>",,True
+newyorker,8d2538003895ef5719c746e52a4fd1a6,NYCC validation 8d2538003895ef5719c746e52a4fd1a6,A,"The image shows two cowboys on chess pieces in the middle of a desert, with the knight piece resembling a horse — a classic visual pun. 
+
+Caption A: ""This can only end in a draw"" — while it's a chess-related statement, it's dry and somewhat serious. It doesn't fully match the absurd, humorous tone of cowboys on a desert chessboard.
+
+Caption B: ""Ever feel like you're not in control?"" — this is a more relatable, introspective, and ironic line. It plays on the idea of being out of control, which fits the surreal, absurd setting of cowboys in the desert with chess pieces. The humor comes from the unexpected juxtaposition of a serious existential question in a ridiculous scenario.
+
+Given the absurdity and the humor of the situation, Caption B lands more effectively with the audience because it’s more relatable and witty in tone.
+
+<A>",,True
+newyorker,2efa6821d2d6595e5e927e1c65ef9077,NYCC validation 2efa6821d2d6595e5e927e1c65ef9077,B,"The humor in this image relies on the absurdity of a product placement — specifically, dish soap — being used in a serious courtroom setting. 
+
+Caption A jokes about the unexpectedness of being sent dish soap after agreeing to product placement, which is a satirical twist on the idea of advertising in media. It's clever and plays on the absurdity of product placement in a high-stakes environment.
+
+Caption B, however, turns the situation into a personal, relatable story — using dish soap as a symbol of resilience through college and law school, and now through the courtroom. It's more grounded and human, but it doesn't quite land the absurdity of the situation.
+
+While both are funny, Caption A better captures the irony and absurdity of a dish soap commercial being used in a courtroom, making it more aligned with the image’s context.
+
+Therefore, the funnier caption for this image is:
+
+<A>",,False
+newyorker,5636ac685a1fe1e02e6608c6efbc88af,NYCC validation 5636ac685a1fe1e02e6608c6efbc88af,A,"The humor in a caption depends on how well it fits and interacts with the visual elements and the absurdity or irony present.
+
+In this image:
+- There are regular humans and four superheros or villains at a bar/restaurant.
+- Caption A: ""The invisible man picked up my tab.""  
+  → This is a clever, absurd, and plausible joke because the invisible man (a classic superhero/villain trope) is literally invisible, so he can't be seen but still acts — like paying a bill. It plays on the idea of invisibility and irony. It's a funny, grounded absurdity that fits the setting and the presence of a superhero.
+  
+- Caption B: ""This is the worst recession I've ever seen.""  
+  → This is a serious, general statement. While it might be relevant to a bar setting (people might be stressed), it doesn’t interact with the presence of superheros or the absurdity of the scene. It lacks a punchline or connection to the image, making it feel out of place.
+
+Therefore, Caption A is funnier because it directly references a character in the image (the invisible man), uses a logical absurdity, and creates a witty, believable moment that fits the scene.
+
+<A>",,True
+newyorker,01b645d57ebc816ce2f29af5483b38db,NYCC validation 01b645d57ebc816ce2f29af5483b38db,A,<B>,,False
+newyorker,d72a4de4ccd33f6f20cabe9824a06abb,NYCC validation d72a4de4ccd33f6f20cabe9824a06abb,A,"<Caption B> is funnier for this image because it introduces a playful, confident tone that matches the dramatic setting of a courtroom. While Caption A starts with a sharp, unexpected line, it feels more like a serious accusation. Caption B, with its exaggerated phrase ""killer strategy,"" adds a comedic twist—implying the lawyer is confidently claiming a brilliant plan, which fits the absurdity of a legal scenario and creates a lighthearted, humorous effect. The word ""killer"" is especially funny when applied to a legal strategy, as it's over-the-top and ironic.
+
+Thus, <B>.",,False
+newyorker,2276a048b2a175a6c39a61d5fe1c538d,NYCC validation 2276a048b2a175a6c39a61d5fe1c538d,B,"The image shows a man and woman staring out a window, with rain ""crushing things"" — a surreal and possibly absurd visual. The captions are:
+
+- Caption A: ""So much for homeland security..."" — this is a satirical remark, implying that the scene (rain crushing things) undermines the idea of security, but it's a bit vague and doesn't clearly connect to the image.
+
+- Caption B: ""Every time I wash the car."" — this is more absurd and relatable in a humorous way. It plays on the idea of rain washing a car, and the image of rain ""crushing things"" could be interpreted as a literal or exaggerated car wash scenario. The humor comes from irony and over-the-top exaggeration, making it more likely to land as a joke.
+
+Given the absurdity of ""rain crushing things,"" Caption B ties directly to a common, everyday experience (washing a car), making it more grounded and therefore funnier in a silly, ironic way.
+
+< B >",,False
+newyorker,aa83b70a75b619466301c920b7d1a765,NYCC validation aa83b70a75b619466301c920b7d1a765,A,"The humor in this image hinges on the absurdity of a human and an animal being in a conversation about shared DNA and a profession—accounting—while being treated as equals. 
+
+Caption A (""You two have a lot in common: 98% of your DNA and you're both in accounting"") is inherently funny because it plays on the biological fact that humans and chimpanzees share about 98% DNA, and then absurdly extends it to an animal in a living room, suggesting it's also in accounting. This creates a witty, surreal twist that feels both scientifically grounded and absurdly ridiculous.
+
+Caption B (""Frankly, it seems to me this is exactly what the Founding Fathers intended"") is much more of a political or historical reference, which feels out of place and overly serious in the context of a group of people talking to an animal. It lacks the absurdity and connection to the image, and the phrase ""Founding Fathers"" is a stretch in this situation—making it feel forced and less funny.
+
+Therefore, the caption that is funnier for this image is:
+
+<A>",,True
+newyorker,115a64741baf8e5da2544ae910cbc7cc,NYCC validation 115a64741baf8e5da2544ae910cbc7cc,B,"The image shows a woman climbing a rock climbing wall and seeing a face on the wall. This creates a visual pun — the face on the wall could be interpreted as a literal face, or as a metaphor for the idea of a ""face"" in a rock group or a ""climbing all over"" scenario.
+
+Let’s evaluate the captions:
+
+- **Caption A** reflects on a personal decision — being hard-headed and not reconsidering a career path. It's introspective and slightly melancholic, but it doesn’t directly connect to the image in a humorous way.
+
+- **Caption B** is a clever, self-deprecating joke that plays on the idea of being in a rock group and having ""women climbing all over me."" The phrase ""climbing all over me"" is a pun on both rock climbing and the literal act of being climbed upon in a romantic or suggestive context. It's absurd, cheeky, and fits the image perfectly — especially since the woman is actually climbing a wall.
+
+Given the visual context and the absurd humor of the pun, **Caption B** is clearly funnier.
+
+<A>",,False
+newyorker,0602e1c864237ba0f95b39fc30635e39,NYCC validation 0602e1c864237ba0f95b39fc30635e39,B,"The humor in a caption depends on how well it matches the image and whether it creates a surprising or witty contrast.
+
+In this image:
+- A woman is standing on the beach.
+- In front of her are two lifeguard chairs.
+
+Caption A: ""Leave it here. He always comes down for his lunch.""  
+→ This implies someone (a lifeguard) regularly comes down for lunch and leaves something behind. It's a bit vague, but it suggests a routine behavior. However, the phrase ""he"" is not clearly established — we don’t know who ""he"" is, and the action of ""leaving it here"" is ambiguous.
+
+Caption B: ""The regular lifeguard isn—'t seeing anybody today.""  
+→ This is a play on the phrase ""seeing somebody"" — a common idiom in lifeguard work meaning ""on duty"" or ""monitoring."" So, the lifeguard isn't actively on duty. The humor comes from the double meaning of ""seeing"" — literal or figurative. It's a clever pun and fits the context of lifeguards and their duties.
+
+Given that the image shows two lifeguard chairs (implying a lifeguard is present or has been), Caption B creates a more natural and witty connection to the scene — it's a pun that fits the setting and adds humor through wordplay.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,9bc96ebf3cb4ffce4bc342c32952e368,NYCC validation 9bc96ebf3cb4ffce4bc342c32952e368,B,<B>,,True
+newyorker,161579311782d470d9a7050a81a3357f,NYCC validation 161579311782d470d9a7050a81a3357f,A,<B>,,False
+newyorker,77d08da4c93fd48c937143c3c055fcfa,NYCC validation 77d08da4c93fd48c937143c3c055fcfa,B,<B>,,True
+newyorker,c116fa39999be62b08d5a1540c0183df,NYCC validation c116fa39999be62b08d5a1540c0183df,A,"The image shows two men at the top of a mountain, with one sitting on a green yoga ball. This setup is playful and visual, suggesting a humorous, absurd scenario — like a man using a yoga ball as a perch on a mountain, possibly implying a ""fitness"" or ""adventure"" theme.
+
+Now, analyzing the captions:
+
+- **Caption A**: ""No, but I can show you the path to a tighter butt.""  
+  This is a playful, absurdly specific joke — implying a journey to achieve a physical goal (a tighter butt) via a mountain path. It ties into the image (mountain, yoga ball, fitness) and is witty and surreal. It matches the visual humor.
+
+- **Caption B**: ""What's your return policy? I thought I ordered grey.""  
+  This is a classic ""customer service"" joke, referencing a product (likely clothing) and a mismatched expectation. However, it doesn't connect well to the mountain or yoga ball imagery. The scene lacks a retail context, making this joke feel out of place.
+
+Given that the image is about a mountain and a yoga ball (fitness/absurdity), Caption A is more thematically aligned and generates a better joke in context.
+
+< A >",,False
+newyorker,95ffe4c475db103c0103be5ba932f0d9,NYCC validation 95ffe4c475db103c0103be5ba932f0d9,B,"The humor in this image relies on a playful, absurd twist — Adam and Eve in Eden offering a pie, which is a modern, everyday item, to a biblical figure. The serpent is present, adding a layer of irony and absurdity.
+
+Caption A: ""And you say it's peach, right?""  
+— This is a light, conversational line, suggesting a casual, almost modern interaction. It's witty and implies a joke about the fruit being a ""peach,"" which is a pun on ""peachy"" and also a nod to the biblical ""fruit of the tree of knowledge"" — but it's a bit vague and not immediately punchy.
+
+Caption B: ""Well, I'll be damned...""  
+— This is a classic reaction to something unexpected or absurd. In this context, it's a strong, dramatic response to the idea of Adam and Eve offering a pie in Eden — a surreal, out-of-place scenario. The phrase ""I'll be damned"" is a well-known expression of surprise or disbelief, and it fits perfectly with the absurdity of the scene.
+
+Given that the image is absurd and the moment is surreal, the humor is amplified by a strong, exaggerated reaction.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,13e8af76efed4134c206f029ed863e79,NYCC validation 13e8af76efed4134c206f029ed863e79,A,"The image shows a man relaxing in a hammock between two pillars, with a man in a suit waiting nearby. The setting suggests a relaxed, tropical, or vacation-like atmosphere — reminiscent of Margaritaville, a brand associated with sunny, laid-back, beachy vibes.
+
+Caption A: ""Margaritaville or bust"" — plays on the famous phrase ""Margaritaville or bust"" from the song, implying a lifestyle choice or a desperate gamble. It fits the scene well because the hammock and the relaxed man suggest a vacation or leisurely escape.
+
+Caption B: ""Spare some plane fare?"" — sounds like a sarcastic or absurd request, implying someone is asking for a ticket to a place, possibly with a tone of irony. However, the context of a man in a suit waiting nearby makes this feel a bit out of place. It's more of a transactional, possibly awkward, line that doesn't quite match the laid-back mood.
+
+Between the two, Caption A is more thematically consistent and has a better comedic resonance with the image — it’s playful, cheeky, and fits the visual tone.
+
+Therefore, the funnier caption for this image is:
+
+<A>",,True
+newyorker,3bb70947d86984aa327820322edbc8ea,NYCC validation 3bb70947d86984aa327820322edbc8ea,A,<A>,,True
+newyorker,0f11874d3f0e99d8e477b308d92c567d,NYCC validation 0f11874d3f0e99d8e477b308d92c567d,B,"The scene shows a man on his couch watching TV, and a cat looking out the window. The captions are:
+
+- Caption A: ""As a matter of fact I am feeling smaller.""  
+- Caption B: ""I've gotta go, the exterminator is here.""
+
+Now, evaluating humor:
+
+- Caption A is absurd and self-reflective. The idea of ""feeling smaller"" in the context of someone sitting on a couch watching TV is vague and slightly surreal. It could be interpreted as a joke about being insignificant or dwarfed by the view, but it's not clearly tied to the image or situation—making it less grounded.
+
+- Caption B is more directly connected to the image. A cat looking out the window could imply the man is being watched, or that something is coming—like an exterminator. The exterminator is a common household joke, and the idea that the cat is looking out the window and the man is suddenly realizing the exterminator is here is a classic ""absurd domestic situation"" humor. It's plausible, unexpected, and creates a funny contrast between the man's calm TV viewing and a sudden, dramatic interruption.
+
+Moreover, the cat looking out the window could be interpreted as a subtle clue that something is coming—like an exterminator—so the caption feels like a clever pun or twist.
+
+Therefore, Caption B is more grounded, more directly tied to the image, and more likely to produce a chuckle.
+
+< B >",,False
+newyorker,d7105dbfea9a3906291b99ccd45ca11d,NYCC validation d7105dbfea9a3906291b99ccd45ca11d,B,"The image shows a knight dueling a dragon in the countryside — a classic, fantastical scene. The captions are both absurd and out of place in that context.
+
+- **Caption A**: ""You know this is a smoke-free zone, right?"" — This is a reference to a real-world rule (smoke-free zones), but in a setting involving a knight and a dragon, it's absurd and jarring. It's a bit of a stretch, but it has a comedic tone because it contrasts a serious rule with a fantasy scene.
+
+- **Caption B**: ""I'm sorry I said you had small hands."" — This is a personal, oddly specific apology that doesn't fit the context at all. It's more awkward and less funny because it's about a physical trait (hands) in a situation where no hands are actually being discussed or shown.
+
+Between the two, **Caption A** is funnier because it makes a witty, ironic comment that plays on the absurdity of the scene — a knight and a dragon in a countryside duel — and references a mundane rule (smoke-free zone) in a ridiculous context. It has a better comedic contrast and punchline.
+
+< A >",,False
+newyorker,36444cb91166ac925a839677ad9a1a87,NYCC validation 36444cb91166ac925a839677ad9a1a87,B,<B>,,True
+newyorker,e54a756b4f6eb7e6ecaba5fff975a75a,NYCC validation e54a756b4f6eb7e6ecaba5fff975a75a,B,<B>,,True
+newyorker,ab1135a0867aca137f86197fdc977f8c,NYCC validation ab1135a0867aca137f86197fdc977f8c,A,"The image shows a man talking to another man in an office, with many chairs in a line in front of him. 
+
+Caption A — ""What makes you think you were not our first choice?"" — is a serious, somewhat sarcastic line, possibly implying a critique of selection or preference. It fits the office setting but lacks a comedic twist.
+
+Caption B — ""Father, may I move three giant seats forward?"" — is absurd and playful. It introduces a childlike request to move ""giant seats"" (which are likely just chairs), and the phrase ""Father"" adds a humorous, unexpected familial tone in an office setting. The absurdity and irony make it clearly funnier.
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,b0f067ce6ad4d6782af94cff2afe1ee4,NYCC validation b0f067ce6ad4d6782af94cff2afe1ee4,A,<B>,,False
+newyorker,8cc744dd5d9e9aed5f0153a7e49b4d05,NYCC validation 8cc744dd5d9e9aed5f0153a7e49b4d05,B,"The humor in this image relies on the contrast between the serene, almost whimsical setting (angels on a cloud) and the unexpected, human-like emotional reactions (one angel looking worried). 
+
+Caption A — ""Look, the first thousand years are the toughest"" — is a bit of a stretch. It's a metaphorical statement, but it's vague and doesn't clearly connect to the image. It might be interpreted as a joke about the afterlife, but it lacks punch and immediacy.
+
+Caption B — ""I always figured hell would be less ironic"" — is funnier because it plays on irony. The image shows angels on a cloud, which is already absurd and ironic (angels in a place that should be divine, yet they’re on a cloud, not in heaven). The idea that ""hell"" would be ""less ironic"" is a clever twist — implying that hell, being a place of suffering, might be ironically less absurd than heaven, which is presented as a serene, almost silly scene. This creates a witty, self-aware contradiction that fits the absurdity of the image.
+
+Therefore, the caption that is funnier for this image is:
+
+<B>",,True
+newyorker,cb1401a42da4d98c137cc4d8f1a905d5,NYCC validation cb1401a42da4d98c137cc4d8f1a905d5,B,"The image shows a man on a beach watching another man being lifted by a giant tentacle — a surreal, absurd, and possibly satirical scene. The humor in such an image often comes from the absurdity of the situation and how it contrasts with real-world expectations.
+
+Now, let's evaluate the two captions:
+
+- **Caption A**: ""I thought that this only happens to Japanese Women""  
+  This is a joke that plays on a stereotype (possibly referencing a common internet meme about Japanese women being ""incredibly strong"" or ""having unique abilities"" in fictional or absurd contexts). However, it's a bit problematic and potentially offensive due to its stereotyping. Also, the premise — ""this only happens to Japanese women"" — doesn't logically fit the scene (a man being lifted by a tentacle), and the statement is absurd in context. It’s a weak joke because it's not clearly connected to the image and relies on a questionable stereotype.
+
+- **Caption B**: ""Where am I going to get the 4,000,000 shrimp for the ransom?""  
+  This is a brilliant piece of absurd humor. It takes a surreal, possibly horror-like scene (a man being lifted by a tentacle) and turns it into a fictional kidnapping scenario with a ridiculous ransom demand. The number ""4,000,000 shrimp"" is absurd and over-the-top, making it both funny and satirical. It creates a humorous, pseudo-realistic narrative that feels like a parody of a crime thriller — which fits the bizarre image perfectly. The humor comes from the unexpected absurdity and the ridiculousness of the detail.
+
+Thus, **Caption B** is funnier because it builds a plausible-sounding, absurd scenario that matches the image’s surreal tone and generates a stronger comedic effect.
+
+<B>",,True
+newyorker,84b4c156b1067e829f7b89685fc68c85,NYCC validation 84b4c156b1067e829f7b89685fc68c85,A,"The image shows a policeman interrogating a suspect, with another cop in clown makeup holding a balloon animal. The humor in this scene comes from the absurdity of a serious police interrogation being interrupted by a clown, suggesting a playful, ironic twist on authority and intimidation.
+
+Caption A: ""Oh, you'll laugh. They all laugh.""  
+— This is a bit vague and generic. It implies that people will laugh, but it doesn't directly connect to the visual elements or the absurdity of a clown cop. It feels more like a general observation than a punchline.
+
+Caption B: ""'Fess up now or I call in the mime.""  
+— This is funnier because it directly plays on the absurdity of the scene. The cop in clown makeup threatens to call in a ""mime,"" which is a ridiculous escalation in a serious interrogation. It’s a clever, unexpected twist—using a mime (a figure of comedy and absurdity) as a threat, which contrasts sharply with the formal setting. The word ""mime"" also doubles as a pun on ""mime"" the act of performing, and the image of a clown already suggests a mime, making the threat both literal and ironic.
+
+Thus, the caption that best matches and enhances the visual humor is:
+
+<B>",,False
+newyorker,d3b4dce1e5bb49fcfb47534c4a1c9763,NYCC validation d3b4dce1e5bb49fcfb47534c4a1c9763,A,<A>,,True
+newyorker,b2c69c3c1107eac224c130edadeffc4c,NYCC validation b2c69c3c1107eac224c130edadeffc4c,B,"The image shows a gigantic roasted chicken on a deli counter, with a woman staring at it. 
+
+Caption A is a playful, plausible explanation — it jokes that the chicken isn't genetically modified, but rather the result of steroid supplements, and ties it to a fan of the Yankees. It's a light-hearted, culturally grounded joke that fits the setting of a deli and a sports fan.
+
+Caption B, however, is absurd and surreal — claiming the item is a ""turduckant"" made of a turkey stuffed with a duck and then an ""elephant."" The inclusion of an elephant in a food item is wildly exaggerated and ridiculous, making it more absurd and humorous in a satirical, surreal way.
+
+While both are funny, **Caption B** leans into absurdity and ridiculousness, which is often more effective in generating a strong comedic effect in visual humor — especially when paired with a strange image like a giant chicken.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,2288d5aa66d83c2ebbf58433b4c96999,NYCC validation 2288d5aa66d83c2ebbf58433b4c96999,A,<B>,,False
+newyorker,354735bda76aa6b1049dc068563f7a3f,NYCC validation 354735bda76aa6b1049dc068563f7a3f,A,"The image shows a man on the beach watching another man being lifted by a giant tentacle — a surreal, absurd scene. The captions are:
+
+- Caption A: ""But honey, I just ate.""  
+- Caption B: ""Ishmael is on his way.""
+
+Now, let's analyze humor:
+
+- Caption A is a mundane, relatable line, but it's oddly out of place in a scene involving a giant tentacle. ""I just ate"" is a common phrase, but in this context, it's not clearly connected to the absurdity. It feels like a punchline that doesn't land well with the visual.
+
+- Caption B references ""Ishmael,"" which is a direct nod to *Moby Dick*, where Ishmael is the character who narrates the story of the whale. A giant tentacle could be a metaphor for a whale. So, ""Ishmael is on his way"" is a clever, absurd, and self-referential joke — it ties the image to a well-known literary reference, and the humor comes from the unexpected twist of a man being lifted by a tentacle, possibly a whale, with a character named Ishmael.
+
+Thus, the humor is stronger when the caption makes a witty, layered connection to the image.
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,8ab87a73680ba70abcd1fdc4267def58,NYCC validation 8ab87a73680ba70abcd1fdc4267def58,A,"The image shows a man on his couch watching TV, with a cat looking out the window. This creates a calm, everyday scene. 
+
+- Caption A: ""It's out of the bag."" — This is a bit of a play on words, implying something has been revealed. However, in this context, it's vague and doesn't clearly connect to the image. It might be funny if there's a prior setup, but there isn't one here.  
+- Caption B: ""We got 14 million hits so far."" — This is a statement that sounds like it's from a website or a viral content piece. The cat looking out the window could be interpreted as a symbol of something going viral, like a meme or a viral video. The number ""14 million hits"" adds a sense of absurdity and exaggeration, which is funny in a surreal, internet-style way.
+
+Given the absurdity and internet-viral tone of the caption, and the lack of any real context for ""it's out of the bag,"" Caption B fits better with the image's potential humor.
+
+Therefore, the funnier caption is: <B>",,False
+newyorker,8e3aca565f88df21605dbe5c6108c0ef,NYCC validation 8e3aca565f88df21605dbe5c6108c0ef,B,<B>,,True
+newyorker,d99442cb6c763370636698d477683f3f,NYCC validation d99442cb6c763370636698d477683f3f,B,"The image shows two firefighters ready to slide down poles at a firehouse. This setting is inherently serious and professional, with firefighters typically associated with duty, safety, and emergency response.
+
+Now let's evaluate the captions:
+
+- **Caption A**: ""I knew hiring SpongeBob was a mistake.""  
+  This is a humorous, absurd statement. SpongeBob is a cartoon character, not a real firefighter. The idea of hiring a cartoon character like SpongeBob (a yellow, cheerful, bouncy sponge) as a real firefighter is ridiculous and satirical. It plays on the contrast between a real job and a cartoon character, making it funny and unexpected.
+
+- **Caption B**: ""Is the fire in Times Square or Columbus Circle?""  
+  This is a question that sounds like it might be relevant to a real fire situation. However, the image shows a firehouse with firefighters preparing to slide down poles—no actual fire is visible. The question is oddly specific and out of place, and it doesn’t connect well with the scene. It feels like a real-world inquiry, but in this context, it lacks the absurdity or irony needed to be funny.
+
+While both are jokes, **Caption A** is funnier because it uses a clear absurdity (hiring a cartoon character as a firefighter), which is both unexpected and inherently ridiculous. The contrast between a real job and a cartoon character creates a strong comedic effect.
+
+Therefore, the funnier caption is:
+
+<A>",,False
+newyorker,08957c35c2e73440d4fc83f93636d26f,NYCC validation 08957c35c2e73440d4fc83f93636d26f,A,"The humor in this image relies on a pun or wordplay — the ""beds"" in the Supreme Court booths are literal beds, and the caption that plays on that absurdity is more likely to be funny.
+
+Caption A: ""Five to four of us would like you to get the lights on your way out"" — this is a play on the Supreme Court's common phrase ""five to four"" (a split decision), and the idea of ""getting the lights on"" is a pun on ""lights out"" (as in, end of the day or a bed). It's clever, but a bit abstract.
+
+Caption B: ""The class action suit against the mattress company was not going well"" — this is a pun on ""mattress"" and ""mattress company"" being a literal bed company, and the lawsuit being ""not going well"" — which sounds like it's not going well in bed. This is a more direct, absurd, and relatable joke that ties directly to the image (mattresses, beds, Supreme Court).
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,8e1eb46b47bb7be3852307880a0cec01,NYCC validation 8e1eb46b47bb7be3852307880a0cec01,A,"The image shows a man and woman in a bedroom with suitcases, one of which is wide open and full of water and fish. 
+
+Caption A: ""I never know what to pack."" — This is a generic, relatable statement, but it doesn't directly relate to the absurd image of fish in a suitcase. It's mild and plausible, but not particularly funny in this context.
+
+Caption B: ""They were supposed to eat the moths."" — This is a joke that plays on the absurdity of the scene. The presence of fish in a suitcase might be odd, but the idea that ""moths"" were supposed to be eaten is a surreal, unexpected twist. It suggests a darkly comedic or absurd scenario, which contrasts humorously with the image of a normal bedroom. The phrase ""they were supposed to eat the moths"" is unexpected and silly, especially since moths aren't typically eaten, and the image doesn't actually show moths — so it's a misdirection that makes the joke work.
+
+Even though the image doesn’t show moths, the caption implies a bizarre, almost surreal situation, which is funnier because it's absurd and unexpected.
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,8db0dde544e02825e1653260330bce64,NYCC validation 8db0dde544e02825e1653260330bce64,B,"The humor in a caption depends on how well it matches the image and whether it creates a relatable, absurd, or ironic situation.
+
+In this image:
+- A man is sitting in a playpen, which is typically associated with infants or young children.
+- He is holding a communicator, suggesting he might be trying to connect or communicate something.
+
+Now, consider the captions:
+
+**Caption A**: ""My parents must have missed the recall notice!""  
+→ This is a plausible, slightly absurd thought. A parent missing a recall notice (e.g., for a product) is a real-life scenario. But the man is in a playpen — implying he's a child. So saying ""my parents missed the recall notice"" suggests the man is an adult, which is contradictory. The irony is that a child (in a playpen) is making a statement about parents missing a notice. It's a bit of a stretch, but the absurdity is grounded.
+
+**Caption B**: ""There's got to be an easier way to keep me insured.""  
+→ This is more directly absurd. A man in a playpen (a child) saying he wants to be insured? That's a surreal, ridiculous idea. The idea of insurance for a child in a playpen is inherently funny — it's a stretch of logic that creates humor through incongruity.
+
+Between the two, **Caption B** is funnier because:
+- It combines a childlike setting with an adult-level concept (insurance).
+- It's more absurd and unexpected.
+- It plays on the idea of a child ""being insured"" — which is not something children are typically insured for — making it absurdly funny.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,0eb5337bab98e46c811792525bbae63f,NYCC validation 0eb5337bab98e46c811792525bbae63f,A,"The image shows a clown sitting at a table outside a restaurant, with a woman paying his bill. The presence of a clown adds a playful, absurd element—something that naturally evokes humor, especially in a real-life context like a restaurant bill.
+
+Now, let's evaluate the captions:
+
+- **Caption A**: ""Well, if you must know, he makes me laugh.""  
+  This is a sincere, slightly awkward line that fits the clown's role. It’s simple and authentic, implying the clown is funny. It’s light-hearted and works well with the image.
+
+- **Caption B**: ""It's called a mid-life crisis, not a midlife circus.""  
+  This is a clever play on words—replacing ""midlife crisis"" with ""midlife circus,"" which is a pun on the clown. It's witty, sharp, and directly mocks the idea of a ""circus"" as a metaphor for a crisis. The humor comes from irony and wordplay, which is especially effective in this context where a clown is present.
+
+Given that the image features a clown, the pun in Caption B directly ties into the scene and creates a more layered, intelligent humor. It's not just funny—it's *relevant* and *clever*.
+
+Therefore, the funnier caption for this image is:
+
+<B>",,False
+newyorker,8dc59c808dc47640328e71557ed546bb,NYCC validation 8dc59c808dc47640328e71557ed546bb,A,"The image shows a man sitting at a table with his hand on a phone and a vulture perched in front of him. This setup is absurd and surreal — a vulture, a common symbol of ominous or uncanny presence, is literally sitting in front of a person using a phone, suggesting a strange or ironic interruption in communication.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""Janice, hold all my calls. Indefinitely.""  
+  This is a humorous, dramatic, and oddly specific command. It implies a person named Janice is being asked to take over all calls indefinitely — which is both absurd and oddly heartfelt. The name ""Janice"" is common, and the phrasing feels like something from a sitcom or a bizarrely earnest phone script. It works well with the image because the vulture could be interpreted as a literal ""agent"" taking over calls — a surreal twist.
+
+- **Caption B**: ""My guess is that we're down-sizing.""  
+  This is a dry, corporate-sounding observation. It's vague and could be interpreted as a comment about reducing size (of office, budget, etc.), but it lacks a clear connection to the vulture. The vulture doesn't seem to be a symbol of downsizing — it’s not a metaphor that clicks immediately. The humor here is more subtle and less tied to the visual absurdity.
+
+Given that the image is absurd and surreal, the funniest caption should play off that absurdity and create a surprising, witty connection between the vulture and the action.
+
+The vulture could be interpreted as a literal ""agent"" or ""representative"" of a call-holding system — thus, Caption A, with its dramatic and oddly specific command, fits the absurdity better.
+
+Therefore, the funnier caption is:
+
+<A>",,True
+newyorker,e099ed8923bcf1a73dd84d027c58f36b,NYCC validation e099ed8923bcf1a73dd84d027c58f36b,B,<B>,,True
+newyorker,8de0608aa38cba6362bdde597b6a317d,NYCC validation 8de0608aa38cba6362bdde597b6a317d,B,"The humor in this image relies on the contrast between the serious office setting and the sudden, violent interruption — a hand with a sword bursting through the desk. 
+
+- **Caption A (""I said no interruptions"")** is a direct, authoritative statement that sets up the expectation of order. When followed by the absurdity of a sword-hand bursting through the desk, it creates a comedic irony — someone is clearly violating a rule, and the scene is both unexpected and absurd.
+
+- **Caption B (""Put him through"")** is more ambiguous. It could be interpreted as a phone instruction (""put him through"" to a call), which is a common phrase. But in this context, with a sword bursting through a desk, it's absurd — like someone is literally ""putting"" a person through a desk with a sword. This creates a surreal, almost absurdly literal interpretation, which can be funny in a more absurdist way.
+
+However, **Caption A** is funnier because it directly contradicts the scene — the man says ""no interruptions,"" and then the scene literally proves it. The irony is stronger and more immediate. The absurdity is clearer and more pointed.
+
+Therefore, the funnier caption is:
+
+<A>",,False
+newyorker,35e85701110364b9f58c73bcdaf7a2f8,NYCC validation 35e85701110364b9f58c73bcdaf7a2f8,A,"The image shows two backpackers startled by a large honey bottle shaped like a bear, which looks angry—implying it's a comedic, absurd, and possibly surreal situation. The bear-shaped bottle is a play on the idea of a ""honey bear,"" which is a common trope in humor (like the ""chocolate moose"" or ""honey bear"" in jokes).
+
+Now let's evaluate the captions:
+
+- **Caption A**: ""Now do you believe me about the chocolate moose?""  
+  This is a direct, absurd follow-up to a joke about a chocolate moose—something that is already a well-known, silly image (like a moose made of chocolate). The reference to ""chocolate moose"" is a classic joke, and the phrasing ""do you believe me"" adds a comedic, incredulous tone. It fits the absurdity of the scene and creates a self-contained, humorous loop.
+
+- **Caption B**: ""Do you guys happen to know the way out?""  
+  This is a generic, mundane question that doesn’t connect well with the absurdity of a bear-shaped honey bottle. It seems out of place—like a normal backpacker question in a real-world setting—without any punchline or absurdity. It doesn’t play into the humor of the image.
+
+Therefore, **Caption A** is funnier because it references a well-known absurd image (chocolate moose), matches the tone of the scene, and creates a humorous, ironic dialogue.
+
+<A>",,True
+newyorker,8d10076acddbaef0c0ad0283c73879bc,NYCC validation 8d10076acddbaef0c0ad0283c73879bc,B,"The image shows a man in a hospital bed with a beverage strapped to his head, IVs in his arms, and a woman glaring at him. The absurdity of a beverage strapped to his head — especially one that might be implying a ""treatment"" — combined with the medical setting, creates a surreal and humorous scenario.
+
+Now, let's evaluate the captions:
+
+- **Caption A**: ""Of course it was a male nurse.""  
+  This is a plausible, slightly ironic comment — implying that a male nurse would be the logical choice in a hospital, which is true in reality. But it's not particularly funny in this context. It doesn't directly relate to the absurdity of the beverage on his head or the woman glaring. It feels like a dry, factual observation, not a punchline.
+
+- **Caption B**: ""I have a hunch I'm in the placebo group.""  
+  This is much funnier. It plays on the medical absurdity — the man has a beverage strapped to his head, which could be interpreted as a ""treatment"" — and the idea that he might be in a placebo group makes the situation absurd and ironic. The joke is that he's being treated with something (a drink on his head), and he's jokingly suggesting it's just a placebo, which is a classic medical humor trope. It’s self-aware, ironic, and fits perfectly with the surreal image.
+
+Therefore, the caption that is funnier for this image is:
+
+<B>",,True
+newyorker,08e71b4f8b04bf866d4fabf6c6d54f82,NYCC validation 08e71b4f8b04bf866d4fabf6c6d54f82,A,"The humor in a caption depends on how well it matches the tone, context, and absurdity of the image. In this scenario:
+
+- The image shows a woman and a man observing a corpse in a casket, with an IV stand nearby. This setting is grim and clinical, suggesting a medical or funeral context.
+- Caption A: ""We'll eventually miss him."" — This is oddly heartfelt and ironic, given the corpse. It implies a deep emotional connection to someone who is dead, which is both touching and absurd. The phrase ""we'll eventually miss him"" is a gentle, almost poetic way to say ""we'll miss someone who's gone,"" which works well in a morbid context — it's funny because it's unexpectedly tender in a scene of death.
+- Caption B: ""I consider it in poor taste."" — This is a dry, dismissive statement, but it's vague and lacks emotional or situational context. It doesn't clearly connect to the image or evoke any humor. It feels like a generic, overly cautious reaction to something, which may come across as boring or insincere.
+
+Between the two, **Caption A** stands out because it creates a contrast between the grim scene and a surprisingly warm, human sentiment — the irony is what makes it funny. The absurdity of missing someone who is dead, in a casket with an IV stand, is both poignant and humorous.
+
+Therefore, the funnier caption is:
+
+<A>",,True
+newyorker,ac160b5d3149cb28be92443cee1a2de6,NYCC validation ac160b5d3149cb28be92443cee1a2de6,B,"The humor in this image relies on the contrast between the mundane scene of construction workers and the surreal, ominous presence of the Grim Reaper — a classic comedic juxtaposition. 
+
+Caption A — ""I can´t believe they pulled you out of retirement too."" — is funny because it plays on the idea of someone being ""pulled out of retirement,"" implying the person is a retired worker or someone who has stopped working, and now they're being forced back into action. It also subtly mocks the idea of a ""retirement"" being a life stage that can be interrupted, which fits with the construction workers being active and the grim reaper being present. The irony is that the grim reaper is sitting *with* them, suggesting a shared reality of labor and mortality.
+
+Caption B — ""I assume this is one of your easier assignments."" — is less funny because it sounds like a dry, bureaucratic comment, and it doesn't really connect with the absurdity of the scene. It feels more like a detached, over-the-top statement that doesn't build on the visual humor.
+
+Therefore, the caption that better captures the absurdity and humor of the image — especially with the grim reaper among construction workers — is:
+
+<A>",,False
+newyorker,2771a19efd2e4137d0b0d0c7d8f6552c,NYCC validation 2771a19efd2e4137d0b0d0c7d8f6552c,B,<B>,,True
+newyorker,200186603eacc8c9f8e9e7c39cf706ba,NYCC validation 200186603eacc8c9f8e9e7c39cf706ba,B,<B>,,True
+newyorker,a496cf6d6671a1a2fc705bee96cf8084,NYCC validation a496cf6d6671a1a2fc705bee96cf8084,B,"The image shows a man on a pile of rocks, looking down at a woman on the ground who is looking up at him. The context is whimsical and possibly satirical, with a power dynamic or a humorous contrast between the two figures.
+
+Let’s evaluate the captions:
+
+- **Caption A**: ""Now glide down gracefully and announce you're running for President""  
+  This is a playful, exaggerated command that imagines the man descending from the rocks and making a political statement. It fits the visual of someone descending from a height and adds a humorous twist with the presidential run—something grandiose and unexpected. The phrase ""glide down gracefully"" adds a performative, almost theatrical tone, making it feel both absurd and funny.
+
+- **Caption B**: ""How about you do a little more hunting and a little less gathering?""  
+  This is a more general, possibly sarcastic suggestion, but it lacks a clear connection to the image. The idea of hunting and gathering is vague and doesn’t directly relate to the visual of someone standing on rocks and someone looking up. It feels more like a generic life advice, and without context, it’s less visually tied to the scene.
+
+Given that Caption A directly plays off the physical action (descending from rocks) and adds a humorous, absurd twist (running for president), it is more clearly and effectively funny in the context of the image.
+
+Therefore, the funnier caption is:
+
+<A>",,False
+newyorker,6a316114759eea1d6fd341458d483c98,NYCC validation 6a316114759eea1d6fd341458d483c98,A,"The image shows a woman reading a book in the living room, with her dog looking at a naked man climbing through the window. This scenario is absurd and surreal—especially the dog watching a man climb in through a window, which is both visually odd and potentially inappropriate.
+
+Now let's evaluate the captions:
+
+- **Caption A**: ""You don't have to explain - you're already viral on You-tube.""  
+  This is a sarcastic, self-deprecating comment implying the image is so absurd it's already gone viral. It plays on the idea of internet absurdity and virality. While it fits the bizarre nature of the image, it's a bit generic and relies on a premise (viral on YouTube) that isn't directly supported by the image.
+
+- **Caption B**: ""They're reducing the carbon footprint at work AGAIN?""  
+  This is a completely unrelated joke. The image has nothing to do with carbon footprints or workplace sustainability. It's a non sequitur—a joke that doesn't follow from the image at all. This makes it feel forced and out of place.
+
+Given that humor works best when it's relevant and well-anchored to the image, **Caption A** is better because it humorously acknowledges the absurdity of the scene and fits the surreal, internet-viral tone of the image.
+
+<caption A>",,False
+newyorker,466e80090dc0ddfce306830edd03ba9b,NYCC validation 466e80090dc0ddfce306830edd03ba9b,A,"The image shows two men in tattered clothing stranded in a desert next to a skull, with one man happy and staring at his watch, and the other distraught. 
+
+Caption A: ""And, best of all, it's completely waterproof!"" — This is a humorous, absurd statement that seems to be a product tagline, implying that something (like a watch) is waterproof. Given that one man is staring at his watch, this caption plays on the irony of a watch being waterproof in a desert scenario, especially with a skull nearby. It's a witty, ironic punchline that fits the absurdity of the scene.
+
+Caption B: ""It is time for a little philosophy."" — This is more of a dry, existential statement. While it might seem profound, it doesn't clearly connect to the image or generate a strong comedic effect. The scene is already absurd, but this caption feels more like a serious philosophical remark, not a joke.
+
+Between the two, Caption A is funnier because it's absurd, ironic, and directly tied to the image (a watch in a desert), creating a humorous contradiction.
+
+<A>",,True
+newyorker,7c112f04ea6e1679018177acd9c7500f,NYCC validation 7c112f04ea6e1679018177acd9c7500f,B,"The image shows cowboys riding through the desert on rocking horses, which is a surreal and absurd setup — cowboys on rocking horses in a desert is inherently funny due to the contradiction of expectation.
+
+Now, consider the captions:
+
+- **Caption A: ""Groupon?""** — This is a reference to a discount website, and it's a bit of a stretch. It doesn't clearly connect to the image, and the humor comes from a random, out-of-context phrase. It’s a bit weak.
+
+- **Caption B: ""No, you grow up""** — This is more ironic and witty. It implies that the image (cowboys on rocking horses) is a childish or absurd idea, and the caption mocks the idea of being childish — suggesting that the viewer should grow up. This plays on the absurdity of the scene and adds a layer of satire and self-aware humor.
+
+Given the absurdity of the image, the caption that best fits and amplifies the humor is one that makes a witty, ironic comment — and ""No, you grow up"" does that better.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,0e3379e8dfbf37b0e34ad643034ee267,NYCC validation 0e3379e8dfbf37b0e34ad643034ee267,B,"The humor in this image relies on the contrast between the couple's statement and the absurdity of a farmer pouring slop (a waste product) into a trough for animals—something that would be considered unappetizing or even offensive to humans.
+
+Caption A: ""They don't feed the animals anything we wouldn't eat.""  
+This is a plausible, somewhat ironic statement. It suggests that the food given to animals is as safe or acceptable as human food. It’s a bit of a stretch, but it's grounded in a common idea—like ""if it's safe for us, it's safe for them."" It's mildly funny because it's a bit of a contradiction: animals are fed things we wouldn't eat, yet the couple claims they don’t feed them anything we wouldn't eat.
+
+Caption B: ""If there's a ring in here, Hank, I swear to God...""  
+This is a classic, punchy line—like a dramatic, almost dramatic threat or joke. The phrase ""if there's a ring in here"" implies a hidden, unexpected object (a ring), which could be a surprise or a metaphor for something deeply personal or forbidden. It's more absurd and has a strong, theatrical tone. In the context of a farmer pouring slop into a trough, the idea of a ring being ""in here"" is absurd and unexpected—making it a funny, surreal punchline.
+
+Between the two, Caption B is more inherently funny because it's unexpected, dramatic, and absurd in a way that plays on the ridiculousness of the scene. It’s a classic ""what if?"" joke that lands better in a visual context.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,7934332dd1561fa7e93478e2bdafaf40,NYCC validation 7934332dd1561fa7e93478e2bdafaf40,B,"The image shows a gigantic roasted chicken on a deli counter, with a woman staring at it. This setup is absurd and surreal—especially because a ""roasted chicken"" on a deli counter is mundane, but the scale is exaggerated, making it seem almost like a cartoon or parody.
+
+Now, let's evaluate the captions:
+
+- **Caption A**: ""Did you order the Obamacare Special?""  
+  This is a satirical, absurd statement. ""Obamacare Special"" is a real (though not official) term sometimes used jokingly in media to refer to a health insurance plan, but here it's applied to a roasted chicken. It's a pun that blends political satire with food, and it's funny because it's ridiculous and unexpected—like a menu item that doesn't exist. The woman staring at the chicken makes it feel like a scene from a mockumentary or a surreal comedy.
+
+- **Caption B**: ""The gravy boat is docked at the wharf.""  
+  This is a very literal, almost literalistic statement. ""Gravy boat"" is a food item, and ""docked at the wharf"" is a maritime image. The absurdity is in the juxtaposition—gravy, which is usually a sauce, being in a boat at a wharf. It's a clever pun, but it's more of a whimsical, surreal image than a punchline. However, the chicken is already huge, so the gravy boat is a small, secondary detail. It doesn’t quite land as strongly as a joke because it's less directly tied to the central absurdity.
+
+Between the two, **Caption A** is funnier because it ties into the absurdity of the scene with a sharp, satirical twist—using a political term in a food context. It's unexpected, witty, and directly engages with the image in a humorous, layered way.
+
+Final answer: <A>",,False
+newyorker,2917514e8692e59b15c9a18706e35def,NYCC validation 2917514e8692e59b15c9a18706e35def,A,"The image shows a woman talking to a man at a desk, with owls perched on the desk. 
+
+Caption A: ""They keep away the pigeons."" — This is a plausible, literal statement. Owls do naturally keep away pigeons, so it makes sense in context. It’s a bit of a pun, but it's grounded in reality.
+
+Caption B: ""So who gives a hoot?"" — This is a pun on ""who gives a hoot,"" which means ""who cares,"" but also plays on ""owls"" (as in ""hoots""). The phrase ""who gives a hoot"" is a well-known idiom, and the image has owls, so the pun is clever and unexpected. It's a classic wordplay that creates humor through double meaning.
+
+Given that the image features owls, and the phrase ""who gives a hoot"" directly references both the sound owls make and the idiom, the humor is more layered and unexpected — making it funnier.
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,e80deaccfbc0fb6b9966eae4a81b738c,NYCC validation e80deaccfbc0fb6b9966eae4a81b738c,A,<B>,,False
+newyorker,08d0b314c7f2f7248e6744653f6ffc75,NYCC validation 08d0b314c7f2f7248e6744653f6ffc75,A,"The image shows two fish speaking underwater, with one of them being just bones. This creates a surreal and absurd visual — a bone fish talking to a living fish. The humor comes from the contradiction: a skeleton talking, implying a kind of existential or absurd dialogue.
+
+Now, evaluating the captions:
+
+- **Caption A**: ""The relationship was less symbiotic than I’d hoped.""  
+  This is a dry, witty phrase, but it's vague and doesn't directly connect to the image. ""Symbiotic"" implies mutual benefit, which is a biological term — and the image of one fish being bones makes it absurd, but the caption doesn't fully capitalize on that absurdity. It's more of a metaphorical or philosophical line, which might not land as funny in this context.
+
+- **Caption B**: ""Fish & Wildlife issues new program 'Eat and Release'.""  
+  This is absurd and ironic. The idea of a government program called ""Eat and Release"" is ridiculous — especially when one of the fish is just bones. It plays on the real-world idea of wildlife programs, but twists it into something absurd. The joke is that if you're a fish, you might ""eat and release"" — implying a program where people eat fish and then release them, which is both bizarre and funny. The image of a bone fish adds to the absurdity — it's like the program is literally being used to justify eating a skeleton.
+
+The absurdity of the situation is amplified by Caption B, which directly references the image (a fish that is bones) and turns a real-world program into something ridiculous.
+
+Therefore, the funnier caption is:
+
+<B>",,False
+newyorker,3dbbd33e6e2004747f608954a2d95561,NYCC validation 3dbbd33e6e2004747f608954a2d95561,A,<B>,,False
+newyorker,53fcc05af501e10348309cd86d2f996e,NYCC validation 53fcc05af501e10348309cd86d2f996e,B,"The image shows a woman pushing a crash test dummy in a wheelchair down a hospital corridor, with two elderly men walking past in the opposite direction. The caption that plays on the absurdity of a crash test dummy being used in a human-like context — especially in a hospital setting — and the irony of someone claiming ""100 percent coverage"" for a dummy — is more likely to be humorous.
+
+Let’s analyze:
+
+- **Caption A**: ""He came in with a splinter and then he sat in Helen's chair.""  
+  This is a play on the phrase ""he came in with a splinter"" (a literal or metaphorical injury), and ""sat in Helen's chair"" — implying a person took someone else’s seat, possibly suggesting a substitution or a metaphor for taking over a role. It's a mild, subtle joke, possibly referencing a character named Helen, and could be interpreted as a pun or a reference to a common saying. It's not directly tied to the image, and the humor is more abstract.
+
+- **Caption B**: ""I hear he's got 100 percent coverage ... parts and labor.""  
+  This is a classic joke — a pun on insurance, where ""100 percent coverage"" is said to cover ""parts and labor,"" which is absurd because a crash test dummy is not a person and can't have insurance. The image of a crash test dummy being pushed in a wheelchair makes this line absurdly funny — it's a perfect satire of insurance jargon applied to a mannequin. The humor comes from the mismatch between the literal object (a dummy) and the human-like insurance claim.
+
+Therefore, **Caption B** is funnier because it directly references the image and creates a sharp, absurd contrast between real-world insurance language and a fictional, inanimate object.
+
+<B>",,True
+newyorker,72eeb3b892d3374f61de177a1dbde5e3,NYCC validation 72eeb3b892d3374f61de177a1dbde5e3,A,<B>,,False
+newyorker,09928bf0cbba50d2a805ed48a4bd6098,NYCC validation 09928bf0cbba50d2a805ed48a4bd6098,A,"The image shows people ice skating with a lifeguard tower in the background, suggesting a calm, recreational, and safe environment. 
+
+Caption A — ""There's a warm front coming through this afternoon"" — is meteorological and somewhat irrelevant to the scene. It's a factual statement about weather, and while it might be a bit odd in context, it doesn't connect humorously to the scene.
+
+Caption B — ""They always told me CPR was important, but I never listened"" — is a classic, relatable, and self-deprecating joke. It's humorous because it implies a personal failure to act responsibly, especially in a situation where a lifeguard is present, suggesting a potential need for CPR. The contrast between being told something is important and ignoring it adds comedic weight.
+
+Even though the scene has a lifeguard, the humor of ""never listening"" to CPR advice fits the setting more naturally and unexpectedly — it’s a punchline that makes the viewer laugh.
+
+Therefore, the funnier caption for this image is:
+
+<B>",,False
+newyorker,c311768fcc7ee7f35142169c7c57b9dc,NYCC validation c311768fcc7ee7f35142169c7c57b9dc,A,"The humor in this image relies on absurdity and irony — a man in a hospital with a beverage strapped to his head, IVs, and a woman glaring at him. 
+
+Caption A — ""Medical license? No, but he has a liquor license"" — is a clever, satirical twist. It plays on the idea of a person having a ""license"" (like a medical one) but instead has a liquor license, which is absurd in this context. It's a witty, plausible joke that contrasts the serious medical setting with a trivial, drinking-related license.
+
+Caption B — ""Guess what happens if you say ANYTHING!"" — is more generic and vague. It sets up a dramatic or scary scenario, but without any clear connection to the image or context. It feels like a cliché, and the absurdity isn't grounded in the visual elements.
+
+Therefore, the caption that is funnier and better integrated with the image is:
+
+<A>",,True
+newyorker,6fb0887ae703e2e7e5c1ae5edaa8d863,NYCC validation 6fb0887ae703e2e7e5c1ae5edaa8d863,B,"The humor in this scenario relies on irony and absurdity — the image shows a war-torn scene with soldiers hiding, and a mime among them. 
+
+Caption A is serious and literal, referencing a minefield — a real danger in a war zone. It's plausible and fits the tone of the image, but it's not particularly funny.
+
+Caption B, however, is absurd and satirical: it claims that ""they've got a full interpretive-dance troupe"" in a war zone. This is a ridiculous exaggeration — a mime is not a ""full interpretive-dance troupe,"" and the idea of such a group being present in a war zone is absurd. The joke hinges on the contrast between the grim reality of war and the surreal, performative nature of a dance troupe. It's a clever, ironic twist that turns a dangerous situation into something comically out of place.
+
+Therefore, the funnier caption is:
+
+<B>",,True
+newyorker,e12119096bee28fff42f28010b23ad20,NYCC validation e12119096bee28fff42f28010b23ad20,A,"The image shows two chefs inside a giant creature, with ribs lining the walls and ceiling — a surreal and absurd scenario. 
+
+- Caption A: ""I would prefer to go out the way we came in"" is a dry, ironic statement that plays on the idea of exiting a situation the same way you entered. It’s a bit of a cliché, but in this context, with the chefs inside a giant creature, it adds a layer of absurdity and dark humor. It’s a clever, subtle joke about escape and the absurdity of being trapped.
+
+- Caption B: ""It doesn't look like an endangered species"" is a bizarre and unexpected statement. It's a play on the idea of ""endangered species"" — implying that the giant creature is not at risk of extinction. But in the context of being inside a giant creature, this is absurd and unintentionally funny because it misapplies a real-world concept to something that is clearly fictional and surreal.
+
+While both are funny, **Caption B** is more absurd and unexpected — it subverts expectations in a more ridiculous and humorous way. The contrast between a real-world concern (endangered species) and the surreal setting makes it funnier.
+
+Therefore, the funnier caption is:  
+<B>",,False
+newyorker,cc2bfd6c0ccce34052ab6b3520744b54,NYCC validation cc2bfd6c0ccce34052ab6b3520744b54,A,"The image shows two cowboys playing chess in the desert, with the chess pieces resembling knights (which look like horses), and the captions are playing on double meanings and puns.
+
+- Caption A: ""Did you hear the one about the bishop and the queen?"" — This is a classic chess joke, referencing the pieces (bishop and queen) in a punny, storytelling way. It’s a well-known joke in the world of chess humor, and it fits the setting of cowboys playing chess. The humor is clever and situational, relying on inside knowledge of chess.
+
+- Caption B: ""I'm gonna check ya and I'm gonna check ya REAL SLOW."" — This is a pun on ""check"" in chess (a move that threatens to capture the opponent’s king) and ""check"" as in ""to verify"" or ""to examine."" The phrase ""check ya"" is a play on words, and ""REAL SLOW"" adds a comedic, exaggerated tone. It’s a more absurd, over-the-top delivery that works well with the cowboy theme — it's silly, bouncy, and fits the genre of a goofy, Western-style joke.
+
+Given that the image is of cowboys in a desert with chess pieces (especially the knight), the humor should lean into the cowboy clichés and absurdity. Caption B uses a more vivid, exaggerated, and unexpected pun that fits the visual absurdity of cowboys playing chess.
+
+Therefore, the funnier caption for this image is:
+
+<B>",,False
+newyorker,cdce133a5031acef25943f676d309f1a,NYCC validation cdce133a5031acef25943f676d309f1a,A,"The humor in this image relies on the absurdity of a grim reaper meeting, with one man in a suit commenting on a pandemic. 
+
+Caption A — ""Well, I thought it was funny"" — is a simple, understated reaction. It implies the man finds the scene amusing, which is plausible, but doesn't necessarily land with the absurdity of the situation.
+
+Caption B — ""Pandemic? What Pandemic?"" — is funnier because it directly subverts expectations. Grim reapers are traditionally associated with death, not pandemics. The phrase ""What Pandemic?"" is a sharp, ironic jab — suggesting that the man is confused or dismissive, as if a pandemic is not a real threat, or not even something that would involve grim reapers. This contradiction creates a comedic contrast between the serious image and the absurd, casual response.
+
+Therefore, the caption that is funnier is:
+
+<B>",,False
+newyorker,e8f75ffefe0d90aca99bb43094d9a115,NYCC validation e8f75ffefe0d90aca99bb43094d9a115,B,<B>,,True
+newyorker,cd88cacd2cc781faaa7eab86b3e2a252,NYCC validation cd88cacd2cc781faaa7eab86b3e2a252,B,<B>,,True
+newyorker,88100c811591f72bf13d712ce306e81f,NYCC validation 88100c811591f72bf13d712ce306e81f,A,"The image shows a man being addressed by another man from a desk on a dais, suggesting a power dynamic or a formal setting. 
+
+Caption A: ""I was told you were the last person to use the key to the mens' room."" — This is a plausible, mundane statement that could fit the scene, but it's oddly specific and slightly awkward. It doesn't clearly generate humor through irony or absurdity.
+
+Caption B: ""Sir, excluding Quebec from our caption contest has proved to be very popular!"" — This is absurd and ridiculous. It's a joke about a contest that ""excludes Quebec,"" which is a non-sequitur in a setting where no contest is mentioned. The humor comes from the sheer illogicality and the implication that a political or geographic exclusion is a popular decision — especially in a context that has no connection to a caption contest. The absurdity is heightened by the formality of ""Sir,"" which makes the statement even more ridiculous.
+
+Therefore, the humor in Caption B is more exaggerated, absurd, and unexpected — making it funnier in the context of the image.
+
+<B>",,False

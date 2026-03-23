@@ -1,0 +1,621 @@
+dataset,sample_id,meta,expected,llm_response,llm_thinking,is_correct
+newyorker,fde4151fcca492b42336d3a3dfe8e0dc,NYCC validation fde4151fcca492b42336d3a3dfe8e0dc,B,"<CB>
+
+Caption B is funnier because it adds a humorous twist to the waitress's situation. It plays on the idea of considering a menu item (cheese board) but then realizing it's a ""trap,"" creating a light-hearted and unexpected twist. This adds humor through irony and situational humor.
+
+</CB>",,False
+newyorker,1214b37425713590e915e3af0b1e6e6a,NYCC validation 1214b37425713590e915e3af0b1e6e6a,B,"The caption **B: ""Worst Groupon ever!""** is funnier because it plays on the absurdity of the situation—two men in winter garb trying to ski on sand—by comparing it to a terrible Groupon, which is a completely unrelated but similarly ridiculous scenario.
+
+<B>",,True
+newyorker,953ca7ee0c0673ebc51e6147f68f0233,NYCC validation 953ca7ee0c0673ebc51e6147f68f0233,A,"The caption that is funnier is <B>:
+
+**""Nobody executes a fork on the Chaturanga kid and live to tell about it.""**
+
+This caption is funnier because it plays on the absurdity of the situation—two cowboys on chess pieces in the middle of a desert, with cheese pieces that look like knights (which are similar to the Chaturanga piece). The phrase ""fork"" refers to a move in chess, specifically the ""fork"" move, which is a tactical technique. The caption exaggerates the idea that no one is making that move, adding a humorous twist to the absurdity of the scene.",,False
+newyorker,b8ecd62018bbd057aaa22277ed24fd68,NYCC validation b8ecd62018bbd057aaa22277ed24fd68,B,"Looking at the image, Caption B—""Is it weird that we have a pet?""—is funnier because it highlights the unexpected and somewhat absurd situation: a mother bird tending to her nest and babies, while another bird is trapped in a cage on an upper branch. The contrast between the nurturing, caring behavior of the mother bird and the lonely, confined state of the other bird adds a humorous twist.
+
+<Caption B>",,False
+newyorker,ce15e7d5a2b0446c455a20b2f97e72a1,NYCC validation ce15e7d5a2b0446c455a20b2f97e72a1,B,"<CB>
+
+Caption B is funnier because it plays on the unexpected and awkward situation of a man walking into a bedroom with a drink and a woman in the bed, while also connecting the dots. It adds a humorous twist by implying that the man is trying to ""make [the woman] feel young again,"" which is both surprising and awkward in the context of the image. 
+
+<CB>",,False
+newyorker,71c3de544184b953bb9c5cd0660e7574,NYCC validation 71c3de544184b953bb9c5cd0660e7574,B,"<CB>
+
+Caption B is funnier because it adds a humorous twist by referencing ""new shoes"" and ""no one you know,"" which creates a light-hearted, unexpected contrast with the serious situation of the man being angry at an alligator. Caption A is more straightforward and less humorous in context.
+
+</CB>",,False
+newyorker,bba482e3fb83f469575fd8706f39dc4c,NYCC validation bba482e3fb83f469575fd8706f39dc4c,A,"<CB>
+
+Caption B is funnier because it adds a personal, relatable, and humorous touch to the situation. The waitress is taking an order, and the customer is perusing the menu—this is a common scenario, but the customer's long-time desire to eat out here adds a layer of charm and humor. It creates a light-hearted, relatable moment that's more engaging than Caption A, which is more straightforward and less humorous.
+
+</CB>",,False
+newyorker,004a0d86afd22c6e8b30b384b73595c1,NYCC validation 004a0d86afd22c6e8b30b384b73595c1,B,"<CB>
+
+Caption B is funnier because it plays on the unexpected and absurdity of the situation— an angry bull interviewing a woman. The contrast between the serious job interview and the unexpectedly aggressive interviewer creates a funny, unexpected twist that is both surprising and amusing.
+
+</CB>",,False
+newyorker,3156dfd78b55850670c84341bdc764ee,NYCC validation 3156dfd78b55850670c84341bdc764ee,B,"Looking at the image, Caption B is funnier. It plays on the eerie and humorous contrast between the cheerful, smiling Snow White and the typically grumpy, annoyed Grumpy Dwarf. The caption uses a pun (""Don't tell me"") and hints at a creepy or spooky element, which adds a layer of humor and surprise.
+
+<Б>",,False
+newyorker,24acecce90ff5aa46459a6488fbb2f58,NYCC validation 24acecce90ff5aa46459a6488fbb2f58,B,"<CB>
+
+Caption B is funnier because it plays on the idea of a cop using a math equation as a lesson, which is both absurd and humorous. It creates a funny contrast between the serious situation (a cop stopping a man) and the unexpected, trivial message (a math equation). 
+
+<CB>",,False
+newyorker,3e3b3aa676233fdac6b86b2af0087643,NYCC validation 3e3b3aa676233fdac6b86b2af0087643,B,"<CB>
+
+Caption B is funnier because it adds a clever, self-deprecating twist that plays on the absurdity of the situation—having a rat with wings on a roof in a city. It's light-hearted, humorous, and adds a layer of irony that makes the image more engaging and funny.
+
+</CB>",,False
+newyorker,dfb2eb87fd3df151bc7dfaa07a6cec21,NYCC validation dfb2eb87fd3df151bc7dfaa07a6cec21,B,"<CB>
+
+Caption B is funnier. It plays on the unexpected and the absurdity of the situation—two prime rib steaks on a desk, while the image shows a grill with a briefcase being cooked. The contrast between the mundane (a desk) and the unexpected (prime rib steaks) adds a humorous twist, making it more surprising and funny than Caption A, which is more serious and less humorous.
+
+</CB>",,False
+newyorker,6fb70ee002349b33248e5160e504c527,NYCC validation 6fb70ee002349b33248e5160e504c527,B,<B>,,True
+newyorker,74bccf1627c9412ccbb060349d704fbd,NYCC validation 74bccf1627c9412ccbb060349d704fbd,B,"<CB>
+
+Caption B is funnier because it's a playful, humorous twist on a date, adding a light-hearted and unexpected element to the scenario. It creates a funny contrast between the rat and the pigeon, and the idea of ""sewer rafting"" adds a quirky, absurd twist that is more engaging and funny than Caption A, which is more about frustration and doesn't add the same level of humor or surprise.
+
+</CB>",,False
+newyorker,9c2da2e3f1de974c57703585ec53b190,NYCC validation 9c2da2e3f1de974c57703585ec53b190,A,"<CB>
+
+Caption B is funnier because it creates a humorous contrast between the image of executives in a board room and the unexpected, absurd scenario of a plant being legalized in New York. The caption plays on the absurdity of the situation, making it more amusing than Caption A, which is more straightforward and less humorous.
+
+</CB>",,False
+newyorker,f0b498930fdb580def55aef651e9c2ac,NYCC validation f0b498930fdb580def55aef651e9c2ac,A,"<CB>
+
+Caption B is funnier because it adds a layer of nostalgia and irony. The image shows a train that is sad and crying, and a man looking at it. The caption ""50 years ago I could"" suggests a memory of a time when things were different, which contrasts with the current situation, making it more humorous and relatable.
+
+</CB>",,False
+newyorker,419c0a690d0c1fadd3db94c3c607e6ba,NYCC validation 419c0a690d0c1fadd3db94c3c607e6ba,A,"<CB>
+
+Caption B is funnier because it plays with the absurdity of the situation—someone (the farmer) pouring slop into a trough, which is a mundane object, and the caption suggests it's generating ""serious doubts about our place in the food chain."" This creates a humorous contrast between the ordinary action and the absurd implication.
+
+</CB>",,False
+newyorker,623ef2993e22b718b1b2b7767f3c20e8,NYCC validation 623ef2993e22b718b1b2b7767f3c20e8,B,"Looking at the image, the caption that is funnier is **<A>**.
+
+**Reasoning:**  
+Caption A, *""You don't want to see the wrong side.""* plays on the idea of a man confronting another man, but still in his bed, implying that the conflict is not real or is being avoided. It adds a twist of irony, suggesting that the man is not fully engaged in the confrontation, which is humorous.
+
+Caption B, *""And yet you embraced the standing desk.""* is less funny because it seems unrelated to the main image of a man confronting another man in bed. It introduces a new, unrelated element that doesn't fit well with the scene.
+
+Therefore, **<A>** is funnier.",,False
+newyorker,73ef5d12327336c4dc364d683188f329,NYCC validation 73ef5d12327336c4dc364d683188f329,A,<B>,,False
+newyorker,61133892a8fcdcb6ed3dbd003d52e928,NYCC validation 61133892a8fcdcb6ed3dbd003d52e928,B,"<CB>
+
+Caption B: ""Do you seek alignment?"" is funnier because it plays on the absurdity of the situation—two men on a mountain, one sitting on a yoga ball—while also suggesting a surreal or humorous interaction. It adds a layer of irony and whimsy that makes the image more engaging and funny.
+
+</CB>",,False
+newyorker,e0c8974c26b6486774326c0686534d57,NYCC validation e0c8974c26b6486774326c0686534d57,B,"<CB>
+
+Caption B is funnier because it plays on the word ""toast of the town"" in a humorous way, implying that even if the toast is considered a ""toast of the town"" (i.e., a notable figure), you still need a reservation. This adds a clever twist to the situation, making it more amusing.
+
+</CB>",,False
+newyorker,ca1bf4dd9457abc5ea771b0939d7ebf0,NYCC validation ca1bf4dd9457abc5ea771b0939d7ebf0,A,"Looking at the image, the caption that is funnier is likely **<A> She left me for an engine that could.**
+
+This caption is funny because it plays on the absurdity of the situation—someone (the train) is ""drinking a beer and sitting at a bar next to a man"" and is ""sad and crying,"" which suggests a romantic or emotional situation. The phrase ""she left me for an engine that could"" is a playful, metaphorical way of saying that the train was abandoned or left behind, which fits the image of the train being sad and crying. It adds a humorous twist to the otherwise poignant scene. 
+
+< A >",,True
+newyorker,b9b16f0018da976281f1d9a6d38bf314,NYCC validation b9b16f0018da976281f1d9a6d38bf314,B,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—someone being blindfolded and walking the plank on a subway train, with pirates behind him. It highlights the unexpected and ironic twist of the scenario, making it more humorous by emphasizing the absurdity and the unexpected nature of the event.
+
+</CB>",,False
+newyorker,edd3dc219a51ce33f26384b1093c571f,NYCC validation edd3dc219a51ce33f26384b1093c571f,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—someone hoping their wife packed LifeSavers, which is a random, unrelated item, while the image shows construction workers and a grim reaper. It creates a humorous contrast between the mundane and the unexpected, making it more amusing than Caption A, which is a riddle that doesn't fit the image as well.
+
+</CB>",,False
+newyorker,cba4ef1ebecfa549028e03dc024a3c1f,NYCC validation cba4ef1ebecfa549028e03dc024a3c1f,A,"<CB>
+
+Caption A is funnier because it plays on the word ""Ponzi varmint,"" which is a derogatory term for a fraudulent scheme, and the image shows an executive looking at a profit chart with farmers and a donkey, suggesting a possible scam or misleading financial information. It adds a humorous twist with the donkey and the phrase ""lost our nest egg.""
+
+Caption B is less funny because it's more abstract and doesn't directly relate to the image in a humorous way.
+
+</CB>",,False
+newyorker,94efe525fe6cf97f338010c85c970c76,NYCC validation 94efe525fe6cf97f338010c85c970c76,A,"Looking at the image, the caption that is funnier would be **Caption B**. It plays on the word ""double arrr"" (likely a misspelling of ""double arrrr"" or ""double arrry""), which adds a comedic twist to the situation. It implies that the man is taking a long, exaggerated step, making the scene more humorous.
+
+< B >",,False
+newyorker,212eed650de8719be5760da5104329c3,NYCC validation 212eed650de8719be5760da5104329c3,A,"<CB>
+
+Caption B is funnier because it plays on the unexpected and absurd situation— a woman waiting to get on an elevator, but the people inside are on fire. It creates a humorous contrast between the expected (a woman waiting to get on an elevator) and the unexpected (the people inside are on fire), leading to a surprising and amusing twist. 
+
+<CB>",,False
+newyorker,f77affeb77a3988d29f23f2af2abf14d,NYCC validation f77affeb77a3988d29f23f2af2abf14d,B,<B>,,True
+newyorker,bd7059bb5e67113acd756b9d42af9ee2,NYCC validation bd7059bb5e67113acd756b9d42af9ee2,B,"The caption that is funnier is <B>.
+
+Caption B plays on the misunderstanding about the animal being ""not an elephant,"" which creates a humorous contrast between the expected image (an elephant) and the actual image (a giraffe). This creates a funny twist that highlights the confusion and the unexpected nature of the scene.",,True
+newyorker,19977b15ed1e09c17d38caf609701ac6,NYCC validation 19977b15ed1e09c17d38caf609701ac6,A,"Looking at the image of two firefighters ready to slide down two poles, the caption that is funnier would be:
+
+<B> This is when I start questioning all my life decisions.
+
+This caption is more humorous because it plays on the unexpected and absurd situation of firefighters sliding down poles, which is unlikely and funny in a way that contrasts with the serious context of the image. The other caption is more of a philosophical reflection, which is less funny in this context.",,False
+newyorker,d5741d3702608dc0a5fe4592fa3d5b9d,NYCC validation d5741d3702608dc0a5fe4592fa3d5b9d,B,"<CB>
+
+Caption B is funnier because it adds a humorous twist by highlighting the absurdity of the situation—there's a racket ball court on the other side of the wall, which contrasts with the serious rock climbing scene. This creates a funny contrast between the two scenarios, making the caption more amusing.
+
+</CB>",,False
+newyorker,5a592c1d9ac2528dbc6c1927412e4c2d,NYCC validation 5a592c1d9ac2528dbc6c1927412e4c2d,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—someone sitting in a playpen holding a communicator, which is far from a ""room service"" request. It creates a humorous contrast between the mundane setting and the unexpected, absurd request, making it more amusing than Caption A, which is more straightforward and less funny.
+
+</CB>",,False
+newyorker,fbc5af1e09f332c0afbceae0f1cd8a68,NYCC validation fbc5af1e09f332c0afbceae0f1cd8a68,A,"<CAPTION B>
+
+Caption B is funnier because it plays on the word ""strangulation,"" which is a more accurate and respectful term for the act depicted in the image compared to ""strangulation"" being used as a joke. It also adds a layer of irony by highlighting the absurdity of the situation, making the caption both informative and humorous.",,False
+newyorker,d3a53f6c23045c19b64e597841e64ac5,NYCC validation d3a53f6c23045c19b64e597841e64ac5,B,<B>,,True
+newyorker,cdf21e60f665cab91fb22ee273c4fc2e,NYCC validation cdf21e60f665cab91fb22ee273c4fc2e,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—being ""never going on another Bumble date ever again""—in the context of being startled by a bear in a honey bottle. It adds a humorous twist with the ""Bumble date"" reference, which is a popular internet slang for dating apps, making the joke more unexpected and relatable.
+
+</CB>",,False
+newyorker,bde891696ceb3212eba91340fd7872cc,NYCC validation bde891696ceb3212eba91340fd7872cc,A,"The caption that is funnier is <B>.
+
+**Reason:** Caption B plays on the absurdity of the situation—suggesting that a caveman, who is clearly not a legal adult, could easily pay a fine. It highlights the ridiculousness of the scenario, making it more humorous than Caption A, which is more straightforward and less funny.",,False
+newyorker,813d014ace16ff772e747ff66b1dfbea,NYCC validation 813d014ace16ff772e747ff66b1dfbea,A,"<CB>
+
+Caption B is funnier because it adds a humorous twist to the situation—acknowledging the difficulty of success, which contrasts with the grim scenario of a man about to kill himself. It introduces a light-hearted, ironic tone that makes the image more relatable and amusing.
+
+</CB>",,False
+newyorker,117337fccf8187a6c3f2be4507dd1ba4,NYCC validation 117337fccf8187a6c3f2be4507dd1ba4,A,"When analyzing the captions, **Caption B** is funnier because it plays on the idea of height and perspective, highlighting the contrast between the two people's viewpoints. The caption implies that the taller person is having a harder time navigating the situation, which adds a humorous twist to the scenario.
+
+< B >",,False
+newyorker,a1dfd3cf07deb5b4cf711266881f2b19,NYCC validation a1dfd3cf07deb5b4cf711266881f2b19,B,"<B>A</B> is funnier because it adds a playful, conversational tone that fits the context of a couple having a picnic and facing a storm. It suggests a light-hearted interaction, which contrasts with the more serious or ominous tone of ""I think the weather's turning on us.""",,True
+newyorker,a2e2a6c72b343cdd37c8b7f4de34d5b2,NYCC validation a2e2a6c72b343cdd37c8b7f4de34d5b2,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—two men in a life raft talking while a skeleton dressed as a Mexican waitress is present. The skeleton is both a bizarre and unexpected addition to the scene, and the question about pina coladas and rain walks adds a humorous twist to the situation. It creates a funny contrast between the mundane setting and the unexpected, quirky character.
+
+</CB>",,False
+newyorker,df5f88b998cf24cca3e4a73f0d6568a8,NYCC validation df5f88b998cf24cca3e4a73f0d6568a8,A,"<CB>
+
+Caption B is funnier because it plays with the idea of the firefighter ""going up"" while the other is ""going down,"" creating a humorous contrast and a pun on the word ""shape."" It's clever and unexpected, making it more amusing than Caption A, which is more straightforward and less humorous.
+
+</CB>",,False
+newyorker,2430c35c0d4c9bd987f62482b45c3d04,NYCC validation 2430c35c0d4c9bd987f62482b45c3d04,B,"<CB>
+
+Caption B is funnier because it adds a humorous and unexpected twist to the image—being awakened by the presence of two chefs inside a giant creature. It creates a sense of absurdity and surprise, making the image more engaging and amusing.
+
+</CB>",,False
+newyorker,7b8f2af80ccc31d175ed24d2aab5fb65,NYCC validation 7b8f2af80ccc31d175ed24d2aab5fb65,A,"<CB>
+
+Caption B is funnier because it's a clever, unexpected twist that adds humor through irony and surprise. It plays on the idea of the woman being interviewed by an angry bull, creating a funny contrast with the usual ""interviewer"" role. The line ""Of course I knew your dad. We worked together at Merrill"" is both surprising and humorous, making it more engaging and funny than Caption A, which is more straightforward and less humorous.
+
+</CB>",,False
+newyorker,84fe897623b973d5b8d1a3cbc260fc5f,NYCC validation 84fe897623b973d5b8d1a3cbc260fc5f,B,<A>,,False
+newyorker,ac1e35b31312e8aff6a92e70b07b7146,NYCC validation ac1e35b31312e8aff6a92e70b07b7146,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of a centaur (a horse-human hybrid) asking for hoof and mouth wash, which is a product typically used for animals like horses or cows. The contrast between the centaur's human-like appearance and the typical use of the product adds a humorous twist.
+
+</CB>",,False
+newyorker,e9690ed139c9661cb07c6e4337d50ff7,NYCC validation e9690ed139c9661cb07c6e4337d50ff7,A,"<CB>
+
+Caption B is funnier because it plays with the absurdity of the situation—being ""I promise not to look up"" while being in a ring with two giant boxers and a referee. It creates a humorous contrast between the serious context of a boxing match and the absurdity of the speaker's promise. 
+
+</CB>",,False
+newyorker,6da66bb3cb5afc958ad83435faa9ca3c,NYCC validation 6da66bb3cb5afc958ad83435faa9ca3c,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—implying that the rules of the match are so strict that underwear is mandatory, which is a ridiculous and humorous take on the serious context of a boxing match. It adds a layer of absurdity and irony that makes it more engaging and funny.
+
+</CB>",,False
+newyorker,e05d8eaee07cadd59131a236d410fdd2,NYCC validation e05d8eaee07cadd59131a236d410fdd2,B,"<B>A</B> is funnier because it plays with the idea of a man shaking violently, adding a humorous twist to the situation with the joke ""Jackhammering"" and the comment about ""decaf."" It creates a funny contrast between the man's action and the caption, making the whole image more humorous.",,True
+newyorker,1992e5e39fa548c02a231aff682a231a,NYCC validation 1992e5e39fa548c02a231aff682a231a,B,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—scientists discussing a mouse head in a lab—by making a joke about intelligence and placebos. It creates a humorous contrast between the serious context of the image and the unexpectedly absurd statement.
+
+</CB>",,False
+newyorker,99140ff14c72b1d5766763235bae3b7c,NYCC validation 99140ff14c72b1d5766763235bae3b7c,B,<B>,,True
+newyorker,30662fa9c0364c6af43d9c9a0173c41e,NYCC validation 30662fa9c0364c6af43d9c9a0173c41e,B,"Looking at the image, Caption B (""It's a Toy!"") is funnier. The image shows a lady in a hospital bed with several people around her, and one of them is handing her a tiny car. The contrast between the serious context (hospital bed) and the unexpected, playful object (a tiny car) creates a humorous and unexpected situation. This contrast makes Caption B more amusing and unexpected, making it funnier than Caption A, which suggests a race and seems more serious or less surprising. 
+
+<Б>",,False
+newyorker,ec860e23ef9a9f1d265cd376c3794a02,NYCC validation ec860e23ef9a9f1d265cd376c3794a02,B,<B>,,True
+newyorker,679097d2d25dfe732c9726fc773c85cf,NYCC validation 679097d2d25dfe732c9726fc773c85cf,B,"The caption that is funnier is <A>.
+
+Caption A: ""They flew early in for Sid's 10:00.""  
+This is funny because it's a humorous and absurd scenario—owls flying early in the morning for a person's 10:00 AM appointment. It's a ridiculous situation that plays on the unexpected and the absurdity of owls flying at dawn.
+
+Caption B: ""Gladys, get me a BLT and nine mice.""  
+This is also funny, but it's more of a quirky, whimsical request. It's playful and imaginative, but it's less absurd than Caption A.
+
+Therefore, <A> is funnier.",,False
+newyorker,27d7064beb992d5dd528e146946d72d4,NYCC validation 27d7064beb992d5dd528e146946d72d4,B,"The caption that is funnier for the image is <B>. 
+
+<B> ""If he wasn't an internist he is now.""  
+This is funnier because it plays on the absurdity of the situation—two lions talking in a field while a bunch of medical instruments are scattered around. The contrast between the wild, animal-like setting and the medical instruments adds humor through irony and unexpected juxtaposition.",,True
+newyorker,59a9d6cc434ab3035072f86c6f497779,NYCC validation 59a9d6cc434ab3035072f86c6f497779,B,"The caption **B** (""They said, 'widespread showers.'"") is funnier because it plays on the absurdity of the situation—someone walking in the rain with a huge umbrella that dwarfs both of them. The phrase ""widespread showers"" suggests that the rain is not just a little bit, but a lot, and the man is trying to cover everyone with his umbrella. It adds a humorous twist by implying that the rain is so heavy that the umbrella is literally a ""widespread"" solution, which is both ironic and funny.
+
+< B >",,False
+newyorker,28e1dbaaa8d4570613d0d567293eb7ac,NYCC validation 28e1dbaaa8d4570613d0d567293eb7ac,B,"Looking at the image, Caption A: ""That's what happens to whistle-blowers"" is funnier because it plays on the idea of a mother bird ""whistle-blowing"" by putting her babies in a cage. It's a clever and ironic twist on the concept of whistleblowers, which is a common theme in media and pop culture. The image shows a mother bird tending to her nest, but the second bird is in a cage, suggesting a violation of natural behavior, making the caption both ironic and humorous.
+
+<B>A>",,True
+newyorker,c5ff85cfdaff7798a3a84c73dc9e9399,NYCC validation c5ff85cfdaff7798a3a84c73dc9e9399,B,<B>,,True
+newyorker,48d6283be77ee807708e75c3ee6ca9fe,NYCC validation 48d6283be77ee807708e75c3ee6ca9fe,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—implying that the fish ""met a lawyer"" while talking underwater, which is a bizarre and unexpected twist. Caption A is more straightforward and doesn't add the same level of unexpected humor.
+
+</CB>",,False
+newyorker,09717fb8938c5bf264c4daade86e9504,NYCC validation 09717fb8938c5bf264c4daade86e9504,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—someone preferring a hard-cover book for its ""solidness"" when the man is holding a newspaper. It creates a humorous contrast between the man's casual, mundane activity (reading a newspaper) and the unexpected preference for a ""hard-cover book"" (which is not relevant to the situation). The caption adds a twist by implying that the man is being overly serious about something trivial, which is a common source of humor.
+
+</CB>",,False
+newyorker,e02e882ba97e6fc4bb13f18c364aa780,NYCC validation e02e882ba97e6fc4bb13f18c364aa780,A,"Looking at the image, Caption **A** is funnier. It plays on the idea of a man dying of thirst and the suit man being perfectly fine, creating a humorous contrast. The phrase ""my percentage of any water you find, real or imagined"" adds a whimsical, almost absurd twist to the situation, making it more amusing.
+
+<A>",,True
+newyorker,a8695e21766a8768264994fc2db7605f,NYCC validation a8695e21766a8768264994fc2db7605f,B,"<CAPTION B>
+
+Caption B is funnier because it plays with the idea of voting by mail in a sandbox, which is a humorous and unexpected contrast to the image of two people building a giant tower. It adds a clever, unexpected twist that makes the caption more amusing.",,False
+newyorker,8f0e104f4fdeed08e80df69f7e478675,NYCC validation 8f0e104f4fdeed08e80df69f7e478675,B,"<CB>
+
+Caption B is funnier. The image shows a couple having a picnic in a park with threatening storm clouds, but Caption B plays with the idea of seeing a bunny, which is a common and harmless image, and contrasts it with the actual scene. It adds a humorous twist by implying that the viewer might be seeing a bunny, which is unexpected and light-hearted, making it more amusing than Caption A, which is more serious and less humorous.
+
+</CB>",,False
+newyorker,f9ebfffbc5e4ce081a2962a0600ff2b2,NYCC validation f9ebfffbc5e4ce081a2962a0600ff2b2,A,"<CAPTION B>
+
+Caption B is funnier because it adds a layer of irony and emotional depth to the image. The man is shot with arrows, yet he is trying to ""explain something"" to the doctor, suggesting a surreal or tragic situation. The caption ""I can't stop loving myself"" contrasts the man's painful state with his persistent self-acceptance, creating a humorous and touching juxtaposition. It highlights the absurdity of the situation while also showing the man's resilience, making it more relatable and amusing.",,False
+newyorker,bf7ac3a3454830a3f6ed333f2acd71b0,NYCC validation bf7ac3a3454830a3f6ed333f2acd71b0,A,"<CB>
+
+Caption B is funnier because it adds a humorous twist to the situation—comparing the woman's mood to the owls on the desk. It creates a light-hearted, ironic contrast between the serious setting (an office with owls) and the emotional tone of the conversation. 
+
+<CB>",,False
+newyorker,1563f7828afe918f98dd503ed2fb609e,NYCC validation 1563f7828afe918f98dd503ed2fb609e,B,"When considering the image, the caption that is funnier would be **<B> Best farm-to-table in town.**
+
+This caption is funnier because it plays on the idea of ""farm-to-table"" cuisine, which is a popular and often humorous phrase in the food industry. It suggests that the restaurant is using fresh, locally sourced ingredients, which is a positive trait, but the phrase itself is often used in a way that's light-hearted or even ironic, especially in the context of a restaurant that's ""shaken not stirred"" (a common joke about poorly shaken cocktails). The contrast between the serious caption and the humorous image adds to the humor.",,True
+newyorker,ef8b23c192fa9325a80a6bb0aa847c28,NYCC validation ef8b23c192fa9325a80a6bb0aa847c28,A,"<CB>
+
+Caption B is funnier because it plays on the irony of the situation—firefighters being asleep in their bunk while preparing to slide down poles. It creates a humorous contrast between the serious context of firefighting and the unexpected, absurdity of the scenario. The caption adds a twist that makes the image more amusing.
+
+</CB>",,False
+newyorker,09933edc3d9000f51d31ae5b3d7dc77c,NYCC validation 09933edc3d9000f51d31ae5b3d7dc77c,B,<B>,,True
+newyorker,ce2441ae8a19f10effdef9d812cabfb0,NYCC validation ce2441ae8a19f10effdef9d812cabfb0,B,"<CB>
+
+Caption B is funnier for this image. The caption ""They do say results will vary"" plays on the absurdity of the situation—someone is gesturing to something on a TV, and the other person is an older woman with lots of hair, making it difficult to see her face. The phrase ""results will vary"" adds a humorous twist, suggesting that the outcome of the gesture or the interaction is uncertain, which fits the bizarre and unexpected nature of the image.
+
+</CB>",,False
+newyorker,35e2f9562cddf17ab0c246b5f16af3bc,NYCC validation 35e2f9562cddf17ab0c246b5f16af3bc,A,"<CB>
+
+Caption A is funnier because it adds a humorous and exaggerated element to the scene—the sheep dogs talking to each other in a silly, repetitive manner, with the caption ""Ewe, ewe. ewe. That's all we ever talk about"" emphasizes the absurdity and lack of meaningful conversation. It creates a funny contrast with the huge, talking sheep dogs.
+
+<CB>",,False
+newyorker,0e3af52d3d18e30417986c4a33c9f39c,NYCC validation 0e3af52d3d18e30417986c4a33c9f39c,B,"<B>A</B> is funnier because it plays on the double meaning of ""grilled"" — referring to both cooking and being treated poorly at work — and adds a humorous twist with the mention of ""the office"" and ""the kids.""",,True
+newyorker,c37960a3515ceac9b2b646547f5830e8,NYCC validation c37960a3515ceac9b2b646547f5830e8,B,"<B>A</B> is funnier because it adds a humorous twist to the situation, making the image more engaging and unexpected. The caption plays on the idea of the grilled briefcase being ""so much better on Masterchef,"" which is a humorous contrast to the mundane setting of a backyard grill.",,True
+newyorker,f53590986a09b35214db04b54e137736,NYCC validation f53590986a09b35214db04b54e137736,B,<B>,,True
+newyorker,3e9e821c5a3bb0d074c296ee0b55a5e3,NYCC validation 3e9e821c5a3bb0d074c296ee0b55a5e3,A,"The caption that is funnier is <A>.
+
+**Reasoning:**  
+Caption A, ""I think they're toying with us,"" is funnier because it plays on the unexpected and potentially unsettling nature of the image—cowboys on rocking horses in the desert. It suggests a playful, perhaps even dangerous or mysterious interaction, which is more engaging and unexpected than Caption B, which is more literal and less humorous.
+
+Thus, <A> is funnier.",,True
+newyorker,05d21bbe4c6f7825199c96a1561d921f,NYCC validation 05d21bbe4c6f7825199c96a1561d921f,A,"<B>A</B> is funnier because it plays on the absurdity of the situation—two fish talking underwater, one of whom is just bones—while also adding a clever twist with the line ""He only wanted me for my body,"" which implies the fish is being used for a purpose (like a skeleton in a movie or a prop). Caption B is more literal and less humorous.",,False
+newyorker,a856920dc543a8ed190617e61539e710,NYCC validation a856920dc543a8ed190617e61539e710,A,"<CB>
+
+Caption B is funnier because it plays on the contrast between the couple's serious expression and the man's unusual appearance (colored claws), creating a humorous and unexpected situation. The reference to ""Maine"" adds a local, quirky touch that contrasts with the serious mood of the image.
+
+</CB>",,False
+newyorker,aa00333d49bcec6c54af306e36e1b68a,NYCC validation aa00333d49bcec6c54af306e36e1b68a,A,<B>,,False
+newyorker,25518f4362fe30474b5b13f4c211e1c1,NYCC validation 25518f4362fe30474b5b13f4c211e1c1,A,"<CAPTION B> is funnier because it plays with the idea of humor through the unexpected juxtaposition of a serious police interrogation with the clown makeup and balloon animal, creating a humorous contrast. The caption invites the viewer to laugh at the absurdity of the situation, making it more engaging and funny.",,False
+newyorker,c6ccf79d6bcb55c23922a33c4e825d86,NYCC validation c6ccf79d6bcb55c23922a33c4e825d86,A,"When analyzing the image and the captions, Caption B is funnier because it uses a more abstract and metaphorical approach, which contrasts with the more literal and straightforward tone of Caption A.
+
+Caption A is straightforward and even a bit ironic, as it suggests the man should find fire, which is a literal and potentially dangerous action. This makes it more direct and less humorous.
+
+Caption B, on the other hand, uses a metaphor (""reimagining"") to suggest that the man is ""reinventing"" himself, which is more abstract and less literal. It plays with the idea of transformation and creativity, making it more humorous and unexpected.
+
+Thus, the funnier caption is:
+
+<Б>",,False
+newyorker,bb76d4275e3e03ef83998c873d8221bf,NYCC validation bb76d4275e3e03ef83998c873d8221bf,B,<A>,,False
+newyorker,0b159ee32f3c02fcb453d5b9b91f31ba,NYCC validation 0b159ee32f3c02fcb453d5b9b91f31ba,B,"The caption that is funnier is <A>.
+
+**Reasoning:**  
+Caption A is more humorous because it uses a sarcastic and unexpected twist—""they'll try putting a Beagle in the truck""—which creates a surprising and funny contrast between the firefighters and the dog. It adds a playful, absurd element that makes the image funnier than Caption B, which is more serious and less humorous.",,False
+newyorker,abdb31ede530645f617a5f069c4084a2,NYCC validation abdb31ede530645f617a5f069c4084a2,B,"<CB>
+
+Caption B is funnier for this image. The caption ""They say jolliness skips a generation"" plays on the idea of a green giant rampaging through a city, suggesting a chaotic, joyful, or wild energy that might be seen as ""jolliness"" — a cheerful, lively energy. The phrase ""skips a generation"" adds a humorous twist, implying that this wild, aggressive behavior is not just typical, but perhaps even a new, unexpected form of joy or energy that skips over normal generational boundaries. It's a clever, ironic take on the image, making it more amusing and relatable.
+
+</CB>",,False
+newyorker,491214913b3b493297ef4f2ece08d53a,NYCC validation 491214913b3b493297ef4f2ece08d53a,A,"<CB>
+
+Caption B is funnier because it plays with the idea of downsizing and the unexpected twist of the entire 12th floor being downsized, creating a humorous contrast with the man's office setup. It adds a layer of absurdity and irony, making it more engaging and amusing.
+
+</CB>",,False
+newyorker,cd1dc047feeb9c6ee99e668d4e36fb04,NYCC validation cd1dc047feeb9c6ee99e668d4e36fb04,B,"<CAPTION B>
+
+Caption B is funnier because it plays on the irony of the situation—while the man is shot with arrows, he's complaining about his arthritis. It adds a humorous contrast between his injury and his health issue, making the caption more relatable and amusing. The other caption is more of a straightforward commentary on the show, which isn't as funny in this context.
+
+<Answer: B>",,False
+newyorker,06e0c88cfb9e56e58677eb1a18f8deca,NYCC validation 06e0c88cfb9e56e58677eb1a18f8deca,B,"<CB>
+
+Caption B is funnier because it plays on the classic ""Little Piggy"" joke, which is a well-known children's rhyme. The image shows a pig about to eat from a trough, which is a literal interpretation of the rhyme, making it humorous and relatable. Caption A is less funny because it's more abstract and doesn't directly relate to the image in a way that's easy to understand or laugh at.
+
+</CB>",,False
+newyorker,8d2538003895ef5719c746e52a4fd1a6,NYCC validation 8d2538003895ef5719c746e52a4fd1a6,A,"When looking at the image of two cowboys on chess pieces in the middle of a desert, with cheese pieces that resemble the knight (horse), the caption that is funnier would be **Caption B**.
+
+**Reasoning:**  
+Caption B, ""Ever feel like you're not in control?"" is more humorous because it plays on the absurdity of the situation—two cowboys on chess pieces in a desert, with cheese pieces that look like knights. It implies a situation where the cowboys are in a game of chess, but they're not in control, which is a funny twist on the idea of being ""not in control"" in a real-life context. The caption adds a layer of irony and humor by connecting the chess game to the feeling of being out of control in real life.
+
+So, the funnier caption is:
+
+<Б>",,False
+newyorker,2efa6821d2d6595e5e927e1c65ef9077,NYCC validation 2efa6821d2d6595e5e927e1c65ef9077,B,"<CAPTION B> is funnier for this image. 
+
+The caption plays on the absurdity of using dish soap as a form of product placement, blending humor with the unexpected and the ironic. It highlights the unexpected and absurdity of the situation, making it more humorous than Caption A, which is more direct and less ironic.",,False
+newyorker,5636ac685a1fe1e02e6608c6efbc88af,NYCC validation 5636ac685a1fe1e02e6608c6efbc88af,A,"The caption that is funnier for this image is <A>. 
+
+Caption A plays on the idea of a ""tab"" being picked up by someone invisible, which is a humorous and absurd situation, especially in the context of a bar or restaurant. It creates a funny contrast between the ""invisible man"" and the reality of paying for a meal. 
+
+Caption B is not funny in this context, as it talks about a recession, which is a serious economic topic and does not fit well with the image of people sitting at a bar.",,True
+newyorker,01b645d57ebc816ce2f29af5483b38db,NYCC validation 01b645d57ebc816ce2f29af5483b38db,A,"Looking at the image, the caption that is funnier is **Caption B**.
+
+Caption B plays on the idea of a scientist chasing funding and then being rewarded with a piece of cheese, which is a classic joke about perseverance and reward. It has a humorous, ironic twist that aligns well with the image of scientists in a lab, suggesting a playful or humorous scenario.
+
+< B >",,False
+newyorker,d72a4de4ccd33f6f20cabe9824a06abb,NYCC validation d72a4de4ccd33f6f20cabe9824a06abb,A,"<CB>
+
+Caption B is funnier because it adds a layer of humor by implying that the lawyer and client are discussing a ""killer strategy"" for handling a legal issue, which is not directly related to the image—tax evasion. It creates a humorous contrast between the serious legal context and the light-hearted, possibly absurd suggestion of a ""killer strategy."" 
+
+<CB>",,False
+newyorker,2276a048b2a175a6c39a61d5fe1c538d,NYCC validation 2276a048b2a175a6c39a61d5fe1c538d,B,<B>,,True
+newyorker,aa83b70a75b619466301c920b7d1a765,NYCC validation aa83b70a75b619466301c920b7d1a765,A,"When analyzing the image, the caption that is funnier would be **<B>**.
+
+**Reasoning:**  
+Caption B plays on the idea of the Founding Fathers intending for people to ""talk to one another"" and ""have a lot in common,"" which fits the scene of a group of people in a living room. The humor comes from the unexpected twist—someone is an animal. This creates a humorous contrast between the expected human interaction and the unexpected animal, making the caption more surprising and funny.
+
+Caption A is more of a factual statement about DNA and profession, which doesn't add the same level of surprise or humor.
+
+< B >",,False
+newyorker,115a64741baf8e5da2544ae910cbc7cc,NYCC validation 115a64741baf8e5da2544ae910cbc7cc,B,"<CB>
+
+Caption B is funnier because it plays on the irony of the situation—she's climbing a wall, yet she's reflecting on her career choices with a self-deprecating tone. It creates a humorous contrast between her physical activity and her internal reflection, making the humor more relatable and unexpected. 
+
+<CB>",,False
+newyorker,0602e1c864237ba0f95b39fc30635e39,NYCC validation 0602e1c864237ba0f95b39fc30635e39,B,<B>,,True
+newyorker,9bc96ebf3cb4ffce4bc342c32952e368,NYCC validation 9bc96ebf3cb4ffce4bc342c32952e368,B,< B >,,False
+newyorker,161579311782d470d9a7050a81a3357f,NYCC validation 161579311782d470d9a7050a81a3357f,A,"<E>Caption B is funnier because it plays on the absurdity of the situation—someone talking to a car on a couch, and the question about a warranty covering Prozac. It creates a humorous contrast between the mundane (a car on a couch) and the unexpected (a psychologicalist talking to a car). Caption A is more straightforward and less humorous.
+
+<B>",,False
+newyorker,77d08da4c93fd48c937143c3c055fcfa,NYCC validation 77d08da4c93fd48c937143c3c055fcfa,B,"<CB>
+
+Caption B is funnier because it creates a humorous contrast between the man walking into a bedroom and the woman in the bed, suggesting a playful or unexpected situation. The phrase ""He's not finished"" adds a twist, implying that the man is still in the process of something, which is both unexpected and amusing in the context of the image.
+
+</CB>",,False
+newyorker,c116fa39999be62b08d5a1540c0183df,NYCC validation c116fa39999be62b08d5a1540c0183df,A,"<CB>
+
+Caption B is funnier because it plays with the idea of a ""return policy"" in a humorous and unexpected way, adding a twist that makes the statement more amusing. The mention of ""grey"" and the ""path to a tighter butt"" creates a light-hearted, absurd contrast that is more amusing than Caption A, which is more direct and less humorous.
+
+</CB>",,False
+newyorker,95ffe4c475db103c0103be5ba932f0d9,NYCC validation 95ffe4c475db103c0103be5ba932f0d9,B,"<CB>
+
+Caption B is funnier because it adds a humorous twist to the situation, playing on the surprise and the unexpected nature of the fruit. The phrase ""Well, I'll be damned"" suggests disbelief or astonishment, which contrasts with the calm, almost innocent tone of the image. It creates a comedic contrast between the expected (a fruit) and the unexpected (a pie), making it more amusing.
+
+</CB>",,False
+newyorker,13e8af76efed4134c206f029ed863e79,NYCC validation 13e8af76efed4134c206f029ed863e79,A,"<CB>  
+<B>  
+</CB>",,False
+newyorker,3bb70947d86984aa327820322edbc8ea,NYCC validation 3bb70947d86984aa327820322edbc8ea,A,"When considering which caption is funnier, we look at the context and the humor in the situation. The image shows a man and a boy fishing, with the boy having caught a businessman. The captions offer contrasting reactions:
+
+- **Caption A** suggests the boy is ready to close the deal, which could be seen as a humorous take on the boy trying to ""sell"" the businessman or make a deal.
+- **Caption B** is more straightforward and less humorous, as it's a simple statement about having insurance.
+
+The humor in **Caption A** comes from the unexpected and possibly awkward situation of a boy trying to ""sell"" a businessman, which is both funny and ironic.
+
+<A>",,True
+newyorker,0f11874d3f0e99d8e477b308d92c567d,NYCC validation 0f11874d3f0e99d8e477b308d92c567d,B,"<CB>
+
+Caption B is funnier because it adds a humorous twist with the mention of an exterminator, creating a situation where the man is forced to leave the room, which contrasts with the calm image of the man watching TV. It adds a layer of absurdity and humor through the unexpected situation.
+
+</CB>",,False
+newyorker,d7105dbfea9a3906291b99ccd45ca11d,NYCC validation d7105dbfea9a3906291b99ccd45ca11d,B,"<CB>
+
+Caption B is funnier because it adds a humorous and unexpected twist to the situation, playing with the idea of the knight's ""small hands"" in a way that feels both absurd and relatable. It creates a light-hearted, ironic contrast between the knight's actions and the caption's playful tone.
+
+</CB>",,False
+newyorker,36444cb91166ac925a839677ad9a1a87,NYCC validation 36444cb91166ac925a839677ad9a1a87,B,"<CB>
+
+Caption B is funnier because it plays on the unexpected and humorous contrast between the doctor's routine task (listening to a patient's heart) and the unexpected situation (the doctor being ""getting a signal"" from the man beside him, implying a hidden message or secret). It adds a twist and a sense of humor through the absurdity of the situation.
+
+</CB>",,False
+newyorker,e54a756b4f6eb7e6ecaba5fff975a75a,NYCC validation e54a756b4f6eb7e6ecaba5fff975a75a,B,"Looking at the image, the caption that is funnier is **Caption B**. 
+
+Caption B plays on the word ""shlemesterol,"" which is a pun on ""cholesterol"" (a common food item) and ""shlemi"" (a Jewish term for a type of fish). It adds a humorous twist by making fun of the idea of eating cholesterol, which is a common joke in Jewish culture. The caption also includes a nod to André, a famous French comedian and actor, who was known for his humorous remarks.
+
+< B >",,False
+newyorker,ab1135a0867aca137f86197fdc977f8c,NYCC validation ab1135a0867aca137f86197fdc977f8c,A,"<CB>
+
+Caption B is funnier because it creates a humorous and unexpected situation—moving giant seats forward in an office—while Caption A is more abstract and less clear in its humor. The absurdity of moving ""giant seats"" in an office setting is more amusing and unexpected.
+
+</CB>",,False
+newyorker,b0f067ce6ad4d6782af94cff2afe1ee4,NYCC validation b0f067ce6ad4d6782af94cff2afe1ee4,A,"<CB>
+
+Caption B is funnier because it adds a humorous and unexpected twist to the scene—dancing in a field with the seven dwarfs while trying to get a photo for Instagram. It creates a sense of absurdity and relatability, making the situation more amusing.
+
+</CB>",,False
+newyorker,8cc744dd5d9e9aed5f0153a7e49b4d05,NYCC validation 8cc744dd5d9e9aed5f0153a7e49b4d05,B,<B>,,True
+newyorker,cb1401a42da4d98c137cc4d8f1a905d5,NYCC validation cb1401a42da4d98c137cc4d8f1a905d5,B,"<CB>
+
+Caption B is funnier because it plays with the absurdity of the situation—being held by a giant tentacle while trying to get shrimp for a ransom. It adds a humorous twist to the horror of the image, making the situation more amusing and unexpected.
+
+</CB>",,False
+newyorker,84b4c156b1067e829f7b89685fc68c85,NYCC validation 84b4c156b1067e829f7b89685fc68c85,A,"<CB>
+
+Caption B is funnier because it plays on the contrast between the serious police interrogation and the clown makeup and balloon animal, creating a humorous twist. The phrase ""Fess up now or I call in the mime"" adds a light-hearted, absurd element that contrasts with the serious scene, making it more amusing.
+
+</CB>",,False
+newyorker,d3b4dce1e5bb49fcfb47534c4a1c9763,NYCC validation d3b4dce1e5bb49fcfb47534c4a1c9763,A,<Ｂ>,,False
+newyorker,b2c69c3c1107eac224c130edadeffc4c,NYCC validation b2c69c3c1107eac224c130edadeffc4c,B,"<CB>
+
+Caption B is funnier because it plays with the word ""turduckant,"" which is a pun on ""turkey"" and ""duck,"" creating a humorous twist on a roasted chicken. It also adds an unexpected element—stuffed with an elephant—making the image both absurd and amusing.
+
+</CB>",,False
+newyorker,2288d5aa66d83c2ebbf58433b4c96999,NYCC validation 2288d5aa66d83c2ebbf58433b4c96999,A,"Looking at the image, the caption that is funnier is **Caption B**.
+
+**Reasoning:**  
+Caption B, ""Me? I am known as Tech Support,"" is funnier because it plays on the stereotype of superheroes being tech-savvy, and the contrast between the ""villains"" and the ""tech support"" persona. It adds a humorous twist by making the superheros or villains seem like regular people with a quirky, relatable twist.
+
+< B >",,False
+newyorker,354735bda76aa6b1049dc068563f7a3f,NYCC validation 354735bda76aa6b1049dc068563f7a3f,A,"<CB>
+
+Caption B is funnier because it plays with the idea of a giant tentacle, which is a common fantasy element in horror and sci-fi, and the phrase ""Ishmael is on his way"" adds a humorous twist by implying that the man is being rescued by a giant tentacle, which is both eerie and funny. Caption A is too literal and doesn't fit the image as well.
+
+</CB>",,False
+newyorker,8ab87a73680ba70abcd1fdc4267def58,NYCC validation 8ab87a73680ba70abcd1fdc4267def58,A,"The caption that is funnier is <A> It's out of the bag. 
+
+This caption is funnier because it plays on the unexpected and humorous contrast between the man watching TV and the cat looking in the window. The phrase ""It's out of the bag"" is a common idiom that implies something that has been revealed or is no longer hidden, which creates a funny twist in the scene.",,True
+newyorker,8e3aca565f88df21605dbe5c6108c0ef,NYCC validation 8e3aca565f88df21605dbe5c6108c0ef,B,"<CB>
+
+Caption B is funnier because it plays on the contrast between the doctor's ordinary, everyday setting (walking in a crowded street) and the unexpected, ironic twist of being ""from Doctors Without Offices,"" which suggests the doctor is not from a traditional office setting. It creates a humorous juxtaposition between the mundane and the unexpected, making it more amusing than Caption A, which is more straightforward and less ironic.
+
+</CB>",,False
+newyorker,d99442cb6c763370636698d477683f3f,NYCC validation d99442cb6c763370636698d477683f3f,B,"<B> is funnier because it plays on the absurdity of the situation—firefighters sliding down poles—while also asking a question about a fire location, which adds a humorous twist. Caption A is more of a statement and less funny in this context.",,True
+newyorker,08957c35c2e73440d4fc83f93636d26f,NYCC validation 08957c35c2e73440d4fc83f93636d26f,A,<A>,,True
+newyorker,8e1eb46b47bb7be3852307880a0cec01,NYCC validation 8e1eb46b47bb7be3852307880a0cec01,A,"<CB>
+
+Caption B is funnier because it plays with the unexpected twist of the situation—someone ""supposed to eat the moths"" while having a wide-open suitcase full of water and fish. It creates a humorous contradiction and a surprising twist, making it more amusing than Caption A, which is more straightforward and less unexpected.
+
+</CB>",,False
+newyorker,8db0dde544e02825e1653260330bce64,NYCC validation 8db0dde544e02825e1653260330bce64,B,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—sitting in a playpen and trying to keep insurance, which is highly unlikely. It highlights the irony and the ridiculousness of the scenario, making it more humorous than Caption A, which is more of a complaint about missing a recall notice.
+
+</CB>",,False
+newyorker,0eb5337bab98e46c811792525bbae63f,NYCC validation 0eb5337bab98e46c811792525bbae63f,A,"The caption that is funnier for this image is **<B>**.
+
+**Reasoning:**  
+Caption B plays on the word ""circus"" and ""mid-life crisis,"" creating a humorous contrast between the clown's role (as a performer) and the man's apparent mid-life crisis. It adds a twist by suggesting that the ""mid-life crisis"" is not about performance but about personal reflection, which is both ironic and funny.
+
+Caption A is more straightforward and less humorous in this context, as it focuses on the clown's ability to make the woman laugh, which is less funny in a situation where the man is paying the bill.
+
+<BO>",,False
+newyorker,8dc59c808dc47640328e71557ed546bb,NYCC validation 8dc59c808dc47640328e71557ed546bb,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—someone sitting at a table with a phone, holding all calls, while a vulture is perched in front of him. It creates a humorous contrast between the mundane (a man sitting at a table) and the unexpected (a vulture, and holding all calls). The word ""down-sizing"" adds a twist and a sense of irony, making it more amusing than Caption A, which is more straightforward and less humorous.
+
+</CB>",,False
+newyorker,e099ed8923bcf1a73dd84d027c58f36b,NYCC validation e099ed8923bcf1a73dd84d027c58f36b,B,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—using paper plates for a jury trial—creating a humorous contrast between the serious courtroom setting and the mundane, everyday item (paper plates). It highlights the irony and absurdity of the scene in a clever, unexpected way.
+
+</CB>",,False
+newyorker,8de0608aa38cba6362bdde597b6a317d,NYCC validation 8de0608aa38cba6362bdde597b6a317d,B,"<CB>
+
+Caption B is funnier because it plays on the unexpected and the absurdity of the situation—someone being ""put through"" by a hand with a sword bursting through a desk. It creates a humorous contrast between the expected calm of an office and the chaotic, unexpected action of a sword breaking through the desk. 
+
+</CB>",,False
+newyorker,35e85701110364b9f58c73bcdaf7a2f8,NYCC validation 35e85701110364b9f58c73bcdaf7a2f8,A,"<CB>
+
+Caption A is funnier because it plays on the unexpected twist of the image— a ""chocolate moose"" that is actually a large honey bottle shaped like a bear. It creates a humorous contrast between the expected (a bear) and the unexpected (a chocolate moose), adding a playful and unexpected twist.
+
+Caption B is less funny because it asks a question about knowing the way out, which doesn't match the image at all. It's more of a generic, unconnected question, and doesn't add the same level of surprise or humor.
+
+</CB>",,False
+newyorker,8d10076acddbaef0c0ad0283c73879bc,NYCC validation 8d10076acddbaef0c0ad0283c73879bc,B,<B>,,True
+newyorker,08e71b4f8b04bf866d4fabf6c6d54f82,NYCC validation 08e71b4f8b04bf866d4fabf6c6d54f82,A,"<CB>
+
+Caption B is funnier because it highlights the awkward and potentially offensive nature of the situation, which is more likely to elicit a laugh from the viewer. The contrast between the serious context (a corpse in a casket) and the awkward, possibly offensive comment adds to the humor.
+
+</CB>",,False
+newyorker,ac160b5d3149cb28be92443cee1a2de6,NYCC validation ac160b5d3149cb28be92443cee1a2de6,B,"The caption that is funnier is <B>:
+
+""I assume this is one of your easier assignments.""
+
+This caption is funnier because it plays on the idea of a ""easier assignment"" in a context where the image shows construction workers sitting on a high beam pole, with a grim reaper beside them. The humor comes from the contrast between the workers' apparent ease and the grim reaper's ominous presence, suggesting that the task might be more difficult or dangerous than it seems.",,True
+newyorker,2771a19efd2e4137d0b0d0c7d8f6552c,NYCC validation 2771a19efd2e4137d0b0d0c7d8f6552c,B,"Looking at the image, Caption A—""The coast is clear. Set the landmime""—is funnier because it plays on the absurdity of a ""landmime"" in a war zone. It's a humorous and unexpected twist on the concept of a mime, which is usually associated with performance art, not combat or danger. The caption adds a layer of irony and absurdity that contrasts with the grim, war-like scene in the image.
+
+<A>",,False
+newyorker,200186603eacc8c9f8e9e7c39cf706ba,NYCC validation 200186603eacc8c9f8e9e7c39cf706ba,B,<B>,,True
+newyorker,a496cf6d6671a1a2fc705bee96cf8084,NYCC validation a496cf6d6671a1a2fc705bee96cf8084,B,<Ｂ>,,False
+newyorker,6a316114759eea1d6fd341458d483c98,NYCC validation 6a316114759eea1d6fd341458d483c98,A,"<CB>
+
+Caption B is funnier because it plays on the irony of the situation—someone is ""reducing the carbon footprint at work"" while a dog is watching a naked man climb in through the window. It creates a humorous contrast between the environmental concern and the awkward, potentially inappropriate scene. The word ""again"" adds a bit of humor by implying that this is not the first time the action has happened.
+
+</CB>",,False
+newyorker,466e80090dc0ddfce306830edd03ba9b,NYCC validation 466e80090dc0ddfce306830edd03ba9b,A,"The caption that is funnier is <B>:
+
+**""It is time for a little philosophy.""**
+
+This caption is funnier because it plays on the absurdity of the situation—two men stranded in the desert next to a skull, one happy and one distraught. The caption suggests that the situation is a philosophical dilemma, which is both ironic and unexpected. It adds a layer of humor by turning a grim, existential scenario into something abstract and thought-provoking.",,False
+newyorker,7c112f04ea6e1679018177acd9c7500f,NYCC validation 7c112f04ea6e1679018177acd9c7500f,B,"Looking at the image of cowboys on rocking horses in the desert, Caption B seems funnier because it plays with the word ""grow up"" in a humorous and unexpected way. It contrasts the idea of growing up with the lighthearted, carefree image of cowboys on rocking horses, creating a funny juxtaposition.
+
+<B>",,True
+newyorker,0e3379e8dfbf37b0e34ad643034ee267,NYCC validation 0e3379e8dfbf37b0e34ad643034ee267,B,"The caption that is funnier is <A>.
+
+Caption A plays on the idea that the couple is not feeding the animals anything they wouldn't eat, which is a humorous twist on the idea of ""feeding the animals"" in a restaurant. It adds a layer of irony and humor by suggesting that the couple is not feeding the animals, but rather, they are feeding themselves, which is a clever and unexpected twist.
+
+Caption B is more of a cryptic or ominous statement, which is less humorous in tone.
+
+Therefore, <A> is funnier.",,False
+newyorker,7934332dd1561fa7e93478e2bdafaf40,NYCC validation 7934332dd1561fa7e93478e2bdafaf40,B,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—having a gravy boat docked at a wharf in a deli counter. It creates a humorous contrast between the mundane setting of a deli and the unexpected, absurd placement of the gravy boat. The word ""wharf"" adds an unexpected twist, making the caption more surprising and funny.
+
+</CB>",,False
+newyorker,2917514e8692e59b15c9a18706e35def,NYCC validation 2917514e8692e59b15c9a18706e35def,A,"<CB>
+
+Caption B is funnier. It plays on the absurdity of the situation—someone talking to a man in an office with owls perched on a desk—by implying that the conversation is irrelevant or unimportant. The phrase ""So who gives a hoot?"" adds a humorous twist by suggesting that the conversation is pointless, which contrasts with the serious setting of the image. Caption A is more straightforward and less humorous, focusing on a practical statement about the owls. Therefore, Caption B is funnier.
+
+</CB>",,False
+newyorker,e80deaccfbc0fb6b9966eae4a81b738c,NYCC validation e80deaccfbc0fb6b9966eae4a81b738c,A,<B>,,False
+newyorker,08d0b314c7f2f7248e6744653f6ffc75,NYCC validation 08d0b314c7f2f7248e6744653f6ffc75,A,"<CB>
+
+Caption B is funnier because it plays with the idea of ""Eat and Release"" as a program, which is a common initiative in fish conservation, and the image shows a fish that's just bones, which is a humorous twist on the idea of eating and releasing. Caption A is more neutral and doesn't add the same level of humor.
+
+</CB>",,False
+newyorker,3dbbd33e6e2004747f608954a2d95561,NYCC validation 3dbbd33e6e2004747f608954a2d95561,A,"The caption that is funnier is <A>.
+
+**Reasoning:**  
+Caption A, ""He said the patent expired,"" is funnier because it plays on the absurdity of a man in another room considering a giant donut, implying he's either completely oblivious or in a bizarre, humorous state. It adds a layer of confusion and absurdity that makes the image more amusing. Caption B, ""He's become such a stoner,"" is less funny because it's more of a straightforward statement without the same level of unexpected humor.",,True
+newyorker,53fcc05af501e10348309cd86d2f996e,NYCC validation 53fcc05af501e10348309cd86d2f996e,B,"Looking at the image, the caption that is funnier is **Caption A**.
+
+**Reasoning:**  
+Caption A says, *""He came in with a splinter and then he sat in Helen's chair.""*  
+This is funny because it's a humorous and unexpected twist—someone coming in with a splinter and then sitting in a chair that's meant for someone else. It's a light-hearted, ironic joke about someone being ""uninvolved"" or ""unhelpful"" in a situation where they're supposed to be helping.
+
+Caption B says, *""I hear he's got 100 percent coverage ... parts and labor.""*  
+This is more of a factual or technical statement, and while it could be funny in a dry, informative way, it doesn't add the same level of surprise or humor as Caption A.
+
+So, <A> is funnier.",,False
+newyorker,72eeb3b892d3374f61de177a1dbde5e3,NYCC validation 72eeb3b892d3374f61de177a1dbde5e3,A,"<CB>
+
+Caption B is funnier because it plays on the absurdity of the situation—someone trying to take the ""cheapest overnight flight"" and then using FedEx, which is a much more expensive service. It creates a humorous contrast between the low-cost suggestion and the high-cost response, making the image more amusing.
+
+</CB>",,False
+newyorker,09928bf0cbba50d2a805ed48a4bd6098,NYCC validation 09928bf0cbba50d2a805ed48a4bd6098,A,"<CB>
+
+Caption B is funnier because it plays on the contrast between the serious topic of CPR and the lighthearted, everyday context of ice skating. It adds a humorous twist by suggesting that the lifeguard is a ""lifeguard"" in the sense of being a ""lifeguard"" in the skating rink, which is a funny and unexpected twist on the actual job. It also adds a personal, relatable tone that makes the humor more relatable and engaging.
+
+</CB>",,False
+newyorker,c311768fcc7ee7f35142169c7c57b9dc,NYCC validation c311768fcc7ee7f35142169c7c57b9dc,A,"Looking at the image, Caption B is funnier because it plays on the unexpected and absurdity of the situation. It uses a rhetorical question that creates a humorous contrast between the man's situation and the expected reaction—saying anything could lead to something ridiculous.
+
+< B >",,False
+newyorker,6fb0887ae703e2e7e5c1ae5edaa8d863,NYCC validation 6fb0887ae703e2e7e5c1ae5edaa8d863,B,<B>,,True
+newyorker,e12119096bee28fff42f28010b23ad20,NYCC validation e12119096bee28fff42f28010b23ad20,A,"<CB>
+
+Caption B is funnier because it plays with the absurdity of the situation—being inside a giant creature and not being recognized as an endangered species. It adds a humorous twist to the image by highlighting the irony and the unexpected nature of the environment.
+
+</CB>",,False
+newyorker,cc2bfd6c0ccce34052ab6b3520744b54,NYCC validation cc2bfd6c0ccce34052ab6b3520744b54,A,"The caption **B** (""I'm gonna check ya and I'm gonna check ya REAL SLOW"") is funnier because it plays on the idea of a chess game, specifically the **king's move**—the **castling** move, which involves a **rook** moving to the king's side. The caption uses the word **""check""** in a humorous way, implying that the cowboys are playing chess and are trying to ""check"" each other, but in a **slow, deliberate** manner, which is both funny and absurd.
+
+Caption **A** (""Did you hear the one about the bishop and the queen?"") is more of a **puzzle** or **riddle** type of joke, which is less humorous in this context.
+
+Therefore, the funnier caption is:
+
+<Б>",,False
+newyorker,cdce133a5031acef25943f676d309f1a,NYCC validation cdce133a5031acef25943f676d309f1a,A,"<CB>
+
+Caption B is funnier. The image shows a man in a suit talking to grim reapers, which is a classic ""pandemic"" scenario. The caption ""Pandemic? What Pandemic?"" highlights the absurdity of the situation, making it more humorous than Caption A, which is a straightforward comment. The humor in Caption B comes from the unexpected and ridiculous scenario presented in the image.
+</CB>",,False
+newyorker,e8f75ffefe0d90aca99bb43094d9a115,NYCC validation e8f75ffefe0d90aca99bb43094d9a115,B,"<CB>
+
+Caption B is funnier because it uses a humorous self-deprecating tone and plays with the idea of being a ""fitness guru"" while the other man is on a yoga ball, creating a funny contrast and a light-hearted, humorous image.
+
+</CB>",,False
+newyorker,cd88cacd2cc781faaa7eab86b3e2a252,NYCC validation cd88cacd2cc781faaa7eab86b3e2a252,B,"<CB>
+
+Caption B is funnier because it plays on the unexpected and the irony of the situation—someone asking about family history while being laid behind a coffin. It creates a humorous contrast between the normal and the bizarre, making it more amusing than Caption A, which is more straightforward and less ironic.
+
+</CB>",,False
+newyorker,88100c811591f72bf13d712ce306e81f,NYCC validation 88100c811591f72bf13d712ce306e81f,A,"Looking at the image, Caption A is more likely to be funnier. It plays on the idea of a man being the last person to use the key to the men's room, which is a humorous and unexpected situation. The humor comes from the absurdity of being the last person to use a key in a large office, which is a funny twist on a typical office scenario.
+
+Caption B is more of a trivial or ironic statement, but it doesn't create as much of a humorous or unexpected situation as Caption A.
+
+< A >",,False

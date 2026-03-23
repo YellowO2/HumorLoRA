@@ -4,7 +4,7 @@ import pandas as pd
 from datasets import load_dataset, load_from_disk
 
 
-OUTPUT_DIR = Path("datasets/newyorker")
+OUTPUT_DIR = Path(__file__).parent.parent.parent / "datasets" / "newyorker"
 RAW_DIR = OUTPUT_DIR / "raw"
 PREPARED_DIR = OUTPUT_DIR
 TASK = "ranking"
@@ -30,7 +30,7 @@ def normalize_row(row: dict, split: str) -> dict:
         "winner_source": row["winner_source"],
         "image_description": row.get("image_description"),
         "image_uncanny_description" : row.get("image_uncanny_description", ""),
-        
+        "from_description": row.get("from_description", ""),
     }
 
 

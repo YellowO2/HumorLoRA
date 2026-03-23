@@ -1,8 +1,39 @@
-model,output_file,accuracy_percent,correct,total,input_dataset_file
-qwen3:14b,llm_eval_qwen3-14b_m3yqj0ru.csv,newyorker_validation_fold0.csv,60.0,90,150,newyorker_validation_fold0.csv
-qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_egiiv_mu.csv,newyorker_validation_fold0.csv,52.0,78,150,newyorker_validation_fold0.csv
-qwen3:8b,llm_eval_qwen3-8b_254an0c7.csv,newyorker_validation_fold0.csv,55.333,83,150,newyorker_validation_fold0.csv
-qwen3:32b,llm_eval_qwen3-32b_pfom4c3_.csv,newyorker_validation_fold0.csv,62.0,93,150,newyorker_validation_fold0.csv
-qwen3:1.7b,llm_eval_qwen3-1.7b_5mm0pebm.csv,newyorker_validation_fold0.csv,60.0,90,150,newyorker_validation_fold0.csv
-qwen3:1.7b,llm_eval_qwen3-1.7b_pqe0ngcb.csv,newyorker_validation_fold0.csv,59.333,89,150,newyorker_validation_fold0.csv
-qwen3:1.7b,llm_eval_qwen3-1.7b_mivnc0xy.csv,newyorker_validation_fold0.csv,60.0,90,150,newyorker_validation_fold0.csv
+model,output_file,input_dataset_file,accuracy_percent,correct,total,output_instruction
+qwen3:1.7b,llm_eval_qwen3-1.7b_neco692u.csv,newyorker_validation_fold0,51.333,77,150,"Wrap your final answer in <> tags, like <A> or <B>."
+qwen3:1.7b,llm_eval_qwen3-1.7b_5u1k_eed.csv,newyorker_validation_fold0,22.667,34,150,"Think about what makes it funny, then wrap your final answer in <> tags, like <A> or <B>."
+qwen3:1.7b,llm_eval_qwen3-1.7b_9_y4asny.csv,newyorker_validation_fold0,36.667,55,150,"Wrap your final answer in <> tags, like Caption <A> or Caption <B>."
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_izat_oih.csv,newyorker_validation_fold0,48.0,72,150,"Wrap your final answer in <> tags, like <A> or <B>."
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_hjpu1byg.csv,newyorker_validation_fold0,47.333,71,150,Reply with either <A> or <B>.
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_9hcyh8k_.csv,newyorker_validation_fold0,52.667,79,150,Reply with either <A> or <B>.
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct__x6qeuwp.csv,newyorker_validation_fold1,56.0,84,150,Reply with either <A> or <B>.
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_z7zy8mz_.csv,newyorker_validation_fold1,58.0,87,150,Reply with either <A> or <B>.
+
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_i8x_njfv.csv,newyorker_validation_fold0,55.667,167,300,Reply with either <A> or <B>.
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_22dn2ym2.csv,newyorker_validation_fold0,50.0,150,300,Reply with either <A> or <B>.
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_cssax3zr.csv,newyorker_validation_fold1,50.0,150,300,Reply with either <A> or <B>.
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_qmnyj1uq.csv,newyorker_validation_fold2,55.333,166,300,Reply with either <A> or <B>.
+qwen3:4b-instruct,llm_eval_qwen3-4b-instruct_wikyfw73.csv,newyorker_validation_fold2,53.667,161,300,Reply with either <A> or <B>.
+qwen3:8b,llm_eval_qwen3-8b_lx4tfvfl.csv,newyorker_validation_fold0,55.25,221,400,Reply with either <A> or <B>.
+qwen3:8b,llm_eval_qwen3-8b_f051mxry.csv,newyorker_validation_fold1,54.5,218,400,Reply with either <A> or <B>.
+qwen3:8b,llm_eval_qwen3-8b_4j24ri0_.csv,newyorker_validation_fold2,57.0,228,400,Reply with either <A> or <B>.
+qwen3:8b,llm_eval_qwen3-8b_u38nvssd.csv,newyorker_validation_fold3,58.25,233,400,Reply with either <A> or <B>.
+qwen3:14b,llm_eval_qwen3-14b_o27uxp3l.csv,newyorker_validation_fold0,57.0,228,400,Reply with either <A> or <B>.
+qwen3:14b,llm_eval_qwen3-14b_wulsitrx.csv,newyorker_validation_fold1,56.25,225,400,Reply with either <A> or <B>.
+qwen3:14b,llm_eval_qwen3-14b_fmjs7uy4.csv,newyorker_validation_fold2,56.0,224,400,Reply with either <A> or <B>.
+qwen3:14b,llm_eval_qwen3-14b_t6wz1on6.csv,newyorker_validation_fold3,56.5,226,400,Reply with either <A> or <B>.
+qwen3:32b,llm_eval_qwen3-32b_g96dqqhm.csv,newyorker_validation_fold0,54.0,216,400,Reply with either <A> or <B>.
+qwen3:32b,llm_eval_qwen3-32b_j5m28bre.csv,newyorker_validation_fold1,58.75,235,400,Reply with either <A> or <B>.
+qwen3:32b,llm_eval_qwen3-32b__rutkuzx.csv,newyorker_validation_fold2,59.0,236,400,Reply with either <A> or <B>.
+qwen3:32b,llm_eval_qwen3-32b_vw2azcum.csv,newyorker_validation_fold3,58.25,233,400,Reply with either <A> or <B>.
+qwen3:8b,llm_eval_qwen3-8b_9ek1pr58.csv,newyorker_validation_fold0,56.0,224,400,Reply with either <A> or <B>.
+qwen3:8b,llm_eval_qwen3-8b_mejnr36x.csv,newyorker_validation_fold1,58.0,232,400,Reply with either <A> or <B>.
+qwen3:8b,llm_eval_qwen3-8b_g4_i7k7y.csv,newyorker_validation_fold2,55.0,220,400,Reply with either <A> or <B>.
+qwen3:8b,llm_eval_qwen3-8b_i8x1v8cd.csv,newyorker_validation_fold3,55.75,223,400,Reply with either <A> or <B>.
+qwen3:14b,llm_eval_qwen3-14b_j9uw6hg9.csv,newyorker_validation_fold0,58.0,232,400,Reply with either <A> or <B>.
+qwen3:14b,llm_eval_qwen3-14b_tw_4h7s6.csv,newyorker_validation_fold1,60.0,240,400,Reply with either <A> or <B>.
+qwen3:14b,llm_eval_qwen3-14b_03h3jaf9.csv,newyorker_validation_fold2,54.5,218,400,Reply with either <A> or <B>.
+qwen3:14b,llm_eval_qwen3-14b_4p4vwe5d.csv,newyorker_validation_fold3,56.0,224,400,Reply with either <A> or <B>.
+qwen3:32b,llm_eval_qwen3-32b_30i9htyp.csv,newyorker_validation_fold0,55.0,220,400,Reply with either <A> or <B>.
+qwen3:32b,llm_eval_qwen3-32b_k1m59q5w.csv,newyorker_validation_fold1,60.75,243,400,Reply with either <A> or <B>.
+qwen3:32b,llm_eval_qwen3-32b_fac9o4s0.csv,newyorker_validation_fold2,56.5,226,400,Reply with either <A> or <B>.
+qwen3:32b,llm_eval_qwen3-32b_ggzj4nhg.csv,newyorker_validation_fold3,57.0,228,400,Reply with either <A> or <B>.
