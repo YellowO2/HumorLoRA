@@ -1,4 +1,0 @@
-fold,sample_id,expected,prediction,is_correct,raw_response,thinking
-0,fde4151fcca492b42336d3a3dfe8e0dc,B,B,True,B,
-0,1214b37425713590e915e3af0b1e6e6a,B,B,True,B,
-0,953ca7ee0c0673ebc51e6147f68f0233,A,B,False,B,

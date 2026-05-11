@@ -5,11 +5,11 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).parent))
-from interact import ask
+from interact import ask, unload
 
 # ── Config ────────────────────────────────────────────────────────────────────
-MODELS     = ["gemma4:e2b", "gemma4:e4b", "qwen3:4b", "qwen3.5:9b"]
-N_EXAMPLES = 3  # total examples to evaluate, None for all (~2600 available)
+MODELS     = ["gemma4:e2b", "gemma4:e4b", "qwen3.5:9b", "qwen3:4b"]
+N_EXAMPLES = 2600  # total examples to evaluate, None for all (~2600 available)
 THINK      = False
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -58,16 +58,13 @@ def load_examples() -> pd.DataFrame:
 def append_summary(model: str, results: list[dict], timestamp: str) -> None:
     summary_path = RESULTS_DIR / "summary.csv"
     df = pd.DataFrame(results)
-    row: dict = {"model": model, "timestamp": timestamp, "n_examples": len(df)}
-
-    for fold in sorted(df["fold"].unique()):
-        fold_df = df[df["fold"] == fold]
-        acc = fold_df["is_correct"].mean() * 100
-        row[f"fold{fold}_acc"] = round(acc, 1)
-
-    row["overall_acc"] = round(df["is_correct"].mean() * 100, 1)
-    row["unknown_count"] = (df["prediction"] == "UNKNOWN").sum()
-
+    row = {
+        "model": model,
+        "timestamp": timestamp,
+        "n_examples": len(df),
+        "overall_acc": round(df["is_correct"].mean() * 100, 1),
+        "unknown_count": int((df["prediction"] == "UNKNOWN").sum()),
+    }
     summary_df = pd.DataFrame([row])
     if summary_path.exists():
         summary_df.to_csv(summary_path, mode="a", header=False, index=False)
@@ -110,6 +107,8 @@ def run_test(model: str, examples: pd.DataFrame) -> None:
     print(f"\n{model} overall: {correct}/{len(results)} = {correct/len(results)*100:.1f}%")
     print(f"Results saved to {out_path}")
     append_summary(model, results, timestamp)
+    unload(model)
+    print(f"Unloaded {model} from VRAM")
 
 
 def main():
