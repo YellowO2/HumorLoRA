@@ -5,11 +5,16 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).parent))
-from interact import ask, unload
+from interact import LocalModel, ask, unload
+
+CHECKPOINT = str(Path(__file__).parent.parent / "outputs" / "gemma4-e2b-discord" / "checkpoint-4011")
 
 # ── Config ────────────────────────────────────────────────────────────────────
-MODELS     = ["gemma4:e2b", "gemma4:e4b", "qwen3.5:9b", "qwen3:4b"]
-N_EXAMPLES = 2600  # total examples to evaluate, None for all (~2600 available)
+MODELS = [
+    LocalModel("gemma4-e2b-discord", CHECKPOINT),
+    # "gemma4:e2b", "gemma4:e4b", "qwen3:4b", "qwen3.5:9b",
+]
+N_EXAMPLES = 5  # total examples to evaluate, None for all (~2600 available)
 THINK      = False
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -73,19 +78,22 @@ def append_summary(model: str, results: list[dict], timestamp: str) -> None:
     print(f"Summary updated at {summary_path}")
 
 
-def run_test(model: str, examples: pd.DataFrame) -> None:
+def run_test(model, examples: pd.DataFrame) -> None:
+    is_local = isinstance(model, LocalModel)
+    model_name = model.name if is_local else model
+
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    out_path = RESULTS_DIR / f"{model.replace(':', '_')}_{timestamp}.csv"
+    out_path = RESULTS_DIR / f"{model_name.replace(':', '_')}_{timestamp}.csv"
 
     print(f"\n{'='*60}")
-    print(f"Model: {model}  |  {len(examples)} examples")
+    print(f"Model: {model_name}  |  {len(examples)} examples")
     print(f"{'='*60}")
 
     results = []
     for i, row in enumerate(examples.itertuples()):
         prompt = build_prompt(row._asdict())
-        out = ask(prompt, model=model, think=THINK)
+        out = model.ask(prompt, think=THINK) if is_local else ask(prompt, model=model, think=THINK)
         prediction = parse_response(out["content"])
         expected = str(row.expected).strip().upper()
         is_correct = prediction == expected
@@ -104,11 +112,11 @@ def run_test(model: str, examples: pd.DataFrame) -> None:
 
     pd.DataFrame(results).to_csv(out_path, index=False)
     correct = sum(r["is_correct"] for r in results)
-    print(f"\n{model} overall: {correct}/{len(results)} = {correct/len(results)*100:.1f}%")
+    print(f"\n{model_name} overall: {correct}/{len(results)} = {correct/len(results)*100:.1f}%")
     print(f"Results saved to {out_path}")
-    append_summary(model, results, timestamp)
-    unload(model)
-    print(f"Unloaded {model} from VRAM")
+    append_summary(model_name, results, timestamp)
+    model.unload() if is_local else unload(model)
+    print(f"Unloaded {model_name} from VRAM")
 
 
 def main():

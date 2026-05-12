@@ -3,3 +3,5 @@ __pycache__
 .env
 .venv
 datasets/newyorker/raw
+outputs
+old_reference

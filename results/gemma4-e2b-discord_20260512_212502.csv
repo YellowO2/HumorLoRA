@@ -1,0 +1,6 @@
+fold,sample_id,expected,prediction,is_correct,raw_response,thinking
+0,fde4151fcca492b42336d3a3dfe8e0dc,B,A,False,A,
+0,1214b37425713590e915e3af0b1e6e6a,B,A,False,A,
+0,953ca7ee0c0673ebc51e6147f68f0233,A,A,True,A,
+0,b8ecd62018bbd057aaa22277ed24fd68,B,A,False,A,
+0,ce15e7d5a2b0446c455a20b2f97e72a1,B,A,False,A,
