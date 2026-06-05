@@ -112,11 +112,23 @@ Export Qwen to GGUF / Ollama:
 
 
 ## Next steps
+- SFT is the wrong tool — pivoting to DPO.
 
-- Qwen 9B: trained and exported to Ollama (`qwen9b-discord`). Still needs the
-  NYCC eval run to get its post-SFT accuracy.
-- The real fix for the accuracy drop is task alignment, not more chat SFT:
-    1. Fine-tune directly on the NYCC preference task (A/B labels), OR
-    2. Try DPO using NYCC preference pairs (chosen = funnier caption,
-       rejected = the other). This matches the eval objective directly and
-       is the most promising direction.
+### DPO direction
+
+Hypothesis: training the model to prefer human-style responses over AI-style
+responses (human alignment) will nudge its internal "taste" closer to human
+judgment, which should transfer to unseen human preference tasks like NYCC
+humor selection.
+
+Key principle: train and test on DIFFERENT datasets (cross-dataset transfer).
+Training on NYCC directly would just be memorization, not alignment.
+
+Training script: training/train_dpo_qwen9b_degpt.py
+Dataset: qingy2024/De-GPT-DPO (44.7k pairs)
+  chosen   = real human-written Reddit response (short, casual, direct)
+  rejected = AI/GPT-style response (verbose, structured, formal)
+
+Eval: run_eval.py on NYCC after DPO — does human-alignment transfer to
+humor preference judgment?
+
