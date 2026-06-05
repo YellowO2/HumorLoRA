@@ -38,16 +38,24 @@ class LocalModel:
         tokenizer = get_chat_template(tokenizer, chat_template="gemma-4")
         FastLanguageModel.for_inference(model)
         self._model = model
-        # use the underlying text tokenizer, not the multimodal processor
+        self._tokenizer = tokenizer  # full tokenizer with apply_chat_template
+        # use the underlying text tokenizer for encoding/decoding raw tokens
         self._tok = tokenizer.tokenizer if hasattr(tokenizer, "tokenizer") else tokenizer
 
-    def ask(self, prompt: str, think: bool = False) -> dict:
-        text = f"<bos><|turn>user\n{prompt}<turn|>\n<|turn>model\n"
+    def ask(self, prompt: str, think: bool = False, history: list = None, max_new_tokens: int = 512) -> dict:
+        # Build messages list: prior history + new user turn
+        messages = list(history) if history else []
+        messages.append({"role": "user", "content": prompt})
+        text = self._tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True,
+        )
         inputs = self._tok(text, return_tensors="pt").to("cuda")
         with torch.no_grad():
             out = self._model.generate(
                 **inputs,
-                max_new_tokens=64,
+                max_new_tokens=max_new_tokens,
                 use_cache=True,
                 do_sample=False,
             )
@@ -58,6 +66,7 @@ class LocalModel:
     def unload(self) -> None:
         del self._model
         del self._tok
+        del self._tokenizer
         import gc
         gc.collect()
         torch.cuda.empty_cache()

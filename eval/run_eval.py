@@ -96,7 +96,7 @@ def run_test(model, examples: pd.DataFrame) -> None:
     results = []
     for i, row in enumerate(examples.itertuples()):
         prompt = build_prompt(row._asdict())
-        out = model.ask(prompt, think=THINK) if is_local else ask(prompt, model=model, think=THINK)
+        out = model.ask(prompt, think=THINK, max_new_tokens=64) if is_local else ask(prompt, model=model, think=THINK)
         prediction = parse_response(out["content"])
         expected = str(row.expected).strip().upper()
         is_correct = prediction == expected

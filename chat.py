@@ -21,6 +21,7 @@ def main():
     model = LocalModel(model_key, checkpoint)
     print("Ready. Type your message and press Enter. Ctrl+C or 'quit' to exit.\n")
 
+    history = []
     while True:
         try:
             user_input = input("You: ").strip()
@@ -32,8 +33,11 @@ def main():
             print("Bye.")
             break
 
-        result = model.ask(user_input)
-        print(f"Model: {result['content']}\n")
+        result = model.ask(user_input, history=history)
+        reply = result["content"]
+        history.append({"role": "user", "content": user_input})
+        history.append({"role": "assistant", "content": reply})
+        print(f"Model: {reply}\n")
 
 
 if __name__ == "__main__":
