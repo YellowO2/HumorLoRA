@@ -58,4 +58,6 @@ class LocalModel:
     def unload(self) -> None:
         del self._model
         del self._tok
+        import gc
+        gc.collect()
         torch.cuda.empty_cache()

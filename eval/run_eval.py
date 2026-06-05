@@ -7,14 +7,17 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).parent))
 from interact import LocalModel, ask, unload
 
-CHECKPOINT = str(Path(__file__).parent.parent / "outputs" / "gemma4-e2b-discord" / "checkpoint-4011")
+OUTPUTS_DIR = Path(__file__).parent.parent / "outputs"
 
 # ── Config ────────────────────────────────────────────────────────────────────
+# Local models are stored as (name, checkpoint) tuples and loaded one at a time
+# to avoid VRAM pressure from having multiple models resident simultaneously.
 MODELS = [
-    LocalModel("gemma4-e2b-discord", CHECKPOINT),
+    # ("gemma4-e2b-discord", str(OUTPUTS_DIR / "gemma4-e2b-discord" / "checkpoint-4011")),
+    ("gemma4-e4b-discord", str(OUTPUTS_DIR / "gemma4-e4b-discord" / "checkpoint-4011")),
     # "gemma4:e2b", "gemma4:e4b", "qwen3:4b", "qwen3.5:9b",
 ]
-N_EXAMPLES = 5  # total examples to evaluate, None for all (~2600 available)
+N_EXAMPLES = None  # total examples to evaluate, None for all (~2600 available)
 THINK      = False
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -122,7 +125,12 @@ def run_test(model, examples: pd.DataFrame) -> None:
 def main():
     examples = load_examples()
     print(f"Loaded {len(examples)} examples across {examples['fold'].nunique()} folds")
-    for model in MODELS:
+    for model_spec in MODELS:
+        if isinstance(model_spec, tuple):
+            name, checkpoint = model_spec
+            model = LocalModel(name, checkpoint)
+        else:
+            model = model_spec
         run_test(model, examples)
 
 
