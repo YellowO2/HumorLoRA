@@ -1,0 +1,11 @@
+fold,sample_id,expected,prediction,is_correct,raw_response,thinking
+0,fde4151fcca492b42336d3a3dfe8e0dc,B,B,True,<answer>B</answer>,
+0,1214b37425713590e915e3af0b1e6e6a,B,B,True,<answer>B</answer>,
+0,953ca7ee0c0673ebc51e6147f68f0233,A,B,False,<answer>B</answer>,
+0,b8ecd62018bbd057aaa22277ed24fd68,B,B,True,<answer>B</answer>,
+0,ce15e7d5a2b0446c455a20b2f97e72a1,B,B,True,<answer>B</answer>,
+0,71c3de544184b953bb9c5cd0660e7574,B,A,False,<answer>A</answer>,
+0,bba482e3fb83f469575fd8706f39dc4c,A,A,True,<answer>A</answer>,
+0,004a0d86afd22c6e8b30b384b73595c1,B,B,True,<answer>B</answer>,
+0,3156dfd78b55850670c84341bdc764ee,B,B,True,<answer>B</answer>,
+0,24acecce90ff5aa46459a6488fbb2f58,B,B,True,<answer>B</answer>,

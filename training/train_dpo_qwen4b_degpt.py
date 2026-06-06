@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# DPO Fine-tuning: Qwen 3.5 9B on De-GPT-DPO (human vs AI preference)
+# DPO Fine-tuning: Qwen 3.5 4B on De-GPT-DPO (human vs AI preference)
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Hypothesis: nudging the model to prefer human-style responses over AI-style
@@ -18,8 +18,8 @@ import torch
 os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 from unsloth import FastLanguageModel
 
-MODEL_ID    = "unsloth/Qwen3.5-9B"
-MAX_SEQ_LEN = 1024   # 2048 OOMs on long rejected responses (De-GPT is verbose); 1024 halves peak memory
+MODEL_ID    = "unsloth/Qwen3.5-4B"
+MAX_SEQ_LEN = 512
 LORA_RANK   = 16
 
 model, tokenizer = FastLanguageModel.from_pretrained(
@@ -52,7 +52,6 @@ raw = load_dataset("qingy2024/De-GPT-DPO", split="train")
 
 
 def to_pair(example):
-    # chosen/rejected are lists of {role, content} dicts; last entry is assistant
     chosen_text   = example["chosen"][-1]["content"]
     rejected_text = example["rejected"][-1]["content"]
     return {
@@ -62,7 +61,7 @@ def to_pair(example):
     }
 
 
-dataset = raw.map(to_pair, remove_columns=raw.column_names)
+dataset = raw.map(to_pair, remove_columns=raw.column_names).select(range(5000))
 print(f"DPO pairs: {len(dataset)}")
 
 # ── Section 3: Trainer Config ─────────────────────────────────────────────────
@@ -72,17 +71,17 @@ from trl import DPOConfig, DPOTrainer
 from unsloth import PatchDPOTrainer
 PatchDPOTrainer()
 
-OUTPUT_DIR = str(Path(__file__).parent.parent / "outputs" / "qwen9b-degpt-dpo")
+OUTPUT_DIR = str(Path(__file__).parent.parent / "outputs" / "qwen4b-degpt-dpo")
 
 trainer = DPOTrainer(
     model=model,
-    ref_model=None,                          # PEFT: frozen base acts as ref
+    ref_model=None,
     tokenizer=tokenizer,
     train_dataset=dataset,
     args=DPOConfig(
         output_dir=OUTPUT_DIR,
         per_device_train_batch_size=1,
-        gradient_accumulation_steps=8,        # effective batch size = 8
+        gradient_accumulation_steps=8,
         num_train_epochs=1,
         learning_rate=5e-6,
         beta=0.1,
@@ -101,15 +100,15 @@ trainer = DPOTrainer(
 )
 
 # ── Section 4: Training ───────────────────────────────────────────────────────
-RESUME = str(Path(__file__).parent.parent / "outputs" / "qwen9b-degpt-dpo" / "checkpoint-500")
+RESUME = str(Path(__file__).parent.parent / "outputs" / "qwen4b-degpt-dpo" / "checkpoint-500")  # ~2500 total steps
 stats = trainer.train(resume_from_checkpoint=RESUME if Path(RESUME).exists() else None)
 print(f"Training done. Final loss: {stats.training_loss:.4f}")
 
 # ── Section 5: GGUF Export ────────────────────────────────────────────────────
-GGUF_DIR = str(Path(__file__).parent.parent / "outputs" / "qwen9b-degpt-dpo-export")
+GGUF_DIR = str(Path(__file__).parent.parent / "outputs" / "qwen4b-degpt-dpo-export")
 try:
     model.save_pretrained_gguf(GGUF_DIR, tokenizer, quantization_method="q4_k_m")
     print(f"GGUF exported to {GGUF_DIR}_gguf")
-    print(f"  ollama create qwen9b-degpt-dpo -f {GGUF_DIR}_gguf/Modelfile")
+    print(f"  ollama create qwen4b-degpt-dpo -f {GGUF_DIR}_gguf/Modelfile")
 except Exception as e:
     print(f"GGUF export failed (expected, see README): {e}")

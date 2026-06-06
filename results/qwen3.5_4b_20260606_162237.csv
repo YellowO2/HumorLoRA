@@ -1,0 +1,39 @@
+fold,sample_id,expected,prediction,is_correct,raw_response,thinking
+0,fde4151fcca492b42336d3a3dfe8e0dc,B,A,False,"Caption A is funny because it relies on the absurdity of a mouse having a romantic relationship with a human waitress, creating a surreal and unexpected twist on the mundane scene.
+
+Caption B is funny because it plays on the common fear of being ""tricked"" by a cheese board, but the humor is muted since a mouse would actually love cheese, making the joke feel slightly forced and less surprising.
+
+<answer>A</answer>",
+0,1214b37425713590e915e3af0b1e6e6a,B,A,False,"Caption A is funny because it uses the word ""cyclical"" to imply the absurdity of the situation is just a repeating, illogical pattern of human stupidity.
+Caption B is funny because it relies on the relatable frustration of a bad deal, which ironically fits the ridiculousness of skiing in a desert.
+<answer>A</answer>",
+0,953ca7ee0c0673ebc51e6147f68f0233,A,A,True,"Caption A is funny because it delivers a classic, relatable chess blunder in a way that feels like a genuine, slightly absurd piece of advice for the cowboys.
+Caption B is funny because it relies on a niche chess term (""fork"") and a specific historical figure (""Chaturanga"") to create a convoluted, wordy joke that may confuse the reader.
+<answer>A</answer>",
+0,b8ecd62018bbd057aaa22277ed24fd68,B,B,True,"Caption A is funny because it twists the real estate slogan to mock the absurdity of a bird living in a cage within a tree.
+Caption B is funny because it delivers a deadpan, human-centric joke about the irony of keeping a wild animal as a pet.
+<answer>B</answer>",
+0,ce15e7d5a2b0446c455a20b2f97e72a1,B,A,False,"Caption A is funny because it cleverly twists the ""connect the dots"" visual into a literal excuse for the man's incomplete action, creating a relatable and self-deprecating joke about procrastination.
+
+Caption B is funny because it uses the phrase ""feel young again"" to ironically contrast the man's likely middle-aged appearance with the childish, game-like activity of connecting dots, implying he has lost his youth.
+
+<answer>A</answer>",
+0,71c3de544184b953bb9c5cd0660e7574,B,A,False,"Caption A is funny because it delivers a sharp, logical punchline that directly addresses the absurdity of an alligator using a pet door.
+Caption B is funny because it relies on a pun about ""new shoes"" that feels disconnected from the visual of an angry alligator.
+<answer>A</answer>",
+0,bba482e3fb83f469575fd8706f39dc4c,A,A,True,"Caption A is funny because it cleverly exploits the visual pun of the mouse's tail to question the spelling of a menu item, turning a mundane scene into a wordplay joke.
+
+Caption B is funny because it relies on the absurdity of a tiny mouse having the patience and desire to wait years for a dining experience, highlighting the disproportionate effort of a small creature.
+
+<answer>A</answer>",
+0,004a0d86afd22c6e8b30b384b73595c1,B,A,False,"Caption A is funny because it relies on the absurdity of a literal bull having a job history, which clashes hilariously with the ""uncanny detail"" that bulls don't work in offices.
+
+Caption B is funny because it treats the angry bull as a normal human interviewer, making the question about ""red flags"" a deadpan joke on the animal's obvious rage.
+
+<answer>A</answer>",
+0,3156dfd78b55850670c84341bdc764ee,B,A,False,"Caption A is funny because it cleverly reinterprets the dwarfs' roller skating as a ""yoga"" session, turning a random visual into a relatable fitness joke.
+Caption B is funny because it playfully misidentifies the character Grumpy as ""Creepy"" based on his grumpy expression, creating a humorous misunderstanding.
+<answer>A</answer>",
+0,24acecce90ff5aa46459a6488fbb2f58,B,A,False,"Caption A is funny because it cleverly twists the police officer's actual tool (a radar gun) into a metaphor for his inability to ""see"" the absurdity of the sign, creating a witty double meaning.
+Caption B is funny because it relies on the classic ""lesson learned"" trope, implying the man's presence on the road was a mistake, which is a dry and relatable joke about bad decisions.
+<answer>A</answer>",

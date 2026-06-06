@@ -1,0 +1,37 @@
+fold,sample_id,expected,prediction,is_correct,raw_response,thinking
+0,fde4151fcca492b42336d3a3dfe8e0dc,B,A,False,"Caption A is funny because it relies on the absurdity of a mouse having a romantic relationship with a human waitress, creating a surreal and unexpected scenario.
+Caption B is funny because it plays on the common fear of mice being ""traps"" or pests, but twists it into a menu item choice that feels oddly specific to the character.
+<answer>A</answer>",
+0,1214b37425713590e915e3af0b1e6e6a,B,B,True,"Caption A is funny because it uses the word ""cyclical"" to imply the absurdity of the situation is just a repeating, inevitable loop of stupidity.
+Caption B is funny because it applies a modern, specific consumer complaint to a completely unrelated and illogical scenario.
+<answer>B</answer>",
+0,953ca7ee0c0673ebc51e6147f68f0233,A,A,True,"Caption A is funny because it uses a classic chess instruction (""back up two paces and take one to the side"") to describe how a chess knight moves, creating a perfect pun on the visual of cowboys on horse-shaped pieces.
+
+Caption B is funny because it references the legendary ""Chaturanga"" chess game (the precursor to modern chess) and the ""fork"" tactic, but the phrasing ""executes a fork on the Chaturanga kid"" is a nonsensical, awkward mashup that relies on the reader knowing obscure chess history to find the humor.
+
+<answer>A</answer>",
+0,b8ecd62018bbd057aaa22277ed24fd68,B,B,True,"Caption A is funny because it twists the real estate slogan to mock the absurdity of a bird living in a cage within a tree.
+Caption B is funny because it uses a deadpan, human-centric joke to highlight the uncanny nature of a wild bird being treated as a pet.
+<answer>B</answer>",
+0,ce15e7d5a2b0446c455a20b2f97e72a1,B,A,False,"Caption A is funny because it cleverly twists the ""uncanny detail"" of the disconnected dots into a literal excuse for the man's unfinished state.
+Caption B is funny because it uses the phrase ""feel young again"" to ironically describe the awkwardness of a man who is still in the process of being drawn.
+<answer>A</answer>",
+0,71c3de544184b953bb9c5cd0660e7574,B,A,False,"Caption A is funny because it delivers a deadpan, logical rebuttal to the absurdity of an alligator, highlighting the man's desperate attempt to maintain sanity.
+Caption B is funny because it relies on a pun about ""new shoes"" to explain the alligator's presence, which feels forced and disconnected from the visual.
+<answer>A</answer>",
+0,bba482e3fb83f469575fd8706f39dc4c,A,A,True,"Caption A is funny because it cleverly exploits the visual pun of the mouse's tail to question the spelling of a menu item, turning a mundane scene into a wordplay joke.
+
+Caption B is funny because it relies on the absurdity of a giant mouse having a long-term desire to eat at a human restaurant, highlighting the surreal scale of the situation.
+
+<answer>A</answer>",
+0,004a0d86afd22c6e8b30b384b73595c1,B,B,True,"Caption A is funny because it relies on the absurdity of a literal bull having a job history, highlighting the surreal nature of the image.
+Caption B is funny because it uses corporate jargon to describe the bull's angry expression, creating a humorous contrast between professional caution and animal rage.
+<answer>B</answer>",
+0,3156dfd78b55850670c84341bdc764ee,B,A,False,"Caption A is funny because it cleverly reinterprets the dwarfs' roller skating as a ""yoga"" session, turning a silly visual into a relatable fitness joke.
+Caption B is funny because it playfully misidentifies the character Grumpy as ""Creepy"" based on his grumpy expression, creating a humorous misunderstanding.
+<answer>A</answer>",
+0,24acecce90ff5aa46459a6488fbb2f58,B,A,False,"Caption A is funny because it cleverly twists the police officer's actual tool (a radar gun) into a metaphor for his inability to ""see"" the absurdity of the situation, creating a witty double meaning.
+
+Caption B is funny because it relies on the classic ""gotcha"" trope where the officer interprets the random math sign as a moral lesson, highlighting the absurdity of the situation through the officer's perspective.
+
+<answer>A</answer>",

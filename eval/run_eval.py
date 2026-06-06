@@ -10,24 +10,35 @@ from interact import LocalModel, ask, unload
 OUTPUTS_DIR = Path(__file__).parent.parent / "outputs"
 
 # ── Config ────────────────────────────────────────────────────────────────────
-# Local models are stored as (name, checkpoint) tuples and loaded one at a time
-# to avoid VRAM pressure from having multiple models resident simultaneously.
 MODELS = [
     # ── Ollama baselines (string = model name in Ollama) ──────────────────────
     # "gemma4:e2b", "gemma4:e4b", "qwen3.5:9b",
     # ── HF baselines (tuple = name, hf_model_id, chat_template) ──────────────
-    ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
+    # ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
     # ── Fine-tuned LoRA checkpoints (tuple = name, local_path, chat_template) ─
     # ("gemma4-e2b-discord", str(OUTPUTS_DIR / "gemma4-e2b-discord" / "checkpoint-4011"), "gemma-4"),
     # ("gemma4-e4b-discord", str(OUTPUTS_DIR / "gemma4-e4b-discord" / "checkpoint-4011"), "gemma-4"),
     # ("qwen9b-discord",     str(OUTPUTS_DIR / "qwen9b-discord"     / "checkpoint-4011"), "qwen-3"),
+    # ("qwen9b-degpt-dpo",   str(OUTPUTS_DIR / "qwen9b-degpt-dpo"   / "checkpoint-5592"), "qwen-3"),
+    ("qwen4b-degpt-dpo",   str(OUTPUTS_DIR / "qwen4b-degpt-dpo"   / "checkpoint-625"),  "qwen-3"),
 ]
-N_EXAMPLES = None  # total examples to evaluate, None for all (~2600 available)
-THINK      = False
+N_EXAMPLES = 1000  # total examples to evaluate, None for all (~2600 available)
+
+# Each entry: (label_suffix, think_flag, instruction)
+# Runs execute in order; model is reloaded between runs.
+RUNS = [
+    ("-gut",      False, "Use your gut feeling and returning <answer>A</answer> or <answer>B</answer>."),
+    ("-no-gut",   False, "Return <answer>A</answer> or <answer>B</answer>."),
+    ("-thinking", True,  "Explain in one line why A is funny. Explain in one line why B is funny. Then return your final choice as <answer>A</answer> or <answer>B</answer>."),
+]
 # ──────────────────────────────────────────────────────────────────────────────
 
 DATASETS_DIR = Path(__file__).parent.parent / "datasets" / "newyorker"
 RESULTS_DIR  = Path(__file__).parent.parent / "results"
+
+# Set per-run in main() before each run_test call
+_run_instruction: str = ""
+_run_think: bool = False
 
 
 def build_prompt(row: dict) -> str:
@@ -38,7 +49,7 @@ def build_prompt(row: dict) -> str:
         "Two captions have been submitted:\n"
         f"A: {row['caption_a']}\n"
         f"B: {row['caption_b']}\n\n"
-        "Which caption do you find funnier? Reply with only A or B."
+        f"Which caption do you find funnier? {_run_instruction}"
     )
 
 
@@ -47,8 +58,9 @@ def parse_response(content: str) -> str:
     m = re.search(r"<answer>([AB])</answer>", content, re.IGNORECASE)
     if m:
         return m.group(1).upper()
-    # check last word only — avoids false positives from reasoning text
-    last_word = content.strip().split()[-1] if content.strip() else ""
+    after_think = re.split(r"</think>", content, flags=re.IGNORECASE)[-1]
+    text = after_think.strip() if after_think.strip() else content.strip()
+    last_word = text.split()[-1] if text.split() else ""
     if re.fullmatch(r"[Aa]\.?", last_word):
         return "A"
     if re.fullmatch(r"[Bb]\.?", last_word):
@@ -86,9 +98,9 @@ def append_summary(model: str, results: list[dict], timestamp: str) -> None:
     print(f"Summary updated at {summary_path}")
 
 
-def run_test(model, examples: pd.DataFrame) -> None:
+def run_test(model, examples: pd.DataFrame, label_suffix: str) -> None:
     is_local = isinstance(model, LocalModel)
-    model_name = model.name if is_local else model
+    model_name = (model.name if is_local else model) + label_suffix
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -101,12 +113,18 @@ def run_test(model, examples: pd.DataFrame) -> None:
     results = []
     for i, row in enumerate(examples.itertuples()):
         prompt = build_prompt(row._asdict())
-        out = model.ask(prompt, think=THINK, max_new_tokens=64) if is_local else ask(prompt, model=model, think=THINK)
+        out = model.ask(prompt, think=_run_think, history=None, max_new_tokens=512) if is_local else ask(prompt, model=model, think=_run_think)
         prediction = parse_response(out["content"])
         expected = str(row.expected).strip().upper()
         is_correct = prediction == expected
 
-        print(f"  [{i+1}] fold={row.fold} pred={prediction} expected={expected} {'✓' if is_correct else '✗'}  raw={out['content']!r}")
+        import re as _re
+        think_match = _re.search(r"<think>(.*?)</think>", out['content'], _re.DOTALL | _re.IGNORECASE)
+        think_text = think_match.group(1).strip() if think_match else ""
+        after_think = _re.split(r"</think>", out['content'], flags=_re.IGNORECASE)[-1].strip()
+        print(f"  [{i+1}] fold={row.fold} pred={prediction} expected={expected} {'✓' if is_correct else '✗'}")
+        print(f"       think({len(think_text)} chars): {think_text[:200].replace(chr(10), ' ')!r}")
+        print(f"       answer: {after_think!r}")
 
         results.append({
             "fold": row.fold,
@@ -128,16 +146,24 @@ def run_test(model, examples: pd.DataFrame) -> None:
 
 
 def main():
+    global _run_instruction, _run_think
     examples = load_examples()
     print(f"Loaded {len(examples)} examples across {examples['fold'].nunique()} folds")
-    for model_spec in MODELS:
-        if isinstance(model_spec, tuple):
-            name, checkpoint, chat_template = model_spec
-            enable_thinking = chat_template in ("qwen-3",)
-            model = LocalModel(name, checkpoint, chat_template=chat_template, enable_thinking=enable_thinking)
-        else:
-            model = model_spec
-        run_test(model, examples)
+
+    for label_suffix, think, instruction in RUNS:
+        _run_instruction = instruction
+        _run_think = think
+        print(f"\n{'#'*60}")
+        print(f"Run: {label_suffix}  |  think={think}")
+        print(f"Instruction: {instruction}")
+        print(f"{'#'*60}")
+        for model_spec in MODELS:
+            if isinstance(model_spec, tuple):
+                name, checkpoint, chat_template = model_spec
+                model = LocalModel(name, checkpoint, chat_template=chat_template, enable_thinking=False)
+            else:
+                model = model_spec
+            run_test(model, examples, label_suffix)
 
 
 if __name__ == "__main__":
