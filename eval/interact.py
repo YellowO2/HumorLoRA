@@ -52,11 +52,11 @@ class LocalModel:
             kwargs["enable_thinking"] = think if self._enable_thinking else False
         text = self._tokenizer.apply_chat_template(messages, **kwargs)
         inputs = self._tok(text, return_tensors="pt").to("cuda")
-        # collect EOS + any end-of-turn tokens the chat template uses
-        stop_ids = [self._tok.eos_token_id]
-        for tok in ["<end_of_turn>", "<|im_end|>", "<|endoftext|>"]:
-            tid = self._tok.convert_tokens_to_ids(tok)
-            if tid != self._tok.unk_token_id:
+        # Qwen3.5 canonical EOS IDs + whatever the (possibly remapped) tokenizer reports
+        stop_ids = [151645, 151643, self._tok.eos_token_id]
+        for t in ["<|im_end|>", "<|endoftext|>", "<end_of_turn>"]:
+            tid = self._tok.convert_tokens_to_ids(t)
+            if tid is not None and tid != self._tok.unk_token_id:
                 stop_ids.append(tid)
         stop_ids = list(set(i for i in stop_ids if i is not None))
 

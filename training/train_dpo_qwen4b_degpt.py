@@ -19,7 +19,7 @@ os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 from unsloth import FastLanguageModel
 
 MODEL_ID    = "unsloth/Qwen3.5-4B"
-MAX_SEQ_LEN = 512
+MAX_SEQ_LEN = 1024
 LORA_RANK   = 16
 
 model, tokenizer = FastLanguageModel.from_pretrained(

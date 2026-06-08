@@ -1,30 +1,34 @@
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent / "eval"))
-from interact import LocalModel
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 OUTPUTS = Path(__file__).parent / "outputs"
 
-# (checkpoint_path, chat_template)
 CHECKPOINTS = {
-    "e2b": (str(OUTPUTS / "gemma4-e2b-discord" / "checkpoint-4011"), "gemma-4"),
-    "e4b": (str(OUTPUTS / "gemma4-e4b-discord" / "checkpoint-4011"), "gemma-4"),
-    "dpo": (str(OUTPUTS / "qwen9b-degpt-dpo"   / "checkpoint-5592"), "qwen-3"),
+    "e2b": str(OUTPUTS / "gemma4-e2b-discord" / "checkpoint-4011"),
+    "e4b": str(OUTPUTS / "gemma4-e4b-discord" / "checkpoint-4011"),
+    "dpo":  str(OUTPUTS / "qwen9b-degpt-dpo"   / "checkpoint-5592"),
+    "dpo4b": str(OUTPUTS / "qwen4b-degpt-dpo"  / "checkpoint-625"),
 }
 
 def main():
-    model_key = sys.argv[1] if len(sys.argv) > 1 else "e2b"
-    entry = CHECKPOINTS.get(model_key)
-    checkpoint = sys.argv[2] if len(sys.argv) > 2 else (entry[0] if entry else None)
-    chat_template = entry[1] if entry else ("qwen-3" if "qwen" in model_key.lower() else "gemma-4")
+    model_key = sys.argv[1] if len(sys.argv) > 1 else "dpo4b"
+    checkpoint = sys.argv[2] if len(sys.argv) > 2 else CHECKPOINTS.get(model_key)
 
     if not checkpoint:
-        print(f"Unknown model '{model_key}'. Use: e2b, e4b, dpo, or pass a checkpoint path.")
+        print(f"Unknown model '{model_key}'. Pass a checkpoint path as second arg.")
         sys.exit(1)
 
     print(f"Loading {model_key} from {checkpoint} ...")
-    model = LocalModel(model_key, checkpoint, chat_template=chat_template)
+    tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+    model = AutoModelForCausalLM.from_pretrained(
+        checkpoint,
+        torch_dtype=torch.bfloat16,
+        device_map="auto",
+    )
+    model.eval()
     print("Ready. Type your message and press Enter. Ctrl+C or 'quit' to exit.\n")
 
     history = []
@@ -39,9 +43,18 @@ def main():
             print("Bye.")
             break
 
-        result = model.ask(user_input, history=history)
-        reply = result["content"]
         history.append({"role": "user", "content": user_input})
+        text = tokenizer.apply_chat_template(
+            history,
+            tokenize=False,
+            add_generation_prompt=True,
+            enable_thinking=False,
+        )
+        inputs = tokenizer(text, return_tensors="pt").to(model.device)
+        with torch.no_grad():
+            out = model.generate(**inputs, max_new_tokens=2048)
+        new_tokens = out[0][inputs["input_ids"].shape[1]:]
+        reply = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
         history.append({"role": "assistant", "content": reply})
         print(f"Model: {reply}\n")
 
