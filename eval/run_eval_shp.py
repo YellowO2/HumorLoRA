@@ -1,0 +1,164 @@
+import sys
+from datetime import datetime
+from pathlib import Path
+
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).parent))
+from interact import LocalModel, ask, unload
+
+OUTPUTS_DIR = Path(__file__).parent.parent / "outputs"
+
+# ── Config ────────────────────────────────────────────────────────────────────
+MODELS = [
+    # ── Ollama baselines ──────────────────────────────────────────────────────
+    # "qwen3.5:4b",
+    # ── HF baselines ─────────────────────────────────────────────────────────
+    # ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
+    # ── Fine-tuned checkpoints ────────────────────────────────────────────────
+    ("qwen4b-degpt-dpo", str(OUTPUTS_DIR / "qwen4b-degpt-dpo" / "checkpoint-625"), "qwen-3"),
+]
+N_EXAMPLES = 1000  # None for all
+
+RUNS = [
+    ("-gut",      False, "Use your gut feeling and return <answer>A</answer> or <answer>B</answer>."),
+    ("-no-gut",   False, "Return <answer>A</answer> or <answer>B</answer>."),
+    ("-thinking", True,  "Briefly explain why each comment is good or bad, then return your final choice as <answer>A</answer> or <answer>B</answer>."),
+]
+# ─────────────────────────────────────────────────────────────────────────────
+
+RESULTS_DIR = Path(__file__).parent.parent / "results" / "shp"
+
+_run_instruction: str = ""
+_run_think: bool = False
+
+
+def build_prompt(row: dict) -> str:
+    return (
+        "You are judging which of two Reddit comments better answers the post "
+        "and would be more valued by the community.\n\n"
+        f"Post:\n{row['history']}\n\n"
+        f"Comment A:\n{row['human_ref_A']}\n\n"
+        f"Comment B:\n{row['human_ref_B']}\n\n"
+        f"Which comment is better? {_run_instruction}"
+    )
+
+
+def parse_response(content: str) -> str:
+    import re
+    m = re.search(r"<answer>([AB])</answer>", content, re.IGNORECASE)
+    if m:
+        return m.group(1).upper()
+    after_think = re.split(r"</think>", content, flags=re.IGNORECASE)[-1]
+    text = after_think.strip() if after_think.strip() else content.strip()
+    last_word = text.split()[-1] if text.split() else ""
+    if re.fullmatch(r"[Aa]\.?", last_word):
+        return "A"
+    if re.fullmatch(r"[Bb]\.?", last_word):
+        return "B"
+    return "UNKNOWN"
+
+
+def load_examples() -> pd.DataFrame:
+    from datasets import load_dataset
+    # use the validation split so we don't touch training data
+    ds = load_dataset("stanfordnlp/SHP", split="validation")
+    df = ds.to_pandas()
+    # only keep examples with a clear winner (score_ratio >= 2 means one comment
+    # got at least 2x the upvotes — a cleaner preference signal)
+    df = df[df["score_ratio"] >= 2].reset_index(drop=True)
+    if N_EXAMPLES:
+        df = df.head(N_EXAMPLES)
+    print(f"Loaded {len(df)} SHP examples (score_ratio >= 2)")
+    return df
+
+
+def append_summary(model_name: str, results: list[dict], timestamp: str) -> None:
+    summary_path = RESULTS_DIR / "summary.csv"
+    df = pd.DataFrame(results)
+    row = {
+        "model": model_name,
+        "timestamp": timestamp,
+        "n_examples": len(df),
+        "overall_acc": round(df["is_correct"].mean() * 100, 1),
+        "unknown_count": int((df["prediction"] == "UNKNOWN").sum()),
+    }
+    summary_df = pd.DataFrame([row])
+    if summary_path.exists():
+        summary_df.to_csv(summary_path, mode="a", header=False, index=False)
+    else:
+        summary_df.to_csv(summary_path, index=False)
+    print(f"Summary updated at {summary_path}")
+
+
+def run_test(model, examples: pd.DataFrame, label_suffix: str) -> None:
+    is_local = isinstance(model, LocalModel)
+    model_name = (model.name if is_local else model) + label_suffix
+
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_path = RESULTS_DIR / f"{model_name.replace(':', '_')}_{timestamp}.csv"
+
+    print(f"\n{'='*60}")
+    print(f"Model: {model_name}  |  {len(examples)} examples")
+    print(f"{'='*60}")
+
+    results = []
+    for i, row in enumerate(examples.itertuples()):
+        prompt = build_prompt(row._asdict())
+        out = model.ask(prompt, think=_run_think, history=None, max_new_tokens=512) if is_local else ask(prompt, model=model, think=_run_think)
+        prediction = parse_response(out["content"])
+        # labels=1 means A is preferred, labels=0 means B is preferred
+        expected = "A" if row.labels == 1 else "B"
+        is_correct = prediction == expected
+
+        import re as _re
+        think_match = _re.search(r"<think>(.*?)</think>", out["content"], _re.DOTALL | _re.IGNORECASE)
+        think_text = think_match.group(1).strip() if think_match else ""
+        after_think = _re.split(r"</think>", out["content"], flags=_re.IGNORECASE)[-1].strip()
+        print(f"  [{i+1}] pred={prediction} expected={expected} {'✓' if is_correct else '✗'}")
+        print(f"       think({len(think_text)} chars): {think_text[:150].replace(chr(10), ' ')!r}")
+        print(f"       answer: {after_think!r}")
+
+        results.append({
+            "post_id": row.post_id,
+            "domain": row.domain,
+            "expected": expected,
+            "prediction": prediction,
+            "is_correct": is_correct,
+            "score_ratio": row.score_ratio,
+            "raw_response": out["content"],
+            "thinking": out["thinking"],
+        })
+
+    pd.DataFrame(results).to_csv(out_path, index=False)
+    correct = sum(r["is_correct"] for r in results)
+    print(f"\n{model_name} overall: {correct}/{len(results)} = {correct/len(results)*100:.1f}%")
+    print(f"Results saved to {out_path}")
+    append_summary(model_name, results, timestamp)
+    model.unload() if is_local else unload(model)
+    print(f"Unloaded {model_name} from VRAM")
+
+
+def main():
+    global _run_instruction, _run_think
+    examples = load_examples()
+
+    for label_suffix, think, instruction in RUNS:
+        _run_instruction = instruction
+        _run_think = think
+        print(f"\n{'#'*60}")
+        print(f"Run: {label_suffix}  |  think={think}")
+        print(f"Instruction: {instruction}")
+        print(f"{'#'*60}")
+        for model_spec in MODELS:
+            if isinstance(model_spec, tuple):
+                name, checkpoint, chat_template = model_spec
+                model = LocalModel(name, checkpoint, chat_template=chat_template, enable_thinking=False)
+            else:
+                model = model_spec
+            run_test(model, examples, label_suffix)
+
+
+if __name__ == "__main__":
+    main()

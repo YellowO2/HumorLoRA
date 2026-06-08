@@ -52,15 +52,29 @@ class LocalModel:
             kwargs["enable_thinking"] = think if self._enable_thinking else False
         text = self._tokenizer.apply_chat_template(messages, **kwargs)
         inputs = self._tok(text, return_tensors="pt").to("cuda")
+        # collect EOS + any end-of-turn tokens the chat template uses
+        stop_ids = [self._tok.eos_token_id]
+        for tok in ["<end_of_turn>", "<|im_end|>", "<|endoftext|>"]:
+            tid = self._tok.convert_tokens_to_ids(tok)
+            if tid != self._tok.unk_token_id:
+                stop_ids.append(tid)
+        stop_ids = list(set(i for i in stop_ids if i is not None))
+
         with torch.no_grad():
             out = self._model.generate(
                 **inputs,
                 max_new_tokens=max_new_tokens,
                 use_cache=True,
                 do_sample=False,
+                eos_token_id=stop_ids,
+                pad_token_id=self._tok.eos_token_id,
             )
         new_tokens = out[0][inputs["input_ids"].shape[1]:]
         content = self._tok.decode(new_tokens, skip_special_tokens=True).strip()
+        # trim at the first fake turn marker (models trained on chat data sometimes
+        # generate the next turn as plain text instead of stopping)
+        import re
+        content = re.split(r"<\|?(?:start_of_)?turn[>\|]|<end_of_turn>|\buser\n|\bmodel\n", content)[0].strip()
         return {"content": content, "thinking": ""}
 
     def unload(self) -> None:
