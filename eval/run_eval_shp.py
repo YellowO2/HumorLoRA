@@ -59,7 +59,7 @@ def parse_response(content: str) -> str:
 
 
 def load_examples() -> pd.DataFrame:
-    import requests, json
+    import requests, json, time
     subreddits = [
         "askacademia", "askanthropology", "askbaking", "askcarguys",
         "askculinary", "askdocs", "askengineers", "askhistorians",
@@ -71,7 +71,16 @@ def load_examples() -> pd.DataFrame:
     rows = []
     for sub in subreddits:
         url = f"{base}/{sub}/validation.json"
-        r = requests.get(url, timeout=120)
+        for attempt in range(5):
+            try:
+                r = requests.get(url, timeout=300)
+                break
+            except requests.exceptions.Timeout:
+                print(f"  timeout on {sub} (attempt {attempt+1}/5), retrying...")
+                time.sleep(5)
+        else:
+            print(f"  skipping {sub} after 5 timeouts")
+            continue
         if r.status_code != 200:
             print(f"  skipping {sub} ({r.status_code})")
             continue
