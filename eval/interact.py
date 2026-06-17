@@ -1,3 +1,6 @@
+import os
+os.environ["HF_ENDPOINT"] = "https://huggingface.co"
+
 import requests
 import torch
 

@@ -1,3 +1,6 @@
+import os
+os.environ["HF_ENDPOINT"] = "https://huggingface.co"
+
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -59,38 +62,9 @@ def parse_response(content: str) -> str:
 
 
 def load_examples() -> pd.DataFrame:
-    import requests, json, time
-    subreddits = [
-        "askacademia", "askanthropology", "askbaking", "askcarguys",
-        "askculinary", "askdocs", "askengineers", "askhistorians",
-        "askhr", "askphysics", "askscience", "asksocialscience",
-        "askwomenadvice", "eli5", "explainlikeimfive", "legaladvice",
-        "personalfinance", "relationships",
-    ]
-    base = "https://huggingface.co/datasets/stanfordnlp/SHP/resolve/main"
-    rows = []
-    for sub in subreddits:
-        url = f"{base}/{sub}/validation.json"
-        for attempt in range(5):
-            try:
-                r = requests.get(url, timeout=300)
-                break
-            except requests.exceptions.Timeout:
-                print(f"  timeout on {sub} (attempt {attempt+1}/5), retrying...")
-                time.sleep(5)
-        else:
-            print(f"  skipping {sub} after 5 timeouts")
-            continue
-        if r.status_code != 200:
-            print(f"  skipping {sub} ({r.status_code})")
-            continue
-        for line in r.text.strip().split("\n"):
-            if line:
-                rows.append(json.loads(line))
-        print(f"  loaded {sub} ({len(rows)} total so far)")
-        if N_EXAMPLES and len(rows) >= N_EXAMPLES * 3:
-            break
-    df = pd.DataFrame(rows)
+    from datasets import load_dataset
+    ds = load_dataset("stanfordnlp/SHP", split="validation")
+    df = ds.to_pandas()
     df = df[df["score_ratio"] >= 2].reset_index(drop=True)
     if N_EXAMPLES:
         df = df.head(N_EXAMPLES)
