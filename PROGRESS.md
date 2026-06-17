@@ -1,64 +1,76 @@
 # Progress Log
-**Goal**: Paper in ~10 days (by ~2026-06-22)
+**Goal**: Paper by ~2026-06-24 (flexible)
 
 This file tracks experiments, results, and key references needed for writing the final paper.
 Update the log section after each experiment.
 
 ---
 
-## Goal
-Make a model's preference judgments align with what the **majority of humans would prefer** — not any single person's taste, but the aggregate crowd signal (as measured by datasets like NYCC and SHP).
+## Paper Direction
 
-## Hypothesis
-The mechanism to achieve this:
-1. Prior research shows LLM-as-a-Judge exhibits self-preference bias — it favours outputs stylistically similar to itself.
-2. Instruction-tuned models are optimised for helpfulness and compliance, not human-like expression. Their generation style is "instruct-style", not how humans naturally talk.
-3. Because of self-preference bias, instruct-tuned judges likely favour instruct-style outputs — which misaligns with what the majority of humans prefer.
-4. Therefore: if we fine-tune the model on natural human conversation (De-GPT DPO on Reddit/Discord), its generation style shifts toward human-like text → its preference judgments should also shift toward majority human preference.
+We are building a collection of empirical findings about fine-tuning LLMs for humor preference alignment. Basically sort of what we discover along the way of trying to make LLMs humorous. A key question is what can be done to give LLM's sort of a taste of humor or even a good sense of humor.
 
-**In short**: fix the style gap → fix the preference gap, via self-preference bias as the linking mechanism.
+The original mechanism hypothesis (self-preference bias → style shift → preference shift via De-GPT DPO) was explored but found weak: DPO produced no meaningful improvement on NYCC or SHP, and Discord SFT hurt performance across the board. The paper is now a findings paper — reporting what works, what doesn't, and why, across humor and general preference datasets.
 
-**Grounded in**:
-- Wataoka et al. (2024), *Self-Preference Bias in LLM-as-a-Judge*, ICLR 2025 submission
-  https://arxiv.org/pdf/2410.21819
-  → Self-preference bias stems from perplexity familiarity: models prefer outputs that look like what they would generate themselves.
+**Original hypothesis (abandoned)**:
+Fine-tune on human-style text (Discord SFT / De-GPT DPO) → model generation style shifts → self-preference bias causes preference judgments to shift toward human-majority taste. Abandoned because: (1) DPO showed no effect, (2) Discord SFT degradation may be general reasoning degradation rather than preference-specific, (3) NYCC captions are both human-written so the self-preference mechanism doesn't cleanly apply.
+The reason i think is because overall understanding decreased after finetuning and i dont have the skills to do advanced stuffs? but cant verify it anyways.
+---
+
+## Key Findings
+
+1. **Discord SFT consistently hurts humor preference accuracy** across two base models (-3pp Gemma4, -5pp Hermes-3 on NYCC) and two eval methods (NYCC accuracy + HaHackathon Spearman r). Pattern is robust: Hermes r=0.228 → r=0.015 after Discord SFT. Likely general reasoning degradation from SFT on casual chat data, not preference-specific.
+
+2. **De-GPT DPO has no effect** on either NYCC or SHP — results within ±2.2pp noise. Perplexity shift from DPO was never measured (open gap), but the behavioural signal is negative.
+
+3. **All base models plateau at ~53–56% on NYCC** regardless of architecture (Gemma4, Qwen3.5, Hermes-3). Human ceiling is ~64.6% (NYAcc). The gap is large and no fine-tuning approach tested has closed it.
+
+4. **CoT prompting hurts SHP accuracy by ~3.5pp** (significant at n=2000, CI ±2.2pp) across both models tested. The effect is not detectable on NYCC at n=1000 (CI ±3.1pp — underpowered). Note: "thinking" here is prompt-level CoT (model asked to explain before answering), not built-in reasoning tokens. Consistent with Wang et al. (2025).
+   - **Theory**: Humor preference may be intuition-driven. Crowd humor signal has no reasoning path to anchor to — there is no "correct" logic for why something is funny. By contrast, SHP (Reddit upvotes) has a more structured signal (helpfulness, engagement) that CoT can reason toward or away from. This would predict CoT genuinely doesn't hurt humor judgment even at n=2000 — pending experiment.
+
+5. **Gut vs no-gut prompt wording makes zero difference** across all models and datasets. Going forward: plain (no-gut) only.
 
 ---
 
 ## Datasets
 | Name | Task | Split used | Size |
 |------|------|-----------|------|
-| NYCC (New Yorker Caption Contest) | Funnier caption A or B? | 5-fold validation | 2000 |
+| NYCC (New Yorker Caption Contest) | Funnier caption A or B? | 5-fold validation | up to 2616 |
 | SHP (stanfordnlp/SHP) | Better Reddit comment A or B? | validation, score_ratio ≥ 2 | 2000 |
-| Discord-Dialogues (`mookiezi/Discord-Dialogues`) | SFT style training — casual human multi-turn conversation | first 50,000 examples | 50,000 |
+| HaHackathon | Joke rating 0–5, Spearman r vs human avg | test | varies |
+| Discord-Dialogues (`mookiezi/Discord-Dialogues`) | SFT training — casual human multi-turn chat | first 50,000 | 50,000 |
+| De-GPT-DPO (`qingy2024/De-GPT-DPO`) | DPO training — human (chosen) vs AI (rejected) | first 5,000 | 5,000 |
 
-Human baselines (from Hessel et al. 2022):
+Human baselines:
 - NYCC CrowdAcc: 83.7% (humans predicting crowd preference)
 - NYCC NYAcc: 64.6% (humans predicting editor choice)
-- Our eval is ~71% official_winner / ~29% crowd_winner → relevant human ceiling is ~64.6%
+- Our eval mix: ~71% official_winner / ~29% crowd_winner → relevant ceiling ≈ 64.6%
+- NYCC unique crowd_winner examples: 757 total across all folds
 
-SHP: no inter-annotator agreement reported — preferences inferred from Reddit upvotes, not explicit human labels. score_ratio ≥ 2 filter used for cleaner signal.
+SHP: preferences inferred from Reddit upvotes (no IAA reported). score_ratio ≥ 2 filter for cleaner signal.
 
 ---
 
-## Eval prompt modes
-Three modes were tested:
+## Eval Setup
+
+- All evals: `do_sample=False`, greedy decoding — fully deterministic
+- 95% CI at n=2000: ±2.2pp | at n=1000: ±3.1pp | at n=757: ±3.6pp
+- Going forward: **plain (no-gut)** prompt only
+
+**Prompt modes tested** (gut vs no-gut confirmed identical — never run both again):
 - **gut**: `"Use your gut feeling and return <answer>A</answer> or <answer>B</answer>."`
-- **no-gut** (plain): `"Return <answer>A</answer> or <answer>B</answer>."`
-- **thinking**: `"Briefly explain why each is good or bad, then return your final choice as <answer>A</answer> or <answer>B</answer>."` + model's built-in thinking enabled
+- **plain (no-gut)**: `"Return <answer>A</answer> or <answer>B</answer>."`
+- **thinking (CoT)**: `"Briefly explain why each is good or bad, then return your final choice as <answer>A</answer> or <answer>B</answer>."` — prompt-level CoT only, no built-in reasoning tokens (`enable_thinking=False`)
 
-**Finding**: gut vs no-gut makes zero difference across all models and datasets. Going forward, use **no-gut (plain)** only — no need to run both.
+**CoT thinking results**:
+| Dataset | Model | plain | CoT | delta |
+|---------|-------|-------|-----|-------|
+| NYCC | qwen3.5:4b | 54.5% | 55.0% (n=1000) | +0.5pp (underpowered) |
+| NYCC | qwen4b-degpt-dpo | 53.5% | 52.2% (n=1000) | -1.3pp (underpowered) |
+| SHP | qwen3.5:4b | 63.2% | 59.8% (n=2000) | **-3.4pp** |
+| SHP | qwen4b-degpt-dpo | 63.8% | 59.7% (n=2000) | **-3.7pp** |
 
-Thinking mode results:
-
-| Dataset | Model | plain | thinking | delta |
-|---------|-------|-------|----------|-------|
-| NYCC | qwen3.5:4b | 54.5% | 55.0% | +0.5pp (noise) |
-| NYCC | qwen4b-degpt-dpo | 53.5% | 52.2% | -1.3pp (noise) |
-| SHP | qwen3.5:4b | 63.2% | 59.8% | **-3.4pp** |
-| SHP | qwen4b-degpt-dpo | 63.8% | 59.7% | **-3.7pp** |
-
-Thinking hurts SHP (~3.5pp) but not NYCC. Likely because NYCC is already near chance (~55%) — there's no signal for thinking to degrade. SHP has a real signal at 63% and thinking mode erodes it. Claim: **thinking mode hurts preference judgment when there is a real signal to degrade; on near-chance tasks the effect is invisible.**
+NYCC CoT results at n=1000 are underpowered for detecting a 3.5pp effect. Pending: extend qwen3.5:4b CoT to n=2000 on NYCC.
 
 ---
 
@@ -73,50 +85,32 @@ Thinking hurts SHP (~3.5pp) but not NYCC. Likely because NYCC is already near ch
 | discord-hermes-3-8b | + Discord SFT | 50.6% | — | 0.015 (n=1000) |
 | llama-3.1-8b-instruct | RLHF-aligned | ~50% | — | 0.277 (n=971) |
 
-- Discord SFT consistently hurts NYCC accuracy across two different base models: -3pp on Gemma4, -5pp on Hermes-3. Pattern is robust.
-- **Discord SFT destroys HaHackathon humor correlation**: base Hermes r=0.228 → Discord-Hermes r=0.015 (near random). Same pattern holds across two datasets and two eval methods.
-- DPO on De-GPT made no meaningful improvement on either NYCC or SHP (within ±2.2pp noise).
-- Base models (Gemma4, Qwen3.5, Hermes-3) all converge to ~53-56% on NYCC regardless of architecture.
-- Eval is fully deterministic (do_sample=False, greedy decoding) — re-running on the same examples gives identical results.
-- 95% CI at n=2000 is ±2.2pp (SE = √(0.55×0.45/2000) ≈ 0.011). The ~2pp gap between base and DPO is within noise — not statistically significant.
-- All models have weak humor correlation (r=0.22–0.28) on HaHackathon — expected, humor is genuinely subjective. Discord SFT is the outlier at r=0.015.
-
 ---
 
-## Key Questions / Gaps
-1. Did DPO actually shift the model's perplexity distribution? (never measured)
-   - If yes but accuracy didn't improve → perplexity shift doesn't drive humor preference
-   - If no → training was insufficient
-2. Is NYCC near ceiling regardless of method? (~55% vs human ~60-65%)
+## TODO
+1. **Run qwen3.5:4b CoT on NYCC n=2000** (extend existing n=1000 by running examples 1000–1999, then merge) — confirms or denies the humor-is-intuitive theory
+2. **Run discord-hermes-3-8b on SHP** — sanity check: if Discord SFT hurts SHP too, degradation is general (reasoning), not humor-specific
+3. **Decide paper scope** — current findings support a "what doesn't work and why" framing; decide whether to add a positive result (e.g. reward model / Option A pivot)
 
 ---
 
 ## References
-| Paper | Link | Key takeaway for this paper |
-|-------|------|-----------------------------|
-| Wataoka et al. (2024), *Self-Preference Bias in LLM-as-a-Judge* | https://arxiv.org/abs/2410.21819 | Self-preference bias stems from perplexity familiarity — models prefer outputs stylistically similar to themselves |
-| Verga et al. (2024), *A Survey on LLM-as-a-Judge* | https://arxiv.org/abs/2411.15594 | Documents known biases: self-enhancement, verbosity, position; GPT-4 only agrees with humans ~80% of the time; alignment degrades on subjective/cultural preferences like humor |
-| Zheng et al. (2023), *Chatbot Arena* | https://arxiv.org/abs/2403.04132 | Crowdsourced human preference benchmark — the gold standard for real human preference data |
-| Hessel et al. (2022), *Do Androids Laugh at Electric Sheep?* | https://arxiv.org/abs/2209.06293 | NYCC dataset paper; human CrowdAcc=83.7%, NYAcc=64.6%; our eval is ~71% editor labels so ceiling ≈ 64.6% |
-| Ethayarajh et al. (2022), *Understanding Dataset Difficulty with V-Usable Information* | https://arxiv.org/abs/2110.08420 | SHP dataset paper (ICML 2022 Outstanding Paper); SHP preferences inferred from Reddit upvotes, no IAA reported |
-| Kirk et al. (2024), *The PRISM Alignment Dataset* | https://arxiv.org/abs/2404.16019 | NeurIPS 2024; 1,500 participants from 75 countries rating 21 LLMs on subjective/value-laden topics — directly shows human preferences are diverse, individualized, and cross-culturally inconsistent; supports why collapsing "human taste" into a single signal is hard |
-| Wang et al. (2025), *Improving LLM-as-a-Judge Inference with the Judgment Distribution* | https://arxiv.org/abs/2503.03064 | EMNLP 2025 Findings; CoT collapses the judgment distribution and hurts LLM-as-a-judge in 30/40 scoring cases. Corroborates our SHP finding that thinking mode degrades preference accuracy (~3.5pp drop). Null result on NYCC likely due to low power at n=1000 (CI ±3.1pp), not a true floor effect. |
+| Paper | Link | Key takeaway |
+|-------|------|--------------|
+| Wataoka et al. (2024), *Self-Preference Bias in LLM-as-a-Judge* | https://arxiv.org/abs/2410.21819 | Self-preference bias from perplexity familiarity — models prefer outputs stylistically similar to themselves |
+| Verga et al. (2024), *A Survey on LLM-as-a-Judge* | https://arxiv.org/abs/2411.15594 | Known biases: self-enhancement, verbosity, position; GPT-4 agrees with humans ~80%; alignment degrades on subjective/cultural tasks like humor |
+| Zheng et al. (2023), *Chatbot Arena* | https://arxiv.org/abs/2403.04132 | Crowdsourced human preference benchmark — gold standard for real human preference data |
+| Hessel et al. (2022), *Do Androids Laugh at Electric Sheep?* | https://arxiv.org/abs/2209.06293 | NYCC dataset; CrowdAcc=83.7%, NYAcc=64.6% |
+| Ethayarajh et al. (2022), *Understanding Dataset Difficulty with V-Usable Information* | https://arxiv.org/abs/2110.08420 | SHP dataset paper (ICML 2022 Outstanding Paper) |
+| Kirk et al. (2024), *The PRISM Alignment Dataset* | https://arxiv.org/abs/2404.16019 | 1,500 participants, 75 countries — human preferences are diverse and cross-culturally inconsistent; supports why crowd aggregation is needed |
+| Wang et al. (2025), *Improving LLM-as-a-Judge Inference with the Judgment Distribution* | https://arxiv.org/abs/2503.03064 | EMNLP 2025; CoT collapses judgment distribution, hurts LLM-as-a-judge in 30/40 scoring cases — corroborates our SHP CoT finding |
 
 ---
 
 ## Training
-- **DPO**: `qingy2024/De-GPT-DPO` — human (chosen) vs AI (rejected), 5000 examples, 1 epoch
+- **DPO**: `qingy2024/De-GPT-DPO` — 5000 examples, 1 epoch
   - Checkpoint: `outputs/qwen4b-degpt-dpo/checkpoint-625`
   - Token lengths verified: prompt avg 18 tokens, chosen avg 104 — no truncation issues
-
----
-
-## TODO (priority order)
-1. **Decide paper direction** — original hypothesis (style shift → preference shift) has weak evidence and a confound (Discord SFT degradation may be general reasoning degradation, not humor-specific). Two options:
-   - **Option A (pivot)**: humor reward model that generalises across domains — train on NYCC, test transfer to HaHa/CAH/Spanish Twitter
-   - **Option B (salvage)**: run SHP on discord-hermes-3-8b to check if SFT degradation is general or humor-specific; run Mistral DPO experiment to close the RLHF-resistance loophole
-2. **If Option A**: collect CAH and Spanish Twitter datasets, design reward model training pipeline
-3. **If Option B**: run discord-hermes SHP eval (fast, ~20 min), then decide if Mistral DPO is worth it
 
 ---
 
@@ -125,5 +119,5 @@ Thinking hurts SHP (~3.5pp) but not NYCC. Likely because NYCC is already near ch
 |------|--------|
 | 2026-06-09 | Ran base qwen3.5:4b on SHP (all 3 prompt variants). Fixed summary.csv path in run_eval_shp.py. |
 | 2026-06-12 | Confirmed negative result. Verified DPO training bug was not an issue. Identified perplexity gap as missing experiment. |
-| 2026-06-13 | HaHackathon rating eval: Hermes r=0.228, Discord-Hermes r=0.015, Llama r=0.277. Discord SFT destroys humor correlation — pattern confirmed across NYCC + HaHa. |
-| 2026-06-17 | Confirmed gut vs no-gut prompt makes zero difference. Thinking mode hurts SHP by ~3.5pp but not NYCC (already near chance). Going forward: plain (no-gut) only. Updated results table with exact numbers. Reconsidering paper direction — original hypothesis has confound and mechanism issues. |
+| 2026-06-13 | HaHackathon rating eval: Hermes r=0.228, Discord-Hermes r=0.015, Llama r=0.277. Discord SFT destroys humor correlation — confirmed across NYCC + HaHa. |
+| 2026-06-17 | Confirmed gut vs no-gut makes zero difference. CoT prompting hurts SHP ~3.5pp (n=2000) but not NYCC (n=1000, underpowered). Abandoned original hypothesis. Restructured PROGRESS.md. |

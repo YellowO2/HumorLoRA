@@ -35,7 +35,7 @@ _run_think: bool = False
 
 def build_prompt(row: dict) -> str:
     return (
-        "You are a reddit user who entered this post. Judge which of two Reddit comments you'd like to upvote.\n\n"
+        "You are a reddit user reading this post. Judge which of two Reddit comments you'd like to upvote.\n\n"
         f"Post:\n{row['history']}\n\n"
         f"Comment A:\n{row['human_ref_A']}\n\n"
         f"Comment B:\n{row['human_ref_B']}\n\n"
