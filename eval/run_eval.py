@@ -121,7 +121,8 @@ def run_test(model, examples: pd.DataFrame, label_suffix: str) -> None:
     results = []
     for i, row in enumerate(examples.itertuples()):
         prompt = build_prompt(row._asdict())
-        out = model.ask(prompt, think=_run_think, history=None, max_new_tokens=512) if is_local else ask(prompt, model=model, think=_run_think)
+        max_tokens = 2048 if _run_think else 512
+        out = model.ask(prompt, think=_run_think, history=None, max_new_tokens=max_tokens) if is_local else ask(prompt, model=model, think=_run_think)
         prediction = parse_response(out["content"])
         expected = str(row.expected).strip().upper()
         is_correct = prediction == expected
@@ -168,7 +169,7 @@ def main():
         for model_spec in MODELS:
             if isinstance(model_spec, tuple):
                 name, checkpoint, chat_template = model_spec
-                model = LocalModel(name, checkpoint, chat_template=chat_template, enable_thinking=_run_think)
+                model = LocalModel(name, checkpoint, chat_template=chat_template, enable_thinking=False)
             else:
                 model = model_spec
             run_test(model, examples, label_suffix)
