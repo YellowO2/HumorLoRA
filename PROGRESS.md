@@ -19,7 +19,7 @@ The reason i think is because overall understanding decreased after finetuning a
 
 ## Key Findings
 
-1. **Discord SFT consistently hurts humor preference accuracy** across two base models (-3pp Gemma4, -5pp Hermes-3 on NYCC) and two eval methods (NYCC accuracy + HaHackathon Spearman r). Pattern is robust: Hermes r=0.228 → r=0.015 after Discord SFT. Likely general reasoning degradation from SFT on casual chat data, not preference-specific.
+1. **Discord SFT causes general capability degradation**, not humor-specific degradation. Confirmed across all three datasets: NYCC (-5pp Hermes), HaHa (r=0.228→0.015), and SHP (-3.7pp: hermes 59.5% → discord-hermes 55.8%). Naively fine-tuning on casual human conversation (Discord) without a targeted method hurts general reasoning/understanding, which then hurts everything downstream. This rules out the "preference shift" mechanism — the model isn't learning human taste, it's just getting dumber.
 
 2. **De-GPT DPO has no effect** on either NYCC or SHP — results within ±2.2pp noise. Perplexity shift from DPO was never measured (open gap), but the behavioural signal is negative.
 
@@ -81,7 +81,7 @@ NYCC CoT results at n=1000 are underpowered for detecting a 3.5pp effect. Pendin
 | gemma4-e4b-discord | SFT (discord) | 50.6% | — | — |
 | qwen3.5:4b | base | 54.5% (n=2616) | 63.2% (n=2000) | — |
 | qwen4b-degpt-dpo | DPO (De-GPT) | 53.5% (n=1000) | 63.8% (n=2000) | — |
-| hermes-3-8b | base (SFT+DPO synthetic) | 55.6% | — | 0.228 (n=671) |
+| hermes-3-8b | base (SFT+DPO synthetic) | 55.6% | 59.5% (n=2000) | 0.228 (n=671) |
 | discord-hermes-3-8b | + Discord SFT | 50.6% | 55.8% (n=2000) | 0.015 (n=1000) |
 | llama-3.1-8b-instruct | RLHF-aligned | ~50% | — | 0.277 (n=971) |
 
@@ -89,7 +89,7 @@ NYCC CoT results at n=1000 are underpowered for detecting a 3.5pp effect. Pendin
 
 ## TODO
 1. **Run qwen3.5:4b CoT on NYCC n=2000** (extend existing n=1000 by running examples 1000–1999, then merge) — confirms or denies the humor-is-intuitive theory
-2. **Run discord-hermes-3-8b on SHP** — sanity check: if Discord SFT hurts SHP too, degradation is general (reasoning), not humor-specific
+2. ~~**Run discord-hermes-3-8b on SHP**~~ ✓ Done — hermes 59.5% vs discord-hermes 55.8%, degradation is general
 3. **Decide paper scope** — current findings support a "what doesn't work and why" framing; decide whether to add a positive result (e.g. reward model / Option A pivot)
 
 ---
