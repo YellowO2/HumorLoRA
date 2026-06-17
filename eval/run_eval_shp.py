@@ -35,12 +35,11 @@ _run_think: bool = False
 
 def build_prompt(row: dict) -> str:
     return (
-        "You are judging which of two Reddit comments better answers the post "
-        "and would be more valued by the community.\n\n"
+        "You are a reddit user who entered this post. Judge which of two Reddit comments you'd like to upvote.\n\n"
         f"Post:\n{row['history']}\n\n"
         f"Comment A:\n{row['human_ref_A']}\n\n"
         f"Comment B:\n{row['human_ref_B']}\n\n"
-        f"Which comment is better? {_run_instruction}"
+        f"{_run_instruction}"
     )
 
 

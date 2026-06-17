@@ -20,19 +20,21 @@ MODELS = [
     # ("gemma4-e4b-discord", str(OUTPUTS_DIR / "gemma4-e4b-discord" / "checkpoint-4011"), "gemma-4"),
     # ("qwen9b-discord",     str(OUTPUTS_DIR / "qwen9b-discord"     / "checkpoint-4011"), "qwen-3"),
     # ("qwen9b-degpt-dpo",   str(OUTPUTS_DIR / "qwen9b-degpt-dpo"   / "checkpoint-5592"), "qwen-3"),
-    ("llama-3.1-8b-instruct", "meta-llama/Llama-3.1-8B-Instruct",   "llama-3.1"),
+    # ("llama-3.1-8b-instruct", "meta-llama/Llama-3.1-8B-Instruct",   "llama-3.1"),
     # ("hermes-3-8b",         "NousResearch/Hermes-3-Llama-3.1-8B", "chatml"),
     # ("discord-hermes-3-8b", "mookiezii/Discord-Hermes-3-8B",      "chatml"),
+    # ("qwen4b-degpt-dpo", str(OUTPUTS_DIR / "qwen4b-degpt-dpo" / "checkpoint-625"), "qwen-3"),
+    ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
 ]
-N_EXAMPLES = 2000  # total examples to evaluate, None for all (~2600 available)
-DATASET    = "nycc"  # label written to summary.csv — change when switching datasets
+N_EXAMPLES     = 2000  # upper bound of example range
+EXAMPLE_OFFSET = 1000  # skip first N examples (set to 0 to run from start)
+DATASET        = "nycc"  # label written to summary.csv — change when switching datasets
 
 # Each entry: (label_suffix, think_flag, instruction)
 # Runs execute in order; model is reloaded between runs.
 RUNS = [
-    ("-gut",    False, "Use your gut feeling and returning <answer>A</answer> or <answer>B</answer>."),
-    ("-no-gut", False, "Return <answer>A</answer> or <answer>B</answer>."),
-    # ("-thinking", True, "Explain in one line why A is funny. Explain in one line why B is funny. Then return your final choice as <answer>A</answer> or <answer>B</answer>."),
+    # no-gut already ran at n=2616 for qwen3.5:4b — only extend thinking
+    ("-thinking", True, "Briefly explain why each caption is funny or not, then return your final choice as <answer>A</answer> or <answer>B</answer>."),
 ]
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -79,7 +81,7 @@ def load_examples() -> pd.DataFrame:
         dfs.append(df)
     combined = pd.concat(dfs, ignore_index=True)
     if N_EXAMPLES:
-        combined = combined.head(N_EXAMPLES)
+        combined = combined.iloc[EXAMPLE_OFFSET:N_EXAMPLES]
     return combined
 
 
@@ -166,7 +168,7 @@ def main():
         for model_spec in MODELS:
             if isinstance(model_spec, tuple):
                 name, checkpoint, chat_template = model_spec
-                model = LocalModel(name, checkpoint, chat_template=chat_template, enable_thinking=False)
+                model = LocalModel(name, checkpoint, chat_template=chat_template, enable_thinking=_run_think)
             else:
                 model = model_spec
             run_test(model, examples, label_suffix)
