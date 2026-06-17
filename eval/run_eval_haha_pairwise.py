@@ -12,14 +12,13 @@ OUTPUTS_DIR = Path(__file__).parent.parent / "outputs"
 
 # ── Config ────────────────────────────────────────────────────────────────────
 MODELS = [
-    ("hermes-3-8b",         "NousResearch/Hermes-3-Llama-3.1-8B", "chatml"),
-    ("discord-hermes-3-8b", "mookiezii/Discord-Hermes-3-8B",      "chatml"),
-    ("llama-3.1-8b-instruct", "meta-llama/Llama-3.1-8B-Instruct", "llama-3.1"),
+    ("qwen3.5:4b",       "unsloth/Qwen3.5-4B",                                        "qwen-3"),
+    ("qwen4b-degpt-dpo", str(OUTPUTS_DIR / "qwen4b-degpt-dpo" / "checkpoint-625"),     "qwen-3"),
 ]
 DATASET = "haha-pairwise"
 
 RUNS = [
-    ("-gut",    False, "Use your gut feeling and return <answer>A</answer> or <answer>B</answer>."),
+    # gut == no-gut confirmed — plain only going forward
     ("-no-gut", False, "Return only <answer>A</answer> or <answer>B</answer>."),
 ]
 # ─────────────────────────────────────────────────────────────────────────────
