@@ -82,7 +82,7 @@ NYCC CoT results at n=1000 are underpowered for detecting a 3.5pp effect. Pendin
 | qwen3.5:4b | base | 54.5% (n=2616) | 63.2% (n=2000) | — |
 | qwen4b-degpt-dpo | DPO (De-GPT) | 53.5% (n=1000) | 63.8% (n=2000) | — |
 | hermes-3-8b | base (SFT+DPO synthetic) | 55.6% | — | 0.228 (n=671) |
-| discord-hermes-3-8b | + Discord SFT | 50.6% | — | 0.015 (n=1000) |
+| discord-hermes-3-8b | + Discord SFT | 50.6% | 55.8% (n=2000) | 0.015 (n=1000) |
 | llama-3.1-8b-instruct | RLHF-aligned | ~50% | — | 0.277 (n=971) |
 
 ---
