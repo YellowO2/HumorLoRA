@@ -15,15 +15,15 @@ MODELS = [
     # "qwen3.5:4b",
     # ── HF baselines ─────────────────────────────────────────────────────────
     # ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
+    # ("hermes-3-8b", "NousResearch/Hermes-3-Llama-3.1-8B", "chatml"),
     # ── Fine-tuned checkpoints ────────────────────────────────────────────────
-    ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
+    ("discord-hermes-3-8b", "mookiezii/Discord-Hermes-3-8B", "chatml"),
 ]
 N_EXAMPLES = 2000  # None for all
 
 RUNS = [
-    ("-gut",      False, "Use your gut feeling and return <answer>A</answer> or <answer>B</answer>."),
-    ("-no-gut",   False, "Return <answer>A</answer> or <answer>B</answer>."),
-    ("-thinking", True,  "Briefly explain why each comment is good or bad, then return your final choice as <answer>A</answer> or <answer>B</answer>."),
+    # gut == no-gut confirmed — plain only going forward
+    ("-no-gut", False, "Return <answer>A</answer> or <answer>B</answer>."),
 ]
 # ─────────────────────────────────────────────────────────────────────────────
 
