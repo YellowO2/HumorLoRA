@@ -59,12 +59,29 @@ def parse_response(content: str) -> str:
 
 
 def load_examples() -> pd.DataFrame:
-    from datasets import load_dataset
-    # use the validation split so we don't touch training data
-    ds = load_dataset("stanfordnlp/SHP", split="validation")
-    df = ds.to_pandas()
-    # only keep examples with a clear winner (score_ratio >= 2 means one comment
-    # got at least 2x the upvotes — a cleaner preference signal)
+    import requests, json
+    subreddits = [
+        "askacademia", "askanthropology", "askbaking", "askcarguys",
+        "askculinary", "askdocs", "askengineers", "askhistorians",
+        "askhr", "askphysics", "askscience", "asksocialscience",
+        "askwomenadvice", "eli5", "explainlikeimfive", "legaladvice",
+        "personalfinance", "relationships",
+    ]
+    base = "https://huggingface.co/datasets/stanfordnlp/SHP/resolve/main"
+    rows = []
+    for sub in subreddits:
+        url = f"{base}/{sub}/validation.json"
+        r = requests.get(url, timeout=120)
+        if r.status_code != 200:
+            print(f"  skipping {sub} ({r.status_code})")
+            continue
+        for line in r.text.strip().split("\n"):
+            if line:
+                rows.append(json.loads(line))
+        print(f"  loaded {sub} ({len(rows)} total so far)")
+        if N_EXAMPLES and len(rows) >= N_EXAMPLES * 3:
+            break
+    df = pd.DataFrame(rows)
     df = df[df["score_ratio"] >= 2].reset_index(drop=True)
     if N_EXAMPLES:
         df = df.head(N_EXAMPLES)
