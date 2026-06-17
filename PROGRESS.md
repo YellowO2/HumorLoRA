@@ -25,8 +25,8 @@ The reason i think is because overall understanding decreased after finetuning a
 
 3. **All base models plateau at ~53–56% on NYCC** regardless of architecture (Gemma4, Qwen3.5, Hermes-3). Human ceiling is ~64.6% (NYAcc). The gap is large and no fine-tuning approach tested has closed it.
 
-4. **CoT prompting hurts SHP accuracy by ~3.5pp** (significant at n=2000, CI ±2.2pp) across both models tested. The effect is not detectable on NYCC at n=1000 (CI ±3.1pp — underpowered). Note: "thinking" here is prompt-level CoT (model asked to explain before answering), not built-in reasoning tokens. Consistent with Wang et al. (2025).
-   - **Theory**: Humor preference may be intuition-driven. Crowd humor signal has no reasoning path to anchor to — there is no "correct" logic for why something is funny. By contrast, SHP (Reddit upvotes) has a more structured signal (helpfulness, engagement) that CoT can reason toward or away from. This would predict CoT genuinely doesn't hurt humor judgment even at n=2000 — pending experiment.
+4. **CoT does not improve — and may hurt — LLM judgment on subjective preference tasks.** SHP: -3.5pp (significant, n=2000). NYCC: -1.3pp (within noise, n=2000). Neither dataset benefits from reasoning. Note: "thinking" here is prompt-level CoT, not built-in reasoning tokens. Consistent with Wang et al. (2025) who found CoT collapses judgment distribution in 30/40 scoring cases.
+   - **Interpretation**: Subjective preference tasks (humor, Reddit upvotes) have no ground-truth reasoning path — there is no correct logic for why something is funnier or more upvoted. CoT either hurts by over-rationalising or provides no gain. This is a broader claim than humor-specific and holds across both datasets tested.
 
 5. **Gut vs no-gut prompt wording makes zero difference** across all models and datasets. Going forward: plain (no-gut) only.
 
@@ -72,12 +72,12 @@ SHP: preferences inferred from Reddit upvotes (no IAA reported). score_ratio ≥
 **CoT thinking results**:
 | Dataset | Model | plain | CoT | delta |
 |---------|-------|-------|-----|-------|
-| NYCC | qwen3.5:4b | 54.5% | 55.0% (n=1000) | +0.5pp (underpowered) |
+| NYCC | qwen3.5:4b | 54.5% | 53.2% (n=2000) | -1.3pp (within noise) |
 | NYCC | qwen4b-degpt-dpo | 53.5% | 52.2% (n=1000) | -1.3pp (underpowered) |
 | SHP | qwen3.5:4b | 63.2% | 59.8% (n=2000) | **-3.4pp** |
 | SHP | qwen4b-degpt-dpo | 63.8% | 59.7% (n=2000) | **-3.7pp** |
 
-NYCC CoT results at n=1000 are underpowered for detecting a 3.5pp effect. Pending: extend qwen3.5:4b CoT to n=2000 on NYCC.
+NYCC CoT result at n=2000: -1.3pp (within ±2.2pp CI) — no significant effect. Confirms humor judgment is not hurt by CoT, unlike SHP (-3.5pp). Theory: crowd humor signal has no reasoning path to anchor to, so CoT neither helps nor hurts.
 
 ---
 
@@ -95,7 +95,7 @@ NYCC CoT results at n=1000 are underpowered for detecting a 3.5pp effect. Pendin
 ---
 
 ## TODO
-1. **Run qwen3.5:4b CoT on NYCC n=2000** (extend existing n=1000 by running examples 1000–1999, then merge) — confirms or denies the humor-is-intuitive theory. Currently running on home 4090.
+1. ~~**Run qwen3.5:4b CoT on NYCC n=2000**~~ ✓ Done — 53.2% CoT vs 54.5% plain, -1.3pp within noise. CoT has no significant effect on humor judgment (unlike SHP -3.5pp). Humor-is-intuitive theory supported.
 2. ~~**Run discord-hermes-3-8b on SHP**~~ ✓ Done — hermes 59.5% vs discord-hermes 55.8%, degradation is general
 3. ~~**Collect humor datasets**~~ ✓ Decided: eval trio = NYCC + HaHackathon + Jester. All already on disk.
 4. **Build Jester preprocessing script** — convert sparse ratings matrix → pairwise CSV (avg rating per joke, pairs with gap > 2.0, ~3010 pairs available)
@@ -117,6 +117,18 @@ NYCC CoT results at n=1000 are underpowered for detecting a 3.5pp effect. Pendin
 | Kirk et al. (2024), *The PRISM Alignment Dataset* | https://arxiv.org/abs/2404.16019 | 1,500 participants, 75 countries — human preferences are diverse and cross-culturally inconsistent; supports why crowd aggregation is needed |
 | Wang et al. (2025), *Improving LLM-as-a-Judge Inference with the Judgment Distribution* | https://arxiv.org/abs/2503.03064 | EMNLP 2025; CoT collapses judgment distribution, hurts LLM-as-a-judge in 30/40 scoring cases — corroborates our SHP CoT finding |
 | Meaney et al. (2021), *SemEval-2021 Task 7: HaHackathon, Detecting and Rating Humor and Offense* | https://aclanthology.org/2021.semeval-1.9 | HaHackathon dataset paper; English jokes rated 0–5 by crowd annotators (AMT); our eval uses 1000-joke test set, measured via Spearman r vs human avg rating |
+
+---
+
+## Models
+| Name | Checkpoint / HF ID | Chat template | Type |
+|------|--------------------|---------------|------|
+| qwen3.5:4b | unsloth/Qwen3.5-4B | qwen-3 | Base (HF) |
+| qwen4b-degpt-dpo | outputs/qwen4b-degpt-dpo/checkpoint-625 | qwen-3 | DPO fine-tune |
+| hermes-3-8b | NousResearch/Hermes-3-Llama-3.1-8B | chatml | Base (HF) |
+| discord-hermes-3-8b | mookiezii/Discord-Hermes-3-8B | chatml | SFT fine-tune |
+| llama-3.1-8b-instruct | meta-llama/Llama-3.1-8B-Instruct | llama-3.1 | Base (HF) |
+| gemma4-e4b-discord | outputs/gemma4-e4b-discord/checkpoint-4011 | gemma-4 | SFT fine-tune |
 
 ---
 

@@ -12,8 +12,8 @@ OUTPUTS_DIR = Path(__file__).parent.parent / "outputs"
 
 # ── Config ────────────────────────────────────────────────────────────────────
 MODELS = [
-    ("qwen3.5:4b",        "Qwen/Qwen2.5-3B-Instruct",                    "qwen2"),
-    ("qwen4b-degpt-dpo",  "outputs/qwen4b-degpt-dpo/checkpoint-625",      "qwen2"),
+    ("qwen3.5:4b",       "unsloth/Qwen3.5-4B",                                           "qwen-3"),
+    ("qwen4b-degpt-dpo", str(OUTPUTS_DIR / "qwen4b-degpt-dpo" / "checkpoint-625"),        "qwen-3"),
 ]
 DATASET = "jester-pairwise"
 
