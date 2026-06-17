@@ -33,13 +33,20 @@ The reason i think is because overall understanding decreased after finetuning a
 ---
 
 ## Datasets
-| Name | Task | Split used | Size |
-|------|------|-----------|------|
-| NYCC (New Yorker Caption Contest) | Funnier caption A or B? | 5-fold validation | up to 2616 |
-| SHP (stanfordnlp/SHP) | Better Reddit comment A or B? | validation, score_ratio ≥ 2 | 2000 |
-| HaHackathon | Joke rating 0–5, Spearman r vs human avg | test | varies |
-| Discord-Dialogues (`mookiezi/Discord-Dialogues`) | SFT training — casual human multi-turn chat | first 50,000 | 50,000 |
-| De-GPT-DPO (`qingy2024/De-GPT-DPO`) | DPO training — human (chosen) vs AI (rejected) | first 5,000 | 5,000 |
+| Name | Description | Split used | Size | Paper | Access |
+|------|-------------|-----------|------|-------|--------|
+| NYCC (New Yorker Caption Contest) | Funnier caption A or B? Crowd-aggregated ground truth | 5-fold validation | up to 2616 | Hessel et al. (2022) | https://arxiv.org/abs/2209.06293 |
+| SHP (stanfordnlp/SHP) | Better Reddit comment A or B? Upvote-based preference, score_ratio ≥ 2 | validation | 2000 | Ethayarajh et al. (2022) | https://arxiv.org/abs/2110.08420 |
+| HaHackathon (SemEval-2021 Task 7) | 1000 English jokes each rated 0–5 by multiple AMT crowd annotators | test set | 1000 jokes | Meaney et al. (2021) | https://aclanthology.org/2021.semeval-1.9 |
+| Jester (dataset 3) | 150 English jokes rated -10 to +10 by 54,905 users; 140 usable; avg ratings -2.74 to +3.66 | full dataset | 140 usable jokes | Goldberg et al. (2001) | https://eigentaste.berkeley.edu/dataset/ |
+| HAHA Spanish Twitter (2019) | Spanish tweets rated 0–4 for humor by screened crowd annotators (test tweets used to filter low-quality raters); 30k tweets | TBD | TBD — not yet downloaded | Chiruzzo et al. (2019) | https://www.fing.edu.uy/inco/grupos/pln/haha/ |
+| Humicroedit / FunLines | ~15,000 English news headlines with word edits rated 0–3 for funniness by 5 AMT judges each; SemEval-2020 Task 7 | TBD | ~15,000 — not yet downloaded | Hossain et al. (2020) | https://arxiv.org/abs/2008.00304 |
+| Open Mic Dataset | Stand-up comedy transcripts (~40 hrs); humor quotient derived from real audience laughter detection — behavioral ground truth, not annotation; validated vs 3 annotators (kappa=0.6) | TBD | TBD — not yet downloaded | Mittal et al. | https://arxiv.org/abs/2110.12765 |
+| Oogiri-GO / Oogiri-Corpus | Japanese humor task; ~100 candidate responses per prompt each rated by ~100 independent blind judges — eliminates popularity bias | TBD | TBD — not yet downloaded | Murakami et al. / Zhong et al. | https://arxiv.org/abs/2512.21494 |
+| Yelp Funny Reviews | Yelp reviews with crowd "funny" votes; general preference signal similar to SHP — useful if we expand beyond humor | TBD | Large — not yet sourced | de Oliveira & Rodrigo (Stanford CS224d) | No public repo |
+| Cards Against Humanity (CAH Lab) | Real player gameplay choices — naturalistic behavioral ground truth, not paid annotation. **Not currently obtainable** — requires emailing lab | N/A | N/A | Cards Against LLMs | N/A — email lab |
+| Discord-Dialogues | SFT training — casual human multi-turn chat | first 50,000 | 50,000 | — | mookiezi/Discord-Dialogues (HF) |
+| De-GPT-DPO | DPO training — human (chosen) vs AI (rejected) text pairs | first 5,000 | 5,000 | — | qingy2024/De-GPT-DPO (HF) |
 
 Human baselines:
 - NYCC CrowdAcc: 83.7% (humans predicting crowd preference)
@@ -88,9 +95,14 @@ NYCC CoT results at n=1000 are underpowered for detecting a 3.5pp effect. Pendin
 ---
 
 ## TODO
-1. **Run qwen3.5:4b CoT on NYCC n=2000** (extend existing n=1000 by running examples 1000–1999, then merge) — confirms or denies the humor-is-intuitive theory
+1. **Run qwen3.5:4b CoT on NYCC n=2000** (extend existing n=1000 by running examples 1000–1999, then merge) — confirms or denies the humor-is-intuitive theory. Currently running on home 4090.
 2. ~~**Run discord-hermes-3-8b on SHP**~~ ✓ Done — hermes 59.5% vs discord-hermes 55.8%, degradation is general
-3. **Decide paper scope** — current findings support a "what doesn't work and why" framing; decide whether to add a positive result (e.g. reward model / Option A pivot)
+3. ~~**Collect humor datasets**~~ ✓ Decided: eval trio = NYCC + HaHackathon + Jester. All already on disk.
+4. **Build Jester preprocessing script** — convert sparse ratings matrix → pairwise CSV (avg rating per joke, pairs with gap > 2.0, ~3010 pairs available)
+5. **Eval qwen3.5:4b vs qwen4b-degpt-dpo on HaHackathon + Jester** (NYCC already done) — tests whether DPO shifted humor preference without degrading capability
+6. **Based on #5 decide next step**:
+   - If DPO shows improvement on humor → refine DPO approach (better dataset, humor-specific pairs from NYCC)
+   - If DPO still flat → pivot to reward model / discriminative head (no next-token generation, just score output) — skips verbalization entirely, connects to CoT finding
 
 ---
 
@@ -104,6 +116,7 @@ NYCC CoT results at n=1000 are underpowered for detecting a 3.5pp effect. Pendin
 | Ethayarajh et al. (2022), *Understanding Dataset Difficulty with V-Usable Information* | https://arxiv.org/abs/2110.08420 | SHP dataset paper (ICML 2022 Outstanding Paper) |
 | Kirk et al. (2024), *The PRISM Alignment Dataset* | https://arxiv.org/abs/2404.16019 | 1,500 participants, 75 countries — human preferences are diverse and cross-culturally inconsistent; supports why crowd aggregation is needed |
 | Wang et al. (2025), *Improving LLM-as-a-Judge Inference with the Judgment Distribution* | https://arxiv.org/abs/2503.03064 | EMNLP 2025; CoT collapses judgment distribution, hurts LLM-as-a-judge in 30/40 scoring cases — corroborates our SHP CoT finding |
+| Meaney et al. (2021), *SemEval-2021 Task 7: HaHackathon, Detecting and Rating Humor and Offense* | https://aclanthology.org/2021.semeval-1.9 | HaHackathon dataset paper; English jokes rated 0–5 by crowd annotators (AMT); our eval uses 1000-joke test set, measured via Spearman r vs human avg rating |
 
 ---
 

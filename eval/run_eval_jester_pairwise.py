@@ -12,20 +12,18 @@ OUTPUTS_DIR = Path(__file__).parent.parent / "outputs"
 
 # ── Config ────────────────────────────────────────────────────────────────────
 MODELS = [
-    ("hermes-3-8b",         "NousResearch/Hermes-3-Llama-3.1-8B", "chatml"),
-    ("discord-hermes-3-8b", "mookiezii/Discord-Hermes-3-8B",      "chatml"),
-    ("llama-3.1-8b-instruct", "meta-llama/Llama-3.1-8B-Instruct", "llama-3.1"),
+    ("qwen3.5:4b",        "Qwen/Qwen2.5-3B-Instruct",                    "qwen2"),
+    ("qwen4b-degpt-dpo",  "outputs/qwen4b-degpt-dpo/checkpoint-625",      "qwen2"),
 ]
-DATASET = "haha-pairwise"
+DATASET = "jester-pairwise"
 
 RUNS = [
-    ("-gut",    False, "Use your gut feeling and return <answer>A</answer> or <answer>B</answer>."),
     ("-no-gut", False, "Return only <answer>A</answer> or <answer>B</answer>."),
 ]
 # ─────────────────────────────────────────────────────────────────────────────
 
-DATA_PATH    = Path(__file__).parent.parent / "datasets" / "hahackathon" / "pairwise.csv"
-RESULTS_DIR  = Path(__file__).parent.parent / "results" / "hahackathon"
+DATA_PATH    = Path(__file__).parent.parent / "datasets" / "jester" / "pairwise.csv"
+RESULTS_DIR  = Path(__file__).parent.parent / "results" / "jester"
 SUMMARY_PATH = Path(__file__).parent.parent / "results" / "summary.csv"
 
 _run_instruction: str = ""
@@ -93,7 +91,7 @@ def run_test(model, examples: pd.DataFrame, label_suffix: str) -> None:
         is_correct = prediction == expected
 
         after_think = re.split(r"</think>", out["content"], flags=re.IGNORECASE)[-1].strip()
-        print(f"  [{i+1}] pred={prediction} expected={expected} {'✓' if is_correct else '✗'} | diff={abs(row.rating_a - row.rating_b):.1f}")
+        print(f"  [{i+1}] pred={prediction} expected={expected} {'✓' if is_correct else '✗'} | gap={abs(row.rating_a - row.rating_b):.2f}")
         print(f"       answer: {after_think!r}")
 
         results.append({
@@ -114,7 +112,7 @@ def run_test(model, examples: pd.DataFrame, label_suffix: str) -> None:
 def main():
     global _run_instruction, _run_think
     examples = pd.read_csv(DATA_PATH)
-    print(f"Loaded {len(examples)} pairs  |  avg rating diff: {(examples['rating_a'] - examples['rating_b']).abs().mean():.2f}")
+    print(f"Loaded {len(examples)} pairs  |  avg rating gap: {(examples['rating_a'] - examples['rating_b']).abs().mean():.2f}")
 
     for label_suffix, think, instruction in RUNS:
         _run_instruction = instruction
