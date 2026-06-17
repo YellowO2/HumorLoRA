@@ -18,9 +18,9 @@ MODELS = [
     # "qwen3.5:4b",
     # ── HF baselines ─────────────────────────────────────────────────────────
     # ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
-    # ("hermes-3-8b", "NousResearch/Hermes-3-Llama-3.1-8B", "chatml"),
+    ("hermes-3-8b",        "NousResearch/Hermes-3-Llama-3.1-8B", "chatml"),
     # ── Fine-tuned checkpoints ────────────────────────────────────────────────
-    ("discord-hermes-3-8b", "mookiezii/Discord-Hermes-3-8B", "chatml"),
+    # ("discord-hermes-3-8b", "mookiezii/Discord-Hermes-3-8B",      "chatml"),
 ]
 N_EXAMPLES = 2000  # None for all
 
@@ -63,11 +63,14 @@ def parse_response(content: str) -> str:
 
 def load_examples() -> pd.DataFrame:
     from datasets import load_dataset
-    ds = load_dataset("stanfordnlp/SHP", split="validation")
-    df = ds.to_pandas()
-    df = df[df["score_ratio"] >= 2].reset_index(drop=True)
-    if N_EXAMPLES:
-        df = df.head(N_EXAMPLES)
+    ds = load_dataset("stanfordnlp/SHP", split="validation", streaming=True)
+    rows = []
+    for example in ds:
+        if example["score_ratio"] >= 2:
+            rows.append(example)
+        if N_EXAMPLES and len(rows) >= N_EXAMPLES:
+            break
+    df = pd.DataFrame(rows)
     print(f"Loaded {len(df)} SHP examples (score_ratio >= 2)")
     return df
 
