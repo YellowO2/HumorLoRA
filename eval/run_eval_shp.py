@@ -16,9 +16,9 @@ MODELS = [
     # ── HF baselines ─────────────────────────────────────────────────────────
     # ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
     # ── Fine-tuned checkpoints ────────────────────────────────────────────────
-    ("qwen4b-degpt-dpo", str(OUTPUTS_DIR / "qwen4b-degpt-dpo" / "checkpoint-625"), "qwen-3"),
+    ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
 ]
-N_EXAMPLES = 1000  # None for all
+N_EXAMPLES = 2000  # None for all
 
 RUNS = [
     ("-gut",      False, "Use your gut feeling and return <answer>A</answer> or <answer>B</answer>."),
@@ -73,8 +73,9 @@ def load_examples() -> pd.DataFrame:
     return df
 
 
+SUMMARY_PATH = Path(__file__).parent.parent / "results" / "summary.csv"
+
 def append_summary(model_name: str, results: list[dict], timestamp: str) -> None:
-    summary_path = RESULTS_DIR / "summary.csv"
     df = pd.DataFrame(results)
     row = {
         "model": model_name,
@@ -82,13 +83,14 @@ def append_summary(model_name: str, results: list[dict], timestamp: str) -> None
         "n_examples": len(df),
         "overall_acc": round(df["is_correct"].mean() * 100, 1),
         "unknown_count": int((df["prediction"] == "UNKNOWN").sum()),
+        "dataset": "shp",
     }
     summary_df = pd.DataFrame([row])
-    if summary_path.exists():
-        summary_df.to_csv(summary_path, mode="a", header=False, index=False)
+    if SUMMARY_PATH.exists():
+        summary_df.to_csv(SUMMARY_PATH, mode="a", header=False, index=False)
     else:
-        summary_df.to_csv(summary_path, index=False)
-    print(f"Summary updated at {summary_path}")
+        summary_df.to_csv(SUMMARY_PATH, index=False)
+    print(f"Summary updated at {SUMMARY_PATH}")
 
 
 def run_test(model, examples: pd.DataFrame, label_suffix: str) -> None:

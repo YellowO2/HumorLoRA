@@ -20,16 +20,19 @@ MODELS = [
     # ("gemma4-e4b-discord", str(OUTPUTS_DIR / "gemma4-e4b-discord" / "checkpoint-4011"), "gemma-4"),
     # ("qwen9b-discord",     str(OUTPUTS_DIR / "qwen9b-discord"     / "checkpoint-4011"), "qwen-3"),
     # ("qwen9b-degpt-dpo",   str(OUTPUTS_DIR / "qwen9b-degpt-dpo"   / "checkpoint-5592"), "qwen-3"),
-    ("qwen4b-degpt-dpo",   str(OUTPUTS_DIR / "qwen4b-degpt-dpo"   / "checkpoint-625"),  "qwen-3"),
+    ("llama-3.1-8b-instruct", "meta-llama/Llama-3.1-8B-Instruct",   "llama-3.1"),
+    # ("hermes-3-8b",         "NousResearch/Hermes-3-Llama-3.1-8B", "chatml"),
+    # ("discord-hermes-3-8b", "mookiezii/Discord-Hermes-3-8B",      "chatml"),
 ]
-N_EXAMPLES = 1000  # total examples to evaluate, None for all (~2600 available)
+N_EXAMPLES = 2000  # total examples to evaluate, None for all (~2600 available)
+DATASET    = "nycc"  # label written to summary.csv — change when switching datasets
 
 # Each entry: (label_suffix, think_flag, instruction)
 # Runs execute in order; model is reloaded between runs.
 RUNS = [
-    ("-gut",      False, "Use your gut feeling and returning <answer>A</answer> or <answer>B</answer>."),
-    ("-no-gut",   False, "Return <answer>A</answer> or <answer>B</answer>."),
-    ("-thinking", True,  "Explain in one line why A is funny. Explain in one line why B is funny. Then return your final choice as <answer>A</answer> or <answer>B</answer>."),
+    ("-gut",    False, "Use your gut feeling and returning <answer>A</answer> or <answer>B</answer>."),
+    ("-no-gut", False, "Return <answer>A</answer> or <answer>B</answer>."),
+    # ("-thinking", True, "Explain in one line why A is funny. Explain in one line why B is funny. Then return your final choice as <answer>A</answer> or <answer>B</answer>."),
 ]
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -80,8 +83,10 @@ def load_examples() -> pd.DataFrame:
     return combined
 
 
+SUMMARY_PATH = Path(__file__).parent.parent / "results" / "summary.csv"
+
 def append_summary(model: str, results: list[dict], timestamp: str) -> None:
-    summary_path = RESULTS_DIR / "summary.csv"
+    summary_path = SUMMARY_PATH
     df = pd.DataFrame(results)
     row = {
         "model": model,
@@ -89,6 +94,7 @@ def append_summary(model: str, results: list[dict], timestamp: str) -> None:
         "n_examples": len(df),
         "overall_acc": round(df["is_correct"].mean() * 100, 1),
         "unknown_count": int((df["prediction"] == "UNKNOWN").sum()),
+        "dataset": DATASET,
     }
     summary_df = pd.DataFrame([row])
     if summary_path.exists():

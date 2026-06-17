@@ -1,0 +1,7 @@
+model,timestamp,n_examples,overall_acc,unknown_count
+qwen4b-degpt-dpo-gut,20260608_162758,2000,63.4,0
+qwen4b-degpt-dpo-no-gut,20260608_165204,2000,63.8,0
+qwen4b-degpt-dpo-thinking,20260608_171631,2000,59.7,48
+qwen3.5:4b-gut,20260609_015718,2000,63.2,0
+qwen3.5:4b-no-gut,20260609_021708,2000,63.2,0
+qwen3.5:4b-thinking,20260609_023754,2000,59.8,42
