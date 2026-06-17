@@ -26,7 +26,7 @@ N_EXAMPLES = 2000  # None for all
 
 RUNS = [
     # gut == no-gut confirmed — plain only going forward
-    ("-no-gut", False, "Return <answer>A</answer> or <answer>B</answer>."),
+    ("-no-gut", False, "Return only <answer>A</answer> or <answer>B</answer>."),
 ]
 # ─────────────────────────────────────────────────────────────────────────────
 
