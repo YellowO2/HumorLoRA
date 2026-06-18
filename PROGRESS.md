@@ -21,7 +21,7 @@ The reason i think is because overall understanding decreased after finetuning a
 
 1. **Discord SFT causes general capability degradation**, not humor-specific degradation. Confirmed across all three datasets: NYCC (-5pp Hermes), HaHa (r=0.228→0.015), and SHP (-3.7pp: hermes 59.5% → discord-hermes 55.8%). Naively fine-tuning on casual human conversation (Discord) without a targeted method hurts general reasoning/understanding, which then hurts everything downstream. This rules out the "preference shift" mechanism — the model isn't learning human taste, it's just getting dumber.
 
-2. **De-GPT DPO has no effect** on either NYCC or SHP — results within ±2.2pp noise. Perplexity shift from DPO was never measured (open gap), but the behavioural signal is negative.
+2. **De-GPT DPO has no effect on any dataset** — NYCC -1.0pp, SHP +0.6pp, HaHa pairwise -0.6pp, Jester pairwise +0.2pp. All within ±2.2pp noise. DPO on human-vs-AI style data does not shift humor preference.
 
 3. **All base models plateau at ~53–56% on NYCC** regardless of architecture (Gemma4, Qwen3.5, Hermes-3). Human ceiling is ~64.6% (NYAcc). The gap is large and no fine-tuning approach tested has closed it.
 
@@ -82,15 +82,15 @@ NYCC CoT result at n=2000: -1.3pp (within ±2.2pp CI) — no significant effect.
 ---
 
 ## Results
-| Model | Training | NYCC (plain) | SHP (plain) | HaHa (Spearman r) |
-|-------|----------|--------------|-------------|-------------------|
-| gemma4:e4b | base | 53.7% | — | — |
-| gemma4-e4b-discord | SFT (discord) | 50.6% | — | — |
-| qwen3.5:4b | base | 54.5% (n=2616) | 63.2% (n=2000) | — |
-| qwen4b-degpt-dpo | DPO (De-GPT) | 53.5% (n=1000) | 63.8% (n=2000) | — |
-| hermes-3-8b | base (SFT+DPO synthetic) | 55.6% | 59.5% (n=2000) | 0.228 (n=671) |
-| discord-hermes-3-8b | + Discord SFT | 50.6% | 55.8% (n=2000) | 0.015 (n=1000) |
-| llama-3.1-8b-instruct | RLHF-aligned | ~50% | — | 0.277 (n=971) |
+| Model | Training | NYCC (plain) | SHP (plain) | HaHa (Spearman r) | HaHa pairwise | Jester pairwise |
+|-------|----------|--------------|-------------|-------------------|---------------|-----------------|
+| gemma4:e4b | base | 53.7% | — | — | — | — |
+| gemma4-e4b-discord | SFT (discord) | 50.6% | — | — | — | — |
+| qwen3.5:4b | base | 54.5% (n=2616) | 63.2% (n=2000) | — | 55.4% (n=2000) | 55.2% (n=2000) |
+| qwen4b-degpt-dpo | DPO (De-GPT) | 53.5% (n=1000) | 63.8% (n=2000) | — | 54.8% (n=2000) | 55.4% (n=2000) |
+| hermes-3-8b | base (SFT+DPO synthetic) | 55.6% | 59.5% (n=2000) | 0.228 (n=671) | — | — |
+| discord-hermes-3-8b | + Discord SFT | 50.6% | 55.8% (n=2000) | 0.015 (n=1000) | — | — |
+| llama-3.1-8b-instruct | RLHF-aligned | ~50% | — | 0.277 (n=971) | — | — |
 
 ---
 
@@ -98,11 +98,10 @@ NYCC CoT result at n=2000: -1.3pp (within ±2.2pp CI) — no significant effect.
 1. ~~**Run qwen3.5:4b CoT on NYCC n=2000**~~ ✓ Done — 53.2% CoT vs 54.5% plain, -1.3pp within noise. CoT has no significant effect on humor judgment (unlike SHP -3.5pp). Humor-is-intuitive theory supported.
 2. ~~**Run discord-hermes-3-8b on SHP**~~ ✓ Done — hermes 59.5% vs discord-hermes 55.8%, degradation is general
 3. ~~**Collect humor datasets**~~ ✓ Decided: eval trio = NYCC + HaHackathon + Jester. All already on disk.
-4. **Build Jester preprocessing script** — convert sparse ratings matrix → pairwise CSV (avg rating per joke, pairs with gap > 2.0, ~3010 pairs available)
-5. **Eval qwen3.5:4b vs qwen4b-degpt-dpo on HaHackathon + Jester** (NYCC already done) — tests whether DPO shifted humor preference without degrading capability
-6. **Based on #5 decide next step**:
-   - If DPO shows improvement on humor → refine DPO approach (better dataset, humor-specific pairs from NYCC)
-   - If DPO still flat → pivot to reward model / discriminative head (no next-token generation, just score output) — skips verbalization entirely, connects to CoT finding
+4. ~~**Build Jester preprocessing script**~~ ✓ Done — 2000 pairs, avg gap 3.13, 50/50 A/B balance
+5. ~~**Eval qwen3.5:4b vs qwen4b-degpt-dpo on HaHackathon + Jester**~~ ✓ Done — DPO flat on all datasets. Conclusion: De-GPT DPO does not shift humor preference.
+6. ~~**Decide next step**~~ ✓ DPO conclusively flat across all 4 datasets. Pivoting to reward model.
+7. **Reward model** — train a discriminative head on humor preference data (NYCC + HaHa + Jester). No next-token generation, just score output. Connects to CoT finding (verbalization doesn't help for subjective tasks).
 
 ---
 
