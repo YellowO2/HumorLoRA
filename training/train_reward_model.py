@@ -20,12 +20,13 @@ os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split  # pip install scikit-learn scipy
 
 from datasets import Dataset
 from transformers import (
     AutoTokenizer,
     AutoModelForSequenceClassification,
+    BitsAndBytesConfig,
     TrainingArguments,
     Trainer,
 )
@@ -36,8 +37,8 @@ from peft import LoraConfig, get_peft_model, TaskType
 MODEL_ID    = "unsloth/Qwen3.5-4B"
 MAX_LENGTH  = 256
 LORA_RANK   = 16
-BATCH_SIZE  = 4
-GRAD_ACCUM  = 4
+BATCH_SIZE  = 2
+GRAD_ACCUM  = 8
 EPOCHS      = 3
 LR          = 2e-4
 SEED        = 42
@@ -79,10 +80,17 @@ val_ds.set_format("torch")
 
 # ── Section 3: Model + LoRA ───────────────────────────────────────────────────
 
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16,
+    bnb_4bit_use_double_quant=True,
+)
+
 model = AutoModelForSequenceClassification.from_pretrained(
     MODEL_ID,
     num_labels=1,
-    torch_dtype=torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16,
+    quantization_config=bnb_config,
     device_map="auto",
 )
 model.config.pad_token_id = tokenizer.pad_token_id
@@ -137,6 +145,7 @@ args = TrainingArguments(
     load_best_model_at_end=True,
     metric_for_best_model="spearman_r",
     greater_is_better=True,
+    gradient_checkpointing=True,
     seed=SEED,
     report_to="none",
 )
