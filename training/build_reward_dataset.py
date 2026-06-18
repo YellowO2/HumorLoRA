@@ -1,49 +1,59 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# Build Humor Reward Dataset
+# Build Humor Reward Dataset (pairwise format)
 # ═══════════════════════════════════════════════════════════════════════════════
 #
 # Sources:
 #   HaHackathon (SemEval 2021 Task 7): 1000 jokes rated 0–5 by AMT annotators
 #   Jester dataset 3: 140 usable jokes rated -10 to +10 by 54,905 users
 #
-# Output: datasets/reward/train.csv  (columns: text, score, source)
-#   score normalized to [0, 1] for both datasets
+# Output: datasets/reward/train.csv  (columns: chosen, rejected, source)
+#   chosen  = funnier joke text
+#   rejected = less funny joke text
 #
 # Test set is NYCC pairwise (held out entirely — different domain, different crowd)
 # ═══════════════════════════════════════════════════════════════════════════════
 
+import random
+from itertools import combinations
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
-HAHA_PATH    = Path(__file__).parent.parent / "datasets" / "hahackathon" / "rating.csv"
+HAHA_PATH      = Path(__file__).parent.parent / "datasets" / "hahackathon" / "rating.csv"
 JESTER_RATINGS = Path(__file__).parent.parent / "datasets" / "jester" / "dataset3_ratings.csv"
 JESTER_JOKES   = Path(__file__).parent.parent / "datasets" / "jester" / "dataset3JokeSet.csv"
-OUTPUT_PATH  = Path(__file__).parent.parent / "datasets" / "reward" / "train.csv"
-MIN_RATERS   = 100
+OUTPUT_PATH    = Path(__file__).parent.parent / "datasets" / "reward" / "train.csv"
+
+HAHA_GAP    = 1.0    # min rating gap on 0–5 scale
+JESTER_GAP  = 2.0    # min avg rating gap on -10 to +10 scale
+MIN_RATERS  = 100
+MAX_HAHA    = 3000
+SEED        = 42
 
 
-# ── HaHackathon ───────────────────────────────────────────────────────────────
-
-def load_haha() -> pd.DataFrame:
+def load_haha_pairs() -> list[dict]:
     df = pd.read_csv(HAHA_PATH)
-    # per-dataset min-max normalize so full [0,1] range is used
-    lo, hi = df["humor_rating"].min(), df["humor_rating"].max()
-    df["score"] = (df["humor_rating"] - lo) / (hi - lo)
-    df["source"] = "haha"
-    return df[["text", "score", "source"]]
+    rows = list(df.itertuples(index=False))
+    eligible = []
+    for a, b in combinations(rows, 2):
+        gap = a.humor_rating - b.humor_rating
+        if abs(gap) >= HAHA_GAP:
+            chosen, rejected = (a.text, b.text) if gap > 0 else (b.text, a.text)
+            eligible.append({"chosen": chosen, "rejected": rejected, "source": "haha"})
+
+    random.seed(SEED)
+    sampled = random.sample(eligible, min(MAX_HAHA, len(eligible)))
+    print(f"HaHa: {len(eligible)} eligible pairs → sampled {len(sampled)}")
+    return sampled
 
 
-# ── Jester ────────────────────────────────────────────────────────────────────
-
-def load_jester() -> pd.DataFrame:
-    # ratings matrix: (n_users, 151) — first col = count of jokes rated per user
+def load_jester_pairs() -> list[dict]:
     raw = pd.read_csv(JESTER_RATINGS, header=None)
-    ratings = raw.iloc[:, 1:].values.astype(float)   # (54905, 150)
+    ratings = raw.iloc[:, 1:].values.astype(float)
     ratings[ratings == 99] = np.nan
 
-    # per-joke avg and rater count
-    avg_ratings  = np.nanmean(ratings, axis=0)   # (150,)
+    avg_ratings  = np.nanmean(ratings, axis=0)
     rater_counts = np.sum(~np.isnan(ratings), axis=0)
 
     jokes = []
@@ -52,36 +62,34 @@ def load_jester() -> pd.DataFrame:
             jokes.append(line.strip().strip('"'))
     assert len(jokes) == 150
 
-    rows = []
-    for i, (text, avg, count) in enumerate(zip(jokes, avg_ratings, rater_counts)):
-        if count < MIN_RATERS:
-            continue
-        score = avg
-        rows.append({"text": text, "score": score, "source": "jester"})
+    usable = [(i, jokes[i], avg_ratings[i]) for i in range(150) if rater_counts[i] >= MIN_RATERS]
 
-    df = pd.DataFrame(rows)
-    # per-dataset min-max normalize so full [0,1] range is used
-    lo, hi = df["score"].min(), df["score"].max()
-    df["score"] = (df["score"] - lo) / (hi - lo)
-    return df
+    eligible = []
+    for (i, text_i, avg_i), (j, text_j, avg_j) in combinations(usable, 2):
+        gap = avg_i - avg_j
+        if abs(gap) >= JESTER_GAP:
+            chosen, rejected = (text_i, text_j) if gap > 0 else (text_j, text_i)
+            eligible.append({"chosen": chosen, "rejected": rejected, "source": "jester"})
 
+    print(f"Jester: {len(eligible)} eligible pairs (all kept)")
+    return eligible
 
-# ── Combine & save ────────────────────────────────────────────────────────────
 
 def main():
-    haha   = load_haha()
-    jester = load_jester()
+    haha_pairs   = load_haha_pairs()
+    jester_pairs = load_jester_pairs()
 
-    combined = pd.concat([haha, jester], ignore_index=True)
-    combined = combined.dropna(subset=["text", "score"])
-    combined = combined[combined["text"].str.strip() != ""]
+    combined = haha_pairs + jester_pairs
+    random.seed(SEED)
+    random.shuffle(combined)
 
+    df_out = pd.DataFrame(combined)
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    combined.to_csv(OUTPUT_PATH, index=False)
+    df_out.to_csv(OUTPUT_PATH, index=False)
 
-    print(f"HaHa:   {len(haha)} jokes  |  score range [{haha['score'].min():.3f}, {haha['score'].max():.3f}]  |  mean {haha['score'].mean():.3f}")
-    print(f"Jester: {len(jester)} jokes  |  score range [{jester['score'].min():.3f}, {jester['score'].max():.3f}]  |  mean {jester['score'].mean():.3f}")
-    print(f"Total:  {len(combined)} jokes  →  {OUTPUT_PATH}")
+    print(f"\nTotal: {len(df_out)} pairs  →  {OUTPUT_PATH}")
+    print(f"  HaHa: {sum(1 for r in combined if r['source'] == 'haha')}")
+    print(f"  Jester: {sum(1 for r in combined if r['source'] == 'jester')}")
 
 
 if __name__ == "__main__":
