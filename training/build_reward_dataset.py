@@ -27,8 +27,9 @@ MIN_RATERS   = 100
 
 def load_haha() -> pd.DataFrame:
     df = pd.read_csv(HAHA_PATH)
-    # humor_rating is 0–5; normalize to [0, 1]
-    df["score"] = df["humor_rating"] / 5.0
+    # per-dataset min-max normalize so full [0,1] range is used
+    lo, hi = df["humor_rating"].min(), df["humor_rating"].max()
+    df["score"] = (df["humor_rating"] - lo) / (hi - lo)
     df["source"] = "haha"
     return df[["text", "score", "source"]]
 
@@ -55,11 +56,14 @@ def load_jester() -> pd.DataFrame:
     for i, (text, avg, count) in enumerate(zip(jokes, avg_ratings, rater_counts)):
         if count < MIN_RATERS:
             continue
-        # normalize -10..+10 → 0..1
-        score = (avg + 10.0) / 20.0
+        score = avg
         rows.append({"text": text, "score": score, "source": "jester"})
 
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    # per-dataset min-max normalize so full [0,1] range is used
+    lo, hi = df["score"].min(), df["score"].max()
+    df["score"] = (df["score"] - lo) / (hi - lo)
+    return df
 
 
 # ── Combine & save ────────────────────────────────────────────────────────────
