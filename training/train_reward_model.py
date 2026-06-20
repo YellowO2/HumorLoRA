@@ -45,7 +45,7 @@ print(f"Loaded {len(df)} pairs  |  sources: {df['source'].value_counts().to_dict
 train_df, val_df = train_test_split(df, test_size=0.15, random_state=SEED)
 print(f"Train: {len(train_df)}  |  Val: {len(val_df)}")
 
-# RewardTrainer expects 'chosen' and 'rejected' columns as plain strings
+# plain text format — chosen/rejected are raw joke strings
 train_ds = Dataset.from_pandas(train_df[["chosen", "rejected"]].reset_index(drop=True))
 val_ds   = Dataset.from_pandas(val_df[["chosen", "rejected"]].reset_index(drop=True))
 
