@@ -113,7 +113,7 @@ def get_hidden_states(texts: list[str], layers: list[int]) -> dict[int, np.ndarr
             return_tensors="pt",
         ).to(model.device)
 
-        out = model(**enc)
+        out = model(**enc, output_hidden_states=True)
         # hidden_states[0] = embedding layer, hidden_states[i] = layer i output
         for l in layers:
             h = out.hidden_states[l][:, -1, :]    # (batch, hidden_size) — last token
