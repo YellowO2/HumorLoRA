@@ -12,14 +12,16 @@ OUTPUTS_DIR = Path(__file__).parent.parent / "outputs"
 
 # ── Config ────────────────────────────────────────────────────────────────────
 MODELS = [
-    ("qwen3.5:4b",       "unsloth/Qwen3.5-4B",                                        "qwen-3"),
-    ("qwen4b-degpt-dpo", str(OUTPUTS_DIR / "qwen4b-degpt-dpo" / "checkpoint-625"),     "qwen-3"),
+    ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
+    # ("qwen4b-degpt-dpo", str(OUTPUTS_DIR / "qwen4b-degpt-dpo" / "checkpoint-625"), "qwen-3"),
 ]
 DATASET = "haha-pairwise"
 
 RUNS = [
-    # gut == no-gut confirmed — plain only going forward
-    ("-no-gut", False, "Return only <answer>A</answer> or <answer>B</answer>."),
+    # crowd-framing prompt — testing if asking model to simulate crowd shifts accuracy
+    ("-crowd", False, "Return only <answer>A</answer> or <answer>B</answer>."),
+    # previous runs (kept for reference):
+    # ("-no-gut", False, "Return only <answer>A</answer> or <answer>B</answer>.")   # qwen3.5:4b 55.4%, qwen4b-degpt-dpo 54.8%
 ]
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -36,7 +38,7 @@ def build_prompt(row: dict) -> str:
         "You are judging which of two texts is funnier.\n\n"
         f"A: {row['text_a']}\n"
         f"B: {row['text_b']}\n\n"
-        f"Which do you find funnier? {_run_instruction}"
+        f"Which do you think more people would find funnier if posted online? {_run_instruction}"
     )
 
 

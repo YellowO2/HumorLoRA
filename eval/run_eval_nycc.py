@@ -27,14 +27,17 @@ MODELS = [
     ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
 ]
 N_EXAMPLES     = 2000  # upper bound of example range
-EXAMPLE_OFFSET = 1000  # skip first N examples (set to 0 to run from start)
+EXAMPLE_OFFSET = 0     # skip first N examples (set to 0 to run from start)
 DATASET        = "nycc"  # label written to summary.csv — change when switching datasets
 
 # Each entry: (label_suffix, think_flag, instruction)
 # Runs execute in order; model is reloaded between runs.
 RUNS = [
-    # no-gut already ran at n=2616 for qwen3.5:4b — only extend thinking
-    ("-thinking", True, "Briefly explain why each caption is funny or not, then return your final choice as <answer>A</answer> or <answer>B</answer>."),
+    # crowd-framing prompt — testing if asking model to simulate crowd shifts accuracy
+    ("-crowd", False, "Return only <answer>A</answer> or <answer>B</answer>."),
+    # previous runs (kept for reference):
+    # ("-no-gut", False, "Return <answer>A</answer> or <answer>B</answer>.")         # 54.5% n=2616
+    # ("-thinking", True, "Briefly explain why each caption is funny or not, then return your final choice as <answer>A</answer> or <answer>B</answer>.")  # 53.2% n=2000
 ]
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -54,7 +57,7 @@ def build_prompt(row: dict) -> str:
         "Two captions have been submitted:\n"
         f"A: {row['caption_a']}\n"
         f"B: {row['caption_b']}\n\n"
-        f"Which caption do you find funnier? {_run_instruction}"
+        f"Which caption do you think a crowd would find funnier if shared online? {_run_instruction}"
     )
 
 
