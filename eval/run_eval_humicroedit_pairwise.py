@@ -17,7 +17,7 @@ MODELS = [
 DATASET = "humicroedit-pairwise"
 
 RUNS = [
-    ("-no-gut", False, "Return only <answer>A</answer> or <answer>B</answer>."),
+    ("", False, "Return only <answer>A</answer> or <answer>B</answer>."),
 ]
 # ─────────────────────────────────────────────────────────────────────────────
 
