@@ -19,10 +19,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
 sys.path.insert(0, str(Path(__file__).parent))
-from interact import ask, unload
+from interact import LocalModel
 
 # ── Config ────────────────────────────────────────────────────────────────────
-MODEL       = "qwen3.5:4b"
+MODEL_NAME       = "qwen3.5:4b"
+MODEL_CHECKPOINT = "unsloth/Qwen3.5-4B"
+MODEL_TEMPLATE   = "qwen-3"
 N_PAIRS     = 2000   # use all available pairs, then split 80/20
 TRAIN_FRAC  = 0.8
 DATASET     = "haha-basis-pairwise"
@@ -103,12 +105,12 @@ def save_cache(cache: dict) -> None:
     CACHE_PATH.write_text(json.dumps(cache, indent=2))
 
 
-def extract_features(text: str, cache: dict) -> list[int] | None:
+def extract_features(text: str, cache: dict, model: LocalModel) -> list[int] | None:
     key = text_hash(text)
     if key in cache:
         return cache[key]
     prompt = FEATURE_PROMPT.format(basis=BASIS_BLOCK, item=text)
-    out = ask(prompt, model=MODEL, think=False)
+    out = model.ask(prompt, think=False, history=None, max_new_tokens=256)
     content = out["content"]
     m = re.search(r"\{[^}]+\}", content, re.DOTALL)
     if not m:
@@ -122,11 +124,11 @@ def extract_features(text: str, cache: dict) -> list[int] | None:
         return None
 
 
-def pairs_to_xy(pairs: pd.DataFrame, cache: dict, split_name: str):
+def pairs_to_xy(pairs: pd.DataFrame, cache: dict, split_name: str, model: LocalModel):
     X, y = [], []
     for i, row in enumerate(pairs.itertuples()):
-        feats_a = extract_features(str(row.text_a), cache)
-        feats_b = extract_features(str(row.text_b), cache)
+        feats_a = extract_features(str(row.text_a), cache, model)
+        feats_b = extract_features(str(row.text_b), cache, model)
         if feats_a is None or feats_b is None:
             continue
         diff = [a - b for a, b in zip(feats_a, feats_b)]
@@ -142,7 +144,7 @@ def pairs_to_xy(pairs: pd.DataFrame, cache: dict, split_name: str):
 
 def append_summary(n: int, acc: float, timestamp: str) -> None:
     row = {
-        "model": MODEL, "timestamp": timestamp,
+        "model": MODEL_NAME, "timestamp": timestamp,
         "n_examples": n,
         "overall_acc": round(acc * 100, 1),
         "unknown_count": 0,
@@ -161,6 +163,8 @@ def main():
     cache = load_cache()
     print(f"Cache loaded: {len(cache)} items already scored")
 
+    model = LocalModel(MODEL_NAME, MODEL_CHECKPOINT, chat_template=MODEL_TEMPLATE, enable_thinking=False)
+
     pairs_df = pd.read_csv(PAIRWISE_PATH).iloc[:N_PAIRS]
     n_train = int(len(pairs_df) * TRAIN_FRAC)
     train_pairs = pairs_df.iloc[:n_train]
@@ -168,11 +172,11 @@ def main():
     print(f"Split: {len(train_pairs)} train / {len(test_pairs)} test pairs")
 
     print(f"\n── Extracting features for TRAIN ({len(train_pairs)} pairs) ──")
-    X_train, y_train = pairs_to_xy(train_pairs, cache, "train")
+    X_train, y_train = pairs_to_xy(train_pairs, cache, "train", model)
     print(f"Train matrix: {X_train.shape}, label dist: {y_train.mean():.2f} frac A wins")
 
     print(f"\n── Extracting features for TEST ({len(test_pairs)} pairs) ──")
-    X_test, y_test = pairs_to_xy(test_pairs, cache, "test")
+    X_test, y_test = pairs_to_xy(test_pairs, cache, "test", model)
     print(f"Test matrix: {X_test.shape}")
 
     print("\n── Training logistic regression (L1 = LASSO) ──")
@@ -203,6 +207,7 @@ def main():
     weights_df.to_csv(weights_path, index=False)
     print(f"Feature weights saved to {weights_path}")
     print(weights_df.to_string(index=False))
+    model.unload()
 
 
 if __name__ == "__main__":

@@ -19,10 +19,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
 sys.path.insert(0, str(Path(__file__).parent))
-from interact import ask
+from interact import LocalModel, unload
 
 # ── Config ────────────────────────────────────────────────────────────────────
-MODEL       = "qwen3.5:4b"
+MODEL_NAME       = "qwen3.5:4b"
+MODEL_CHECKPOINT = "unsloth/Qwen3.5-4B"
+MODEL_TEMPLATE   = "qwen-3"
 N_TRAIN     = 1000   # pairs from train.csv used to train the preference model
 N_TEST      = 1000   # pairs from test.csv used to evaluate
 DATASET     = "humicroedit-basis-pairwise"
@@ -115,12 +117,12 @@ def save_cache(cache: dict) -> None:
     CACHE_PATH.write_text(json.dumps(cache, indent=2))
 
 
-def extract_features(original_text: str, edited_text: str, cache: dict) -> list[int] | None:
+def extract_features(original_text: str, edited_text: str, cache: dict, model: LocalModel) -> list[int] | None:
     key = text_hash(edited_text)
     if key in cache:
         return cache[key]
     prompt = FEATURE_PROMPT.format(basis=BASIS_BLOCK, original=original_text, edited=edited_text)
-    out = ask(prompt, model=MODEL, think=False)
+    out = model.ask(prompt, think=False, history=None, max_new_tokens=256)
     content = out["content"]
     m = re.search(r"\{[^}]+\}", content, re.DOTALL)
     if not m:
@@ -140,15 +142,15 @@ def load_pairs(path: Path, n: int) -> pd.DataFrame:
     return df.iloc[:n]
 
 
-def pairs_to_xy(pairs: pd.DataFrame, cache: dict, split_name: str):
+def pairs_to_xy(pairs: pd.DataFrame, cache: dict, split_name: str, model: LocalModel):
     X, y = [], []
     for i, row in enumerate(pairs.itertuples()):
         orig_a    = restore_original(row.original1)
         edited_a  = apply_edit(row.original1, row.edit1)
         orig_b    = restore_original(row.original2)
         edited_b  = apply_edit(row.original2, row.edit2)
-        feats_a = extract_features(orig_a, edited_a, cache)
-        feats_b = extract_features(orig_b, edited_b, cache)
+        feats_a = extract_features(orig_a, edited_a, cache, model)
+        feats_b = extract_features(orig_b, edited_b, cache, model)
         if feats_a is None or feats_b is None:
             continue
         diff = [a - b for a, b in zip(feats_a, feats_b)]
@@ -164,7 +166,7 @@ def pairs_to_xy(pairs: pd.DataFrame, cache: dict, split_name: str):
 
 def append_summary(n: int, acc: float, timestamp: str) -> None:
     row = {
-        "model": MODEL, "timestamp": timestamp,
+        "model": MODEL_NAME, "timestamp": timestamp,
         "n_examples": n,
         "overall_acc": round(acc * 100, 1),
         "unknown_count": 0,
@@ -183,14 +185,16 @@ def main():
     cache = load_cache()
     print(f"Cache loaded: {len(cache)} items already scored")
 
+    model = LocalModel(MODEL_NAME, MODEL_CHECKPOINT, chat_template=MODEL_TEMPLATE, enable_thinking=False)
+
     print(f"\n── Extracting features for TRAIN ({N_TRAIN} pairs) ──")
     train_pairs = load_pairs(DATA_DIR / "train.csv", N_TRAIN)
-    X_train, y_train = pairs_to_xy(train_pairs, cache, "train")
+    X_train, y_train = pairs_to_xy(train_pairs, cache, "train", model)
     print(f"Train matrix: {X_train.shape}, label dist: {y_train.mean():.2f} frac A wins")
 
     print(f"\n── Extracting features for TEST ({N_TEST} pairs) ──")
     test_pairs = load_pairs(DATA_DIR / "test.csv", N_TEST)
-    X_test, y_test = pairs_to_xy(test_pairs, cache, "test")
+    X_test, y_test = pairs_to_xy(test_pairs, cache, "test", model)
     print(f"Test matrix: {X_test.shape}")
 
     print("\n── Training logistic regression (L1 = LASSO) ──")
@@ -222,6 +226,7 @@ def main():
     weights_df.to_csv(weights_path, index=False)
     print(f"Feature weights saved to {weights_path}")
     print(weights_df.to_string(index=False))
+    model.unload()
 
 
 if __name__ == "__main__":
