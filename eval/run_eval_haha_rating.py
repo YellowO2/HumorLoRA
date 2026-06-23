@@ -1,5 +1,6 @@
 """
 Rating eval: ask model to rate each joke 0-5, compare to human average rating.
+Source: pairwise.csv (2376 unique jokes with ratings) — NOT rating.csv (IDs don't overlap).
 Metrics: RMSE, Spearman correlation, MAE.
 Also derives pairwise accuracy from predicted scores (higher score wins).
 """
@@ -19,52 +20,50 @@ OUTPUTS_DIR = Path(__file__).parent.parent / "outputs"
 # ── Config ────────────────────────────────────────────────────────────────────
 MODELS = [
     ("qwen3.5:4b", "unsloth/Qwen3.5-4B", "qwen-3"),
-    # previous runs (zero-shot, no anchors):
-    # ("hermes-3-8b",         "NousResearch/Hermes-3-Llama-3.1-8B", "chatml"),       # spearman r=0.228
-    # ("discord-hermes-3-8b", "mookiezii/Discord-Hermes-3-8B",      "chatml"),       # spearman r=0.015
-    # ("llama-3.1-8b-instruct", "meta-llama/Llama-3.1-8B-Instruct", "llama-3.1"),   # spearman r=0.277
+    # previous runs (zero-shot, no anchors, loaded from rating.csv):
+    # ("hermes-3-8b",           "NousResearch/Hermes-3-Llama-3.1-8B", "chatml"),     # spearman r=0.228
+    # ("discord-hermes-3-8b",   "mookiezii/Discord-Hermes-3-8B",      "chatml"),     # spearman r=0.015
+    # ("llama-3.1-8b-instruct", "meta-llama/Llama-3.1-8B-Instruct",   "llama-3.1"), # spearman r=0.277
 ]
 DATASET_RATING   = "haha-rating"
 DATASET_PAIRWISE = "haha-rating-derived-pairwise"
+
+N_PAIRS = 1000  # cap on pairwise pairs; only unique jokes from those pairs get rated
 # ─────────────────────────────────────────────────────────────────────────────
 
-DATA_PATH     = Path(__file__).parent.parent / "datasets" / "hahackathon" / "rating.csv"
 PAIRWISE_PATH = Path(__file__).parent.parent / "datasets" / "hahackathon" / "pairwise.csv"
 RESULTS_DIR   = Path(__file__).parent.parent / "results" / "hahackathon"
 SUMMARY_PATH  = Path(__file__).parent.parent / "results" / "summary.csv"
 
-# Anchor targets — held out from test set (no separate train available)
-# Realistic crowd average range is ~1.5–4.0 (individual ratings are 1–5)
-ANCHOR_TARGETS = [0.2, 1.1, 2.0, 2.9, 4.0]
+# Evenly spaced across actual rating range in pairwise.csv (0.1–4.0)
+ANCHOR_TARGETS = [0.1, 1.1, 2.1, 3.1, 4.0]
 
 
-def select_anchors(df: pd.DataFrame) -> list[dict]:
+def select_anchors(jokes: dict) -> list[dict]:
+    """jokes: {id: {text, humor_rating}}"""
     anchors = []
     for target in ANCHOR_TARGETS:
-        row = df.iloc[(df["humor_rating"] - target).abs().argsort().iloc[:1]].iloc[0]
-        anchors.append(row.to_dict())
+        best = min(jokes.values(), key=lambda j: abs(j["humor_rating"] - target))
+        anchors.append(best)
     return anchors
 
 
 def build_anchor_block(anchors: list[dict]) -> str:
-    lines = []
-    for a in anchors:
-        lines.append(f'- Rating {a["humor_rating"]:.1f}/5: "{a["text"]}"')
-    return "\n".join(lines)
+    return "\n".join(f'- Rating {a["humor_rating"]:.1f}/5: "{a["text"]}"' for a in anchors)
 
 
 def build_prompt(text: str, anchor_block: str) -> str:
     return (
         "Rate the funniness of this joke on a scale from 0 to 5.\n\n"
-        "Calibration examples:\n"
-        f"{anchor_block}\n\n"
         f'Joke: "{text}"\n\n'
+        "Example ratings:\n"
+        f"{anchor_block}\n\n"
         "Return your rating as <rating>X.X</rating> with one decimal place."
     )
 
 
 def parse_rating(content: str) -> float | None:
-    m = re.search(r"<rating>\s*([0-5](?:\.\d+)?)\s*</rating>", content, re.IGNORECASE)
+    m = re.search(r"<rating>\s*(\d+(?:\.\d+)?)\s*</rating>", content, re.IGNORECASE)
     if m:
         return max(0.0, min(5.0, float(m.group(1))))
     nums = re.findall(r"\b([0-5](?:\.\d+)?)\b", content)
@@ -87,32 +86,40 @@ def append_summary(model: str, n: int, metric_val: float, dataset: str, timestam
     )
 
 
-def run_test(model, examples: pd.DataFrame) -> None:
+def run_test(model) -> None:
     is_local = isinstance(model, LocalModel)
     model_name = model.name if is_local else model
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    anchors = select_anchors(examples)
-    anchor_ids = {str(a["id"]) for a in anchors}
-    eval_df = examples[~examples["id"].astype(str).isin(anchor_ids)].reset_index(drop=True)
+    # Load N_PAIRS pairs, collect unique jokes needed
+    pairs_df = pd.read_csv(PAIRWISE_PATH).iloc[:N_PAIRS]
+    jokes = {}
+    for row in pairs_df.itertuples():
+        jokes[str(row.id_a)] = {"id": str(row.id_a), "text": row.text_a, "humor_rating": row.rating_a}
+        jokes[str(row.id_b)] = {"id": str(row.id_b), "text": row.text_b, "humor_rating": row.rating_b}
+
+    anchors = select_anchors(jokes)
+    anchor_ids = {a["id"] for a in anchors}
+    eval_jokes = [j for j in jokes.values() if j["id"] not in anchor_ids]
     anchor_block = build_anchor_block(anchors)
 
     print(f"\n{'='*60}")
-    print(f"Model: {model_name}  |  {len(eval_df)} jokes  ({len(anchors)} held out as anchors)")
+    print(f"Model: {model_name}  |  {len(eval_jokes)} jokes to rate  ({len(anchors)} held out as anchors)")
     print(f"Anchors:\n{anchor_block}")
     print(f"{'='*60}")
+    print(f"\nSample prompt:\n{build_prompt(eval_jokes[0]['text'], anchor_block)}\n{'='*60}")
 
     results = []
-    for i, row in enumerate(eval_df.itertuples()):
-        prompt = build_prompt(row.text, anchor_block)
+    for i, joke in enumerate(eval_jokes):
+        prompt = build_prompt(joke["text"], anchor_block)
         out = model.ask(prompt, think=False, history=None, max_new_tokens=64) if is_local else ask(prompt, model=model, think=False)
         predicted = parse_rating(out["content"])
         after_think = re.split(r"</think>", out["content"], flags=re.IGNORECASE)[-1].strip()
-        print(f"  [{i+1}] human={row.humor_rating:.2f}  model={predicted}  {after_think!r}")
+        print(f"  [{i+1}] human={joke['humor_rating']:.2f}  model={predicted}  {after_think!r}")
         results.append({
-            "id": row.id, "text": row.text,
-            "humor_rating": row.humor_rating,
+            "id": joke["id"], "text": joke["text"],
+            "humor_rating": joke["humor_rating"],
             "predicted_rating": predicted,
             "raw_response": out["content"],
         })
@@ -122,10 +129,6 @@ def run_test(model, examples: pd.DataFrame) -> None:
     df.to_csv(out_path, index=False)
 
     valid = df.dropna(subset=["predicted_rating"])
-    if len(valid) < 10:
-        print(f"WARNING: only {len(valid)} valid ratings — check parse_rating()")
-        return
-
     rmse = ((valid["humor_rating"] - valid["predicted_rating"]) ** 2).mean() ** 0.5
     spearman, _ = spearmanr(valid["humor_rating"], valid["predicted_rating"])
     mae = (valid["humor_rating"] - valid["predicted_rating"]).abs().mean()
@@ -134,15 +137,12 @@ def run_test(model, examples: pd.DataFrame) -> None:
     append_summary(model_name, len(valid), rmse * 100, DATASET_RATING, timestamp)
 
     # ── Derived pairwise ──────────────────────────────────────────────────────
-    score_map = dict(zip(df["id"].astype(str), df["predicted_rating"]))
-    pairs_df = pd.read_csv(PAIRWISE_PATH)
+    score_map = dict(zip(df["id"], df["predicted_rating"]))
 
     pair_results = []
-    skipped = 0
     for row in pairs_df.itertuples():
         id_a, id_b = str(row.id_a), str(row.id_b)
         if score_map.get(id_a) is None or score_map.get(id_b) is None:
-            skipped += 1
             continue
         predicted = "A" if score_map[id_a] >= score_map[id_b] else "B"
         expected  = str(row.expected).strip().upper()
@@ -150,9 +150,8 @@ def run_test(model, examples: pd.DataFrame) -> None:
 
     correct = sum(r["is_correct"] for r in pair_results)
     n_pairs = len(pair_results)
-    acc = correct / n_pairs * 100
-    print(f"{model_name} Derived pairwise: {correct}/{n_pairs} = {acc:.1f}%  (skipped {skipped} anchor/unparsed pairs)")
-    append_summary(model_name, n_pairs, acc, DATASET_PAIRWISE, timestamp)
+    print(f"{model_name} Derived pairwise: {correct}/{n_pairs} = {correct/n_pairs*100:.1f}%")
+    append_summary(model_name, n_pairs, correct / n_pairs * 100, DATASET_PAIRWISE, timestamp)
 
     pair_out = RESULTS_DIR / f"{model_name.replace(':', '_')}_rating_derived_pairwise_{timestamp}.csv"
     pd.DataFrame(pair_results).to_csv(pair_out, index=False)
@@ -161,12 +160,12 @@ def run_test(model, examples: pd.DataFrame) -> None:
 
 
 def main():
-    examples = pd.read_csv(DATA_PATH)
-    print(f"Loaded {len(examples)} jokes  |  human rating mean={examples['humor_rating'].mean():.2f}")
+    pairs_df = pd.read_csv(PAIRWISE_PATH)
+    print(f"Loaded {len(pairs_df)} pairs total, using first {N_PAIRS}")
     for model_spec in MODELS:
         name, checkpoint, chat_template = model_spec
         model = LocalModel(name, checkpoint, chat_template=chat_template, enable_thinking=False)
-        run_test(model, examples)
+        run_test(model)
 
 
 if __name__ == "__main__":
