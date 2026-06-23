@@ -32,13 +32,17 @@ SUMMARY_PATH = Path(__file__).parent.parent / "results" / "summary.csv"
 N_PAIRS = 1500  # cap on subtask-2 pairs to evaluate; only items needed by those pairs get rated
 
 # Anchor target ratings on 0-3 scale — picked from train set, not test
-ANCHOR_TARGETS = [0.3, 1.5, 2.5]
+ANCHOR_TARGETS = [0.0, 0.75, 1.5, 2.25, 3.0]
 
 _run_think: bool = False
 
 
 def apply_edit(original: str, edit: str) -> str:
     return re.sub(r"<[^/]+/>", edit, original).strip()
+
+
+def restore_original(original: str) -> str:
+    return re.sub(r"<([^/]+)/>", r"\1", original).strip()
 
 
 def select_anchors(train_df: pd.DataFrame) -> list[dict]:
@@ -52,18 +56,21 @@ def select_anchors(train_df: pd.DataFrame) -> list[dict]:
 def build_anchor_block(anchors: list[dict]) -> str:
     lines = []
     for a in anchors:
-        headline = apply_edit(a["original"], a["edit"])
-        lines.append(f'- Rating {a["meanGrade"]:.1f}/3: "{headline}"')
+        lines.append(
+            f'- Rating {a["meanGrade"]:.1f}/3:\n'
+            f'  Original: {restore_original(a["original"])}\n'
+            f'  Edited:   {apply_edit(a["original"], a["edit"])}'
+        )
     return "\n".join(lines)
 
 
 def build_prompt(row: dict, anchor_block: str) -> str:
-    headline = apply_edit(row["original"], row["edit"])
     return (
         "Rate the funniness of this edited news headline on a scale from 0 to 3.\n\n"
-        "Calibration examples:\n"
+        f'Original: {restore_original(row["original"])}\n'
+        f'Edited:   {apply_edit(row["original"], row["edit"])}\n\n'
+        "Example ratings:\n"
         f"{anchor_block}\n\n"
-        f'Headline: "{headline}"\n\n'
         "Return your rating as <rating>X.X</rating> with one decimal place."
     )
 
@@ -121,6 +128,12 @@ def run_test(model, label_suffix: str) -> None:
     print(f"Model: {model_name}  |  {len(item_lookup)} unique items to rate  ({len(s2)} pairs)")
     print(f"Anchors:\n{anchor_block}")
     print(f"{'='*60}")
+
+    # Print sample prompt for inspection
+    sample_item = next(iter(item_lookup.values()))
+    print("\n── Sample prompt ──────────────────────────────────────")
+    print(build_prompt(sample_item, anchor_block))
+    print("───────────────────────────────────────────────────────\n")
 
     results = []
     for i, (item_id, item) in enumerate(item_lookup.items()):

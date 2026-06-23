@@ -35,7 +35,7 @@ SUMMARY_PATH  = Path(__file__).parent.parent / "results" / "summary.csv"
 
 # Anchor targets — held out from test set (no separate train available)
 # Realistic crowd average range is ~1.5–4.0 (individual ratings are 1–5)
-ANCHOR_TARGETS = [1.5, 2.5, 4.0]
+ANCHOR_TARGETS = [0.2, 1.1, 2.0, 2.9, 4.0]
 
 
 def select_anchors(df: pd.DataFrame) -> list[dict]:
