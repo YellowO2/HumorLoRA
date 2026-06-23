@@ -53,3 +53,5 @@ qwen3.5:4b,20260623_145340,1701,67.3,0,humicroedit-rating
 qwen3.5:4b,20260623_145340,1500,57.1,0,humicroedit-rating-derived-pairwise
 qwen3.5:4b,20260623_153834,995,88.9134,0,haha-rating
 qwen3.5:4b,20260623_153834,94,63.8298,0,haha-rating-derived-pairwise
+qwen3.5:4b,20260623_160317,1479,130.5538,0,haha-rating
+qwen3.5:4b,20260623_160317,985,56.3452,0,haha-rating-derived-pairwise
