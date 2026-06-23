@@ -47,3 +47,5 @@ qwen4b-probe-humicro,20260622_114332,2831,51.8,0,haha-probe-xdomain-layer16
 qwen3.5:4b-crowd,20260622_154550,2000,54.2,0,nycc
 qwen3.5:4b-crowd,20260622_155815,2000,54.4,0,haha-pairwise
 qwen3.5:4b-no-gut,20260623_121312,2628,56.3,0,humicroedit-pairwise
+qwen3.5:4b,20260623_143215,1701,120.5,0,humicroedit-rating
+qwen3.5:4b,20260623_143215,1500,58.7,0,humicroedit-rating-derived-pairwise
