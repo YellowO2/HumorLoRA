@@ -40,6 +40,7 @@ BATCH_SIZE    = 8
 SEED          = 42
 N_TRAIN       = 3000
 N_TEST        = 1000
+MIN_MARGIN    = 1.0   # only keep pairs where |meanGrade_A - meanGrade_B| >= this
 
 S2_TRAIN_PATH = Path(__file__).parent.parent / "datasets" / "humicroedit" / "semeval-2020-task-7-dataset" / "subtask-2" / "train.csv"
 S2_TEST_PATH  = Path(__file__).parent.parent / "datasets" / "humicroedit" / "semeval-2020-task-7-dataset" / "subtask-2" / "test.csv"
@@ -50,7 +51,7 @@ SUMMARY_PATH  = Path(__file__).parent.parent / "results" / "summary.csv"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-PROBES_CACHE      = CACHE_DIR / "humicro_pairwise_probes.joblib"
+PROBES_CACHE      = CACHE_DIR / f"humicro_pairwise_probes_margin{MIN_MARGIN}.joblib"
 
 
 # ── Model loading ─────────────────────────────────────────────────────────────
@@ -102,9 +103,12 @@ def apply_edit(original: str, edit: str) -> str:
     return re.sub(r"<[^/]+/>", edit, original).strip()
 
 
-def load_pairs(path: Path, n: int) -> pd.DataFrame:
+def load_pairs(path: Path, n: int, min_margin: float = 0.0) -> pd.DataFrame:
     df = pd.read_csv(path)
     df = df[df["label"] != 0].reset_index(drop=True)
+    if min_margin > 0:
+        margin = (df["meanGrade1"] - df["meanGrade2"]).abs()
+        df = df[margin >= min_margin].reset_index(drop=True)
     return df.iloc[:n]
 
 
@@ -118,9 +122,9 @@ mdl, tok = None, None
 
 # ── Load pairs ────────────────────────────────────────────────────────────────
 
-print(f"Loading {N_TRAIN} train pairs and {N_TEST} test pairs...")
-train_df = load_pairs(S2_TRAIN_PATH, N_TRAIN)
-test_df  = load_pairs(S2_TEST_PATH, N_TEST)
+print(f"Loading pairs (margin >= {MIN_MARGIN})...")
+train_df = load_pairs(S2_TRAIN_PATH, N_TRAIN, MIN_MARGIN)
+test_df  = load_pairs(S2_TEST_PATH,  N_TEST,  MIN_MARGIN)
 print(f"  Train: {len(train_df)} pairs  |  Test: {len(test_df)} pairs")
 
 train_a = [apply_edit(r.original1, r.edit1) for r in train_df.itertuples()]
