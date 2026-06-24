@@ -31,7 +31,6 @@ from pathlib import Path
 from datetime import datetime
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import cross_val_score
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 PROBE_LAYERS  = [8, 12, 16, 20, 24]
@@ -39,8 +38,8 @@ BASE_MODEL    = "unsloth/Qwen3.5-4B"
 MAX_LENGTH    = 256
 BATCH_SIZE    = 8
 SEED          = 42
-N_TRAIN       = 1500
-N_TEST        = 500
+N_TRAIN       = 3000
+N_TEST        = 1000
 
 S2_TRAIN_PATH = Path(__file__).parent.parent / "datasets" / "humicroedit" / "semeval-2020-task-7-dataset" / "subtask-2" / "train.csv"
 S2_TEST_PATH  = Path(__file__).parent.parent / "datasets" / "humicroedit" / "semeval-2020-task-7-dataset" / "subtask-2" / "test.csv"
@@ -160,22 +159,19 @@ if PROBES_CACHE.exists():
     saved = joblib.load(PROBES_CACHE)
     probes  = saved["probes"]
     scalers = saved["scalers"]
-    cv_accs = saved["cv_accs"]
 else:
-    print("\nFitting pairwise probes per layer (5-fold CV on train set)...")
-    probes, scalers, cv_accs = {}, {}, {}
+    print("\nFitting pairwise probes per layer...")
+    probes, scalers = {}, {}
     for l in PROBE_LAYERS:
         X = train_acts[l]
         scaler = StandardScaler()
         X_s = scaler.fit_transform(X)
         clf = LogisticRegression(max_iter=1000, random_state=SEED, C=1.0)
-        cv_scores = cross_val_score(clf, X_s, y_train, cv=5, scoring="accuracy")
-        cv_accs[l] = cv_scores.mean() * 100
         clf.fit(X_s, y_train)
         probes[l]  = clf
         scalers[l] = scaler
-        print(f"  Layer {l:2d}: CV {cv_accs[l]:.1f}% ± {cv_scores.std()*100:.1f}%")
-    joblib.dump({"probes": probes, "scalers": scalers, "cv_accs": cv_accs}, PROBES_CACHE)
+        print(f"  Layer {l:2d}: done")
+    joblib.dump({"probes": probes, "scalers": scalers}, PROBES_CACHE)
     print(f"Probes saved to {PROBES_CACHE}")
 
 
@@ -191,17 +187,15 @@ for l in PROBE_LAYERS:
 best_layer = max(test_accs, key=test_accs.get)
 
 print(f"\n══ Full Results ══")
-print(f"{'Layer':>6}  {'Train CV':>9}  {'Test acc':>9}")
+print(f"{'Layer':>6}  {'Test acc':>9}")
 for l in PROBE_LAYERS:
-    print(f"  {l:4d}  {cv_accs[l]:8.1f}%  {test_accs[l]:8.1f}%")
+    print(f"  {l:4d}  {test_accs[l]:8.1f}%")
 
-print(f"\nBest layer {best_layer}:")
-print(f"  Train CV:  {cv_accs[best_layer]:.1f}%")
-print(f"  Test acc:  {test_accs[best_layer]:.1f}%")
+print(f"\nBest layer {best_layer}: {test_accs[best_layer]:.1f}%")
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 results_df = pd.DataFrame([
-    {"layer": l, "train_cv": round(cv_accs[l], 1), "test_acc": round(test_accs[l], 1)}
+    {"layer": l, "test_acc": round(test_accs[l], 1)}
     for l in PROBE_LAYERS
 ])
 out_path = RESULTS_DIR / f"probe_pairwise_{timestamp}.csv"
