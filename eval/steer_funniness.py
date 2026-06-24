@@ -132,7 +132,7 @@ while True:
         continue
 
     history.append({"role": "user", "content": user_input})
-    prompt = tok.apply_chat_template(history, add_generation_prompt=True, tokenize=False)
+    prompt = tok.apply_chat_template(history, add_generation_prompt=True, tokenize=False, enable_thinking=False)
     enc = tok(prompt, return_tensors="pt").to(device)
 
     with torch.inference_mode():
