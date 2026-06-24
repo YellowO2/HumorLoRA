@@ -18,7 +18,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 BASE_MODEL   = "unsloth/Qwen3.5-4B"
 TARGET_LAYER = 16
-ALPHA        = 20.0
+ALPHA        = 2.0
 MAX_NEW_TOKENS = 300
 W_SOURCE     = "probe"   # "probe" = binary probe, "lora" = LoRA regression head
 
