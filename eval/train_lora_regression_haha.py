@@ -6,6 +6,7 @@ Eval: pairwise.csv (2000 pairs) — compare predicted scores between joke pairs.
 
 Run: python eval/train_lora_regression_haha.py
 """
+import gc
 import torch
 import torch.nn as nn
 import pandas as pd
@@ -173,6 +174,10 @@ base.save_pretrained(MODEL_SAVE)
 torch.save(head.state_dict(), MODEL_SAVE / "head.pt")
 print(f"\nSaved LoRA adapters + head to {MODEL_SAVE}")
 
+del optimizer, scheduler, dataset, loader
+gc.collect()
+torch.cuda.empty_cache()
+
 
 # ── Eval on HaHa pairwise ─────────────────────────────────────────────────────
 
@@ -194,7 +199,7 @@ all_prompts = [make_prompt(j) for j in jokes_a + jokes_b]
 @torch.inference_mode()
 def score_all(prompts):
     all_scores = []
-    bs = BATCH_SIZE * 2
+    bs = BATCH_SIZE  # halved vs training to avoid OOM after memory fragmentation
     for i in range(0, len(prompts), bs):
         batch = prompts[i:i + bs]
         enc   = tok(batch, truncation=True, max_length=MAX_LENGTH, padding=True, return_tensors="pt")
