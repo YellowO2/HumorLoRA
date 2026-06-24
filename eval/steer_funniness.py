@@ -70,10 +70,11 @@ _hook_handle = None
 
 def make_hook(alpha, w):
     def hook(module, input, output):
-        # Qwen decoder layer returns tuple: (hidden_states, ...)
-        hidden = output[0].clone()
-        hidden = hidden + alpha * w.to(hidden.dtype)
-        return (hidden,) + output[1:]
+        if isinstance(output, tuple):
+            hidden = output[0] + alpha * w.to(output[0].dtype)
+            return (hidden,) + output[1:]
+        else:
+            return output + alpha * w.to(output.dtype)
     return hook
 
 def set_steering(alpha):
