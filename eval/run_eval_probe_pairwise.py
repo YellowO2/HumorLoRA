@@ -122,9 +122,9 @@ mdl, tok = None, None
 
 # ── Load pairs ────────────────────────────────────────────────────────────────
 
-print(f"Loading pairs (margin >= {MIN_MARGIN})...")
+print(f"Loading pairs (train margin >= {MIN_MARGIN}, test unfiltered)...")
 train_df = load_pairs(S2_TRAIN_PATH, N_TRAIN, MIN_MARGIN)
-test_df  = load_pairs(S2_TEST_PATH,  N_TEST,  MIN_MARGIN)
+test_df  = load_pairs(S2_TEST_PATH,  N_TEST,  0.0)
 print(f"  Train: {len(train_df)} pairs  |  Test: {len(test_df)} pairs")
 
 train_a = [apply_edit(r.original1, r.edit1) for r in train_df.itertuples()]
