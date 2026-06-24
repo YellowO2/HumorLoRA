@@ -1,10 +1,11 @@
 """
-Download HaHackathon train split and produce two eval datasets:
-  datasets/hahackathon/pairwise.csv  — A/B pairs for accuracy eval
-  datasets/hahackathon/rating.csv    — individual jokes for correlation eval
+Download HaHackathon train split and produce two datasets with a proper 80/20 split:
+  datasets/hahackathon/rating.csv    — 80% of humorous jokes for LoRA training
+  datasets/hahackathon/pairwise.csv  — pairs formed exclusively from held-out 20%
+
+No gap filter on pairwise — unfiltered random pairs give an honest eval number.
 """
 import random
-import itertools
 from pathlib import Path
 
 import pandas as pd
@@ -14,10 +15,9 @@ TRAIN_URL = (
     "/main/datasets/hahackathon_train.csv"
 )
 
-RATING_DIFF_THRESHOLD = 1.0   # minimum humor_rating gap to form a pair
-N_PAIRS  = 2000
-N_RATING = 1000
-SEED     = 42
+TRAIN_FRAC = 0.8
+N_PAIRS    = 2000
+SEED       = 42
 
 OUT_DIR = Path(__file__).parent.parent / "datasets" / "hahackathon"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -28,46 +28,53 @@ def main():
     df = pd.read_csv(TRAIN_URL)
     print(f"Total rows: {len(df)}")
 
-    humorous = df[df["is_humor"] == 1].reset_index(drop=True)
+    humorous = df[df["is_humor"] == 1].sample(frac=1, random_state=SEED).reset_index(drop=True)
     print(f"Humorous texts: {len(humorous)}")
 
-    # ── Pairwise dataset ──────────────────────────────────────────────────────
-    rng = random.Random(SEED)
-    rows = humorous.to_dict("records")
+    # ── 80/20 split by joke ID — no overlap ───────────────────────────────────
+    n_train = int(len(humorous) * TRAIN_FRAC)
+    train_df = humorous.iloc[:n_train]
+    test_df  = humorous.iloc[n_train:]
+    print(f"Train: {len(train_df)} jokes  |  Test (held-out): {len(test_df)} jokes")
+
+    # ── Rating dataset (train split, all jokes) ───────────────────────────────
+    rating_df = train_df[["id", "text", "humor_rating"]].reset_index(drop=True)
+    rating_path = OUT_DIR / "rating.csv"
+    rating_df.to_csv(rating_path, index=False)
+    print(f"\nRating: {len(rating_df)} texts saved to {rating_path}")
+    print(f"  humor_rating mean={rating_df['humor_rating'].mean():.2f}, std={rating_df['humor_rating'].std():.2f}")
+
+    # ── Pairwise dataset (held-out test split only, no gap filter) ────────────
+    rng  = random.Random(SEED)
+    rows = test_df.to_dict("records")
+    indices = list(range(len(rows)))
 
     pairs = []
-    # random sampling — check random pairs until we have enough
-    indices = list(range(len(rows)))
     attempts = 0
-    while len(pairs) < N_PAIRS and attempts < N_PAIRS * 50:
+    while len(pairs) < N_PAIRS and attempts < N_PAIRS * 100:
         i, j = rng.sample(indices, 2)
         a, b = rows[i], rows[j]
-        diff = abs(a["humor_rating"] - b["humor_rating"])
-        if diff >= RATING_DIFF_THRESHOLD:
-            # randomly assign which is text_a and which is text_b
-            if rng.random() < 0.5:
-                a, b = b, a
-            winner = "A" if a["humor_rating"] > b["humor_rating"] else "B"
-            pairs.append({
-                "id_a": a["id"], "id_b": b["id"],
-                "text_a": a["text"], "text_b": b["text"],
-                "rating_a": a["humor_rating"], "rating_b": b["humor_rating"],
-                "expected": winner,
-            })
+        if a["humor_rating"] == b["humor_rating"]:
+            attempts += 1
+            continue
+        if rng.random() < 0.5:
+            a, b = b, a
+        winner = "A" if a["humor_rating"] > b["humor_rating"] else "B"
+        pairs.append({
+            "id_a": a["id"], "id_b": b["id"],
+            "text_a": a["text"], "text_b": b["text"],
+            "rating_a": a["humor_rating"], "rating_b": b["humor_rating"],
+            "expected": winner,
+        })
         attempts += 1
 
     pairwise_df = pd.DataFrame(pairs)
     pairwise_path = OUT_DIR / "pairwise.csv"
     pairwise_df.to_csv(pairwise_path, index=False)
-    print(f"Pairwise: {len(pairwise_df)} pairs saved to {pairwise_path}")
-    print(f"  avg rating diff: {(pairwise_df['rating_a'] - pairwise_df['rating_b']).abs().mean():.2f}")
-
-    # ── Rating dataset ────────────────────────────────────────────────────────
-    rating_df = humorous.sample(n=N_RATING, random_state=SEED)[["id", "text", "humor_rating"]].reset_index(drop=True)
-    rating_path = OUT_DIR / "rating.csv"
-    rating_df.to_csv(rating_path, index=False)
-    print(f"Rating: {len(rating_df)} texts saved to {rating_path}")
-    print(f"  humor_rating mean={rating_df['humor_rating'].mean():.2f}, std={rating_df['humor_rating'].std():.2f}")
+    print(f"\nPairwise: {len(pairwise_df)} pairs saved to {pairwise_path}")
+    gap = (pairwise_df["rating_a"] - pairwise_df["rating_b"]).abs()
+    print(f"  avg gap: {gap.mean():.2f}  |  min: {gap.min():.2f}  |  max: {gap.max():.2f}")
+    print(f"  expected A: {(pairwise_df['expected']=='A').sum()}  B: {(pairwise_df['expected']=='B').sum()}")
 
 
 if __name__ == "__main__":
