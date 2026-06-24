@@ -59,3 +59,4 @@ qwen3.5:4b,20260623_214650,1000,56.3,0,humicroedit-basis-pairwise
 qwen4b-probe-humicro,20260624_111557,2628,61.9,0,humicro-s2-pairwise-probe-layer16
 qwen4b-probe-pairwise,20260624_131828,500,60.4,0,humicro-s2-pairwise-probe-crowd-layer20
 qwen4b-probe-pairwise,20260624_164905,1000,56.7,0,humicro-s2-pairwise-probe-crowd-layer20
+qwen4b-lora-regression-haha,20260624_223936,2000,68.4,0,haha-pairwise-lora-layer16
