@@ -40,11 +40,12 @@ TARGET_LAYER = 16
 LORA_R       = 16
 LORA_ALPHA   = 32
 LR           = 2e-4
-EPOCHS       = 3
-BATCH_SIZE   = 16   # larger batch → more pairs per step across datasets
-GRAD_ACCUM   = 2
-MAX_LENGTH   = 192  # longer than single-joke to handle humicroedit two-line format
-SEED         = 42
+EPOCHS           = 3
+BATCH_SIZE       = 16   # larger batch → more pairs per step across datasets
+GRAD_ACCUM       = 2
+MAX_LENGTH       = 192  # longer than single-joke to handle humicroedit two-line format
+SEED             = 42
+CAP_PER_DATASET  = 10000  # stratified cap per dataset; datasets smaller than this use all rows
 # ─────────────────────────────────────────────────────────────────────────────
 
 ROOT          = Path(__file__).parent.parent
@@ -60,7 +61,7 @@ torch.manual_seed(SEED)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--datasets", nargs="+",
-                    default=["hahackathon", "humicroedit", "reddit_jokes", "haha_spanish", "humor_arena"],
+                    default=["hahackathon", "humicroedit", "reddit_jokes", "haha_spanish", "nycc"],
                     help="Datasets to include in joint training")
 args = parser.parse_args()
 
@@ -71,11 +72,20 @@ def load_dataset(name: str) -> pd.DataFrame:
     p = LORA_DATA_DIR / f"{name}.csv"
     if not p.exists():
         raise FileNotFoundError(f"Run prepare/{name}.py first: {p}")
-    df = pd.read_csv(p)
-    return df[["prompt_text", "score", "source"]]
+    df = pd.read_csv(p)[["prompt_text", "score", "source"]]
+    if len(df) <= CAP_PER_DATASET:
+        return df
+    # Stratified sample: bin scores into 10 quantiles, sample proportionally
+    df["_bin"] = pd.qcut(df["score"], q=10, labels=False, duplicates="drop")
+    df = (
+        df.groupby("_bin", group_keys=False)
+        .apply(lambda g: g.sample(frac=CAP_PER_DATASET / len(df), random_state=SEED))
+    )
+    df = df.drop(columns=["_bin"]).reset_index(drop=True)
+    return df
 
 
-print(f"Loading datasets: {args.datasets}")
+print(f"Loading datasets (cap={CAP_PER_DATASET} per dataset): {args.datasets}")
 dfs = []
 for name in args.datasets:
     try:
