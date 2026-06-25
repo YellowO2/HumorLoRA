@@ -20,7 +20,7 @@ import random
 from pathlib import Path
 
 SEED        = 42
-TRAIN_PAIRS = 4000  # pairs from fold0_train → 8k rows total
+TRAIN_PAIRS = 2000  # pairs from fold0_train → 4k rows total (signal check only)
 
 ROOT     = Path(__file__).parent.parent
 NY_DIR   = ROOT / "datasets" / "newyorker"

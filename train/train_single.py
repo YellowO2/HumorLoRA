@@ -45,6 +45,7 @@ torch.manual_seed(SEED)
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", required=True, help="Dataset name (must exist in datasets/lora_train_data/)")
+    parser.add_argument("--epochs", type=int, default=EPOCHS, help="Number of training epochs")
     return parser.parse_args()
 
 
@@ -88,6 +89,7 @@ def pairwise_bce_loss(pred_scores, true_scores):
 def main():
     args  = parse_args()
     name  = args.dataset
+    epochs = args.epochs
     dpath = LORA_DATA_DIR / f"{name}.csv"
     save  = CACHE_DIR / f"lora_{name}"
     save.mkdir(parents=True, exist_ok=True)
@@ -131,14 +133,14 @@ def main():
     head = nn.Linear(base.config.hidden_size, 1).to(dev)
 
     optimizer   = torch.optim.AdamW(list(base.parameters()) + list(head.parameters()), lr=LR, weight_decay=0.01)
-    total_steps = (len(loader) // GRAD_ACCUM) * EPOCHS
+    total_steps = (len(loader) // GRAD_ACCUM) * epochs
     scheduler   = get_linear_schedule_with_warmup(optimizer, max(1, total_steps // 10), total_steps)
 
-    total_steps = len(loader) * EPOCHS
-    print(f"Training {EPOCHS} epochs on {len(dataset)} examples  ({total_steps} steps total)...")
+    total_steps = len(loader) * epochs
+    print(f"Training {epochs} epochs on {len(dataset)} examples  ({total_steps} steps total)...")
     pipeline_start = time.time()
 
-    for epoch in range(EPOCHS):
+    for epoch in range(epochs):
         base.train(); head.train()
         total_loss = 0.0
         optimizer.zero_grad()
@@ -169,7 +171,7 @@ def main():
                       f"ETA {eta_min}m{eta_sec:02d}s")
 
         epoch_elapsed = time.time() - epoch_start
-        print(f"Epoch {epoch+1} done. Avg loss: {total_loss/len(loader):.4f}  "
+        print(f"Epoch {epoch+1}/{epochs} done. Avg loss: {total_loss/len(loader):.4f}  "
               f"({epoch_elapsed/60:.1f} min)")
 
     base.save_pretrained(save)
