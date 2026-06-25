@@ -1,14 +1,16 @@
 """
-Fine-tune Qwen3.5-4B with LoRA + scalar head using pairwise ranking loss on HaHa data.
+Fine-tune Qwen3.5-4B with LoRA + scalar head using in-batch pairwise ranking loss.
 Same architecture as regression version — head still outputs a pointwise score.
-Loss: BCE on sigmoid(score_A - score_B) vs winner label.
-Training pairs sampled from rating.csv (train split, 3945 jokes).
+
+In-batch pairwise: encode N jokes per batch → N forward passes → N*(N-1)/2 pair signals.
+Loss: BCE on sigmoid(score_i - score_j) for all pairs where rating_i != rating_j.
+This matches regression training speed while giving much stronger gradient signal.
+
 Eval: same pairwise.csv held-out test (2000 pairs) — apples-to-apples vs regression 68.3%.
 
 Run: python eval/train_lora_pairwise_haha.py
 """
 import gc
-import random
 import torch
 import torch.nn as nn
 import pandas as pd
@@ -29,10 +31,9 @@ LORA_R       = 16
 LORA_ALPHA   = 32
 LR           = 2e-4
 EPOCHS       = 3
-BATCH_SIZE   = 4    # pairs of jokes — effective throughput same as regression
-GRAD_ACCUM   = 4    # effective batch = 16 pairs
+BATCH_SIZE   = 8    # N jokes per batch → 28 pair signals per step
+GRAD_ACCUM   = 2    # effective batch = 16 jokes
 MAX_LENGTH   = 128
-N_PAIRS      = 10000   # training pairs sampled from 3945 train jokes
 SEED         = 42
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -47,34 +48,15 @@ CACHE_DIR.mkdir(parents=True, exist_ok=True)
 MODEL_SAVE.mkdir(parents=True, exist_ok=True)
 
 torch.manual_seed(SEED)
-random.seed(SEED)
 
 
-# ── Load + sample training pairs ──────────────────────────────────────────────
+# ── Load data ─────────────────────────────────────────────────────────────────
 
 print("Loading HaHa rating data...")
 rating = pd.read_csv(RATING_CSV)
 jokes  = rating["text"].tolist()
 scores = rating["humor_rating"].tolist()
 print(f"  {len(jokes)} train jokes, humor_rating {min(scores):.2f}–{max(scores):.2f}")
-
-rng     = random.Random(SEED)
-indices = list(range(len(jokes)))
-pairs   = []
-attempts = 0
-while len(pairs) < N_PAIRS and attempts < N_PAIRS * 50:
-    i, j = rng.sample(indices, 2)
-    if scores[i] == scores[j]:
-        attempts += 1
-        continue
-    # randomly flip so model sees both orders
-    if rng.random() < 0.5:
-        i, j = j, i
-    label = 1.0 if scores[i] > scores[j] else 0.0   # P(A wins)
-    pairs.append((jokes[i], jokes[j], label))
-    attempts += 1
-
-print(f"  Sampled {len(pairs)} training pairs")
 
 
 # ── Tokenizer ─────────────────────────────────────────────────────────────────
@@ -91,29 +73,53 @@ def make_prompt(text: str) -> str:
     return tok.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
 
 
-# ── Dataset ───────────────────────────────────────────────────────────────────
+# ── Dataset — individual jokes with their ratings ─────────────────────────────
 
-class PairDataset(Dataset):
-    def __init__(self, pairs):
-        self.prompts_a = [make_prompt(a) for a, _, _ in pairs]
-        self.prompts_b = [make_prompt(b) for _, b, _ in pairs]
-        self.labels    = [label for _, _, label in pairs]
+class JokeDataset(Dataset):
+    def __init__(self, jokes, scores):
+        self.prompts = [make_prompt(j) for j in jokes]
+        self.scores  = scores
 
     def __len__(self):
-        return len(self.labels)
+        return len(self.prompts)
 
     def __getitem__(self, idx):
-        enc_a = tok(self.prompts_a[idx], truncation=True, max_length=MAX_LENGTH,
-                    padding="max_length", return_tensors="pt")
-        enc_b = tok(self.prompts_b[idx], truncation=True, max_length=MAX_LENGTH,
-                    padding="max_length", return_tensors="pt")
+        enc = tok(
+            self.prompts[idx], truncation=True, max_length=MAX_LENGTH,
+            padding="max_length", return_tensors="pt",
+        )
         return {
-            "input_ids_a":      enc_a["input_ids"].squeeze(0),
-            "attention_mask_a": enc_a["attention_mask"].squeeze(0),
-            "input_ids_b":      enc_b["input_ids"].squeeze(0),
-            "attention_mask_b": enc_b["attention_mask"].squeeze(0),
-            "label":            torch.tensor(self.labels[idx], dtype=torch.float32),
+            "input_ids":      enc["input_ids"].squeeze(0),
+            "attention_mask": enc["attention_mask"].squeeze(0),
+            "score":          torch.tensor(self.scores[idx], dtype=torch.float32),
         }
+
+
+# ── In-batch pairwise loss ────────────────────────────────────────────────────
+
+def pairwise_bce_loss(pred_scores, true_scores):
+    """
+    pred_scores: (N,) model outputs
+    true_scores: (N,) ground truth ratings
+    For all i<j where true_scores[i] != true_scores[j]:
+      label = 1 if true_scores[i] > true_scores[j] else 0
+      loss  = BCE(sigmoid(pred_scores[i] - pred_scores[j]), label)
+    """
+    N = pred_scores.size(0)
+    # Compute all pairwise differences
+    diff_pred = pred_scores.unsqueeze(1) - pred_scores.unsqueeze(0)   # (N, N)
+    diff_true = true_scores.unsqueeze(1) - true_scores.unsqueeze(0)   # (N, N)
+
+    # Upper triangle only, skip ties
+    mask = (torch.triu(torch.ones(N, N, device=pred_scores.device), diagonal=1) == 1) \
+           & (diff_true != 0)
+
+    if mask.sum() == 0:
+        return pred_scores.sum() * 0.0  # no valid pairs in batch
+
+    logits = diff_pred[mask]
+    labels = (diff_true[mask] > 0).float()
+    return nn.functional.binary_cross_entropy_with_logits(logits, labels)
 
 
 # ── Load model ────────────────────────────────────────────────────────────────
@@ -145,18 +151,9 @@ head        = nn.Linear(hidden_size, 1).to(head_device)
 print(f"Model ready. Hidden size: {hidden_size}, head device: {head_device}")
 
 
-# ── Helper: score a batch of pre-tokenised inputs ─────────────────────────────
-
-def score_batch(input_ids, attention_mask):
-    out = base(input_ids=input_ids, attention_mask=attention_mask,
-               output_hidden_states=True)
-    h = out.hidden_states[TARGET_LAYER][:, -1, :].to(head_device)
-    return head(h.float()).squeeze(-1)
-
-
 # ── Training ──────────────────────────────────────────────────────────────────
 
-dataset = PairDataset(pairs)
+dataset = JokeDataset(jokes, scores)
 loader  = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 
 optimizer   = torch.optim.AdamW(
@@ -170,9 +167,7 @@ scheduler   = get_linear_schedule_with_warmup(
     num_training_steps=total_steps,
 )
 
-bce = nn.BCEWithLogitsLoss()
-
-print(f"\nTraining {EPOCHS} epochs on {len(dataset)} pairs...")
+print(f"\nTraining {EPOCHS} epochs on {len(dataset)} jokes ({BATCH_SIZE*(BATCH_SIZE-1)//2} pairs/step)...")
 for epoch in range(EPOCHS):
     base.train()
     head.train()
@@ -180,17 +175,15 @@ for epoch in range(EPOCHS):
     optimizer.zero_grad()
 
     for step, batch in enumerate(loader):
-        ids_a  = batch["input_ids_a"].to(head_device)
-        mask_a = batch["attention_mask_a"].to(head_device)
-        ids_b  = batch["input_ids_b"].to(head_device)
-        mask_b = batch["attention_mask_b"].to(head_device)
-        labels = batch["label"].to(head_device)
+        input_ids      = batch["input_ids"].to(head_device)
+        attention_mask = batch["attention_mask"].to(head_device)
+        true_scores    = batch["score"].to(head_device)
 
-        score_a = score_batch(ids_a, mask_a)
-        score_b = score_batch(ids_b, mask_b)
+        out  = base(input_ids=input_ids, attention_mask=attention_mask, output_hidden_states=True)
+        h    = out.hidden_states[TARGET_LAYER][:, -1, :].to(head_device)
+        pred = head(h.float()).squeeze(-1)
 
-        # BCE loss: sigmoid(score_a - score_b) vs P(A wins)
-        loss = bce(score_a - score_b, labels) / GRAD_ACCUM
+        loss = pairwise_bce_loss(pred, true_scores) / GRAD_ACCUM
         loss.backward()
         total_loss += loss.item() * GRAD_ACCUM
 
