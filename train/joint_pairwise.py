@@ -75,14 +75,7 @@ def load_dataset(name: str) -> pd.DataFrame:
     df = pd.read_csv(p)[["prompt_text", "score", "source"]]
     if len(df) <= CAP_PER_DATASET:
         return df
-    # Stratified sample: bin scores into 10 quantiles, sample proportionally
-    df["_bin"] = pd.qcut(df["score"], q=10, labels=False, duplicates="drop")
-    df = (
-        df.groupby("_bin", group_keys=False)
-        .apply(lambda g: g.sample(frac=CAP_PER_DATASET / len(df), random_state=SEED))
-    )
-    df = df.drop(columns=["_bin"]).reset_index(drop=True)
-    return df
+    return df.sample(n=CAP_PER_DATASET, random_state=SEED).reset_index(drop=True)
 
 
 print(f"Loading datasets (cap={CAP_PER_DATASET} per dataset): {args.datasets}")
