@@ -100,7 +100,10 @@ def main():
     print(f"Loaded {len(df)} rows from {dpath}")
 
     print("Loading tokenizer...")
-    tok = AutoTokenizer.from_pretrained(BASE_MODEL)
+    try:
+        tok = AutoTokenizer.from_pretrained(BASE_MODEL)
+    except Exception:
+        tok = AutoTokenizer.from_pretrained(BASE_MODEL, local_files_only=True)
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
     tok.padding_side = "left"
@@ -113,7 +116,10 @@ def main():
         load_in_4bit=True, bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_use_double_quant=True,
     )
-    base = AutoModelForCausalLM.from_pretrained(BASE_MODEL, quantization_config=bnb, device_map="auto")
+    try:
+        base = AutoModelForCausalLM.from_pretrained(BASE_MODEL, quantization_config=bnb, device_map="auto")
+    except Exception:
+        base = AutoModelForCausalLM.from_pretrained(BASE_MODEL, quantization_config=bnb, device_map="auto", local_files_only=True)
     base = prepare_model_for_kbit_training(base)
     base = get_peft_model(base, LoraConfig(
         r=LORA_R, lora_alpha=LORA_ALPHA, lora_dropout=0.05,

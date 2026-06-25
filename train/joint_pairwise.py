@@ -93,7 +93,7 @@ print(all_data["source"].value_counts().to_string())
 # ── Tokenizer ─────────────────────────────────────────────────────────────────
 
 print("\nLoading tokenizer...")
-tok = AutoTokenizer.from_pretrained(BASE_MODEL)
+tok = AutoTokenizer.from_pretrained(BASE_MODEL, local_files_only=True)
 if tok.pad_token is None:
     tok.pad_token = tok.eos_token
 tok.padding_side = "left"
@@ -177,7 +177,7 @@ bnb = BitsAndBytesConfig(
     bnb_4bit_use_double_quant=True,
 )
 base = AutoModelForCausalLM.from_pretrained(
-    BASE_MODEL, quantization_config=bnb, device_map="auto",
+    BASE_MODEL, quantization_config=bnb, device_map="auto", local_files_only=True,
 )
 base = prepare_model_for_kbit_training(base)
 
