@@ -7,6 +7,7 @@ Saves: results/probe/cache/lora_{dataset}/
 """
 import argparse
 import gc
+import time
 import torch
 import torch.nn as nn
 import pandas as pd
@@ -127,11 +128,16 @@ def main():
     total_steps = (len(loader) // GRAD_ACCUM) * EPOCHS
     scheduler   = get_linear_schedule_with_warmup(optimizer, max(1, total_steps // 10), total_steps)
 
-    print(f"Training {EPOCHS} epochs on {len(dataset)} examples...")
+    total_steps = len(loader) * EPOCHS
+    print(f"Training {EPOCHS} epochs on {len(dataset)} examples  ({total_steps} steps total)...")
+    pipeline_start = time.time()
+
     for epoch in range(EPOCHS):
         base.train(); head.train()
         total_loss = 0.0
         optimizer.zero_grad()
+        epoch_start = time.time()
+
         for step, batch in enumerate(loader):
             ids  = batch["input_ids"].to(dev)
             mask = batch["attention_mask"].to(dev)
@@ -146,8 +152,19 @@ def main():
                 nn.utils.clip_grad_norm_(list(base.parameters()) + list(head.parameters()), 1.0)
                 optimizer.step(); scheduler.step(); optimizer.zero_grad()
             if (step + 1) % 50 == 0:
-                print(f"  Epoch {epoch+1} step {step+1}/{len(loader)}  loss={total_loss/(step+1):.4f}")
-        print(f"Epoch {epoch+1} done. Avg loss: {total_loss/len(loader):.4f}")
+                elapsed   = time.time() - pipeline_start
+                done_steps = epoch * len(loader) + step + 1
+                sps        = done_steps / elapsed
+                remaining  = (total_steps - done_steps) / sps
+                eta_min    = int(remaining // 60)
+                eta_sec    = int(remaining % 60)
+                print(f"  Epoch {epoch+1} step {step+1}/{len(loader)}  "
+                      f"loss={total_loss/(step+1):.4f}  "
+                      f"ETA {eta_min}m{eta_sec:02d}s")
+
+        epoch_elapsed = time.time() - epoch_start
+        print(f"Epoch {epoch+1} done. Avg loss: {total_loss/len(loader):.4f}  "
+              f"({epoch_elapsed/60:.1f} min)")
 
     base.save_pretrained(save)
     torch.save(head.state_dict(), save / "head.pt")

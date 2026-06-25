@@ -24,6 +24,15 @@ COMPAT_THRESHOLD = 0.3   # cosine similarity below this → dataset flagged as o
 
 DATASETS = ["hahackathon", "humicroedit", "reddit_jokes", "haha_spanish", "humor_arena"]
 
+# Rough per-dataset training time estimate on a 4090 (3 epochs, batch=8)
+APPROX_MINUTES = {
+    "hahackathon":  20,
+    "humicroedit":  90,
+    "reddit_jokes": 30,
+    "haha_spanish": 120,
+    "humor_arena":  10,
+}
+
 PYTHON = sys.executable
 
 
@@ -64,6 +73,13 @@ for name, script in prepare_scripts.items():
 print("\n" + "="*60)
 print("STAGE 2: INDIVIDUAL LORA TRAINING")
 print("="*60)
+
+already_done = [n for n in DATASETS if (CACHE_DIR / f"lora_{n}" / "adapter_config.json").exists()]
+to_train     = [n for n in DATASETS if n not in already_done]
+total_est    = sum(APPROX_MINUTES[n] for n in to_train)
+print(f"  To train: {to_train}")
+print(f"  Already done (will skip): {already_done}")
+print(f"  Estimated time: ~{total_est} min ({total_est//60}h {total_est%60}m)")
 
 for name in DATASETS:
     save = CACHE_DIR / f"lora_{name}"
