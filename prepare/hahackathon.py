@@ -19,8 +19,10 @@ TRAIN_FRAC = 0.8
 N_PAIRS    = 2000
 SEED       = 42
 
-OUT_DIR = Path(__file__).parent.parent / "datasets" / "hahackathon"
+OUT_DIR      = Path(__file__).parent.parent / "datasets" / "hahackathon"
+TRAIN_OUT    = Path(__file__).parent.parent / "datasets" / "lora_train_data" / "hahackathon.csv"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
+TRAIN_OUT.parent.mkdir(parents=True, exist_ok=True)
 
 
 def main():
@@ -37,12 +39,17 @@ def main():
     test_df  = humorous.iloc[n_train:]
     print(f"Train: {len(train_df)} jokes  |  Test (held-out): {len(test_df)} jokes")
 
-    # ── Rating dataset (train split, all jokes) ───────────────────────────────
+    # ── Rating dataset (train split) — unified schema for lora_train_data/ ──────
     rating_df = train_df[["id", "text", "humor_rating"]].reset_index(drop=True)
-    rating_path = OUT_DIR / "rating.csv"
-    rating_df.to_csv(rating_path, index=False)
-    print(f"\nRating: {len(rating_df)} texts saved to {rating_path}")
-    print(f"  humor_rating mean={rating_df['humor_rating'].mean():.2f}, std={rating_df['humor_rating'].std():.2f}")
+    lora_df = rating_df.copy()
+    lora_df["prompt_text"] = lora_df["text"].apply(
+        lambda t: f"Consider the amount of funniness in the following: {t}"
+    )
+    lora_df["source"] = "hahackathon"
+    lora_df = lora_df[["prompt_text", "humor_rating", "source"]].rename(columns={"humor_rating": "score"})
+    lora_df.to_csv(TRAIN_OUT, index=False)
+    print(f"\nLoRA train: {len(lora_df)} rows saved to {TRAIN_OUT}")
+    print(f"  humor_rating mean={lora_df['score'].mean():.2f}, std={lora_df['score'].std():.2f}")
 
     # ── Pairwise dataset (held-out test split only, no gap filter) ────────────
     rng  = random.Random(SEED)

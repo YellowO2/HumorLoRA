@@ -23,8 +23,8 @@ MIN_SCORE = 10
 MAX_CHARS = 2000
 SEED      = 42
 
-RAW_CSV = Path(__file__).parent.parent / "datasets" / "reddit_jokes" / "reddit_full_data.csv"
-OUT_CSV = Path(__file__).parent.parent / "datasets" / "reddit_jokes" / "jokes.csv"
+RAW_CSV  = Path(__file__).parent.parent / "datasets" / "reddit_jokes" / "reddit_full_data.csv"
+OUT_CSV  = Path(__file__).parent.parent / "datasets" / "lora_train_data" / "reddit_jokes.csv"
 
 
 def clean_text(text: str) -> str:
@@ -66,16 +66,20 @@ def main():
     df = df.drop_duplicates(subset=["text"])
     print(f"  After dedup: {len(df)}  (dropped {before - len(df)} exact dupes)")
 
-    # Final output
-    out = df[["id", "text", "score", "upvote_ratio"]].reset_index(drop=True)
+    # Final output — unified schema for lora_train_data/
+    out = df.reset_index(drop=True)
+    out["prompt_text"] = out["text"].apply(
+        lambda t: f"Consider the amount of funniness in the following: {t}"
+    )
+    out["source"] = "reddit_jokes"
+    out = out[["prompt_text", "upvote_ratio", "source"]].rename(columns={"upvote_ratio": "score"})
+
+    OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(OUT_CSV, index=False)
 
-    print(f"\nSaved {len(out)} jokes to {OUT_CSV}")
-    print(f"  upvote_ratio: mean={out['upvote_ratio'].mean():.3f}  "
-          f"std={out['upvote_ratio'].std():.3f}  "
-          f"min={out['upvote_ratio'].min():.2f}  "
-          f"max={out['upvote_ratio'].max():.2f}")
-    print(f"  score: median={out['score'].median():.0f}  max={out['score'].max():.0f}")
+    print(f"\nSaved {len(out)} rows to {OUT_CSV}")
+    print(f"  score (upvote_ratio): mean={out['score'].mean():.3f}  "
+          f"min={out['score'].min():.2f}  max={out['score'].max():.2f}")
 
 
 if __name__ == "__main__":

@@ -6,3 +6,4 @@ datasets/newyorker/raw
 outputs
 old_reference
 references
+datasets/lora_train_data/
