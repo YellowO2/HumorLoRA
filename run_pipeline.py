@@ -22,7 +22,7 @@ LORA_DATA_DIR  = ROOT / "datasets" / "lora_train_data"
 CACHE_DIR      = ROOT / "results" / "probe" / "cache"
 COMPAT_THRESHOLD = 0.3   # cosine similarity below this → dataset flagged as outlier
 
-DATASETS = ["hahackathon", "humicroedit", "reddit_jokes", "haha_spanish", "humor_arena"]
+DATASETS = ["hahackathon", "humicroedit", "reddit_jokes", "haha_spanish", "humor_arena", "nycc"]
 
 # Rough per-dataset training time estimate on a 4090 (3 epochs, batch=8)
 APPROX_MINUTES = {
@@ -31,6 +31,7 @@ APPROX_MINUTES = {
     "reddit_jokes": 30,
     "haha_spanish": 120,
     "humor_arena":  10,
+    "nycc":         25,
 }
 
 PYTHON = sys.executable
@@ -58,6 +59,7 @@ prepare_scripts = {
     "reddit_jokes": ROOT / "prepare" / "reddit_jokes.py",
     "haha_spanish": ROOT / "prepare" / "haha_spanish.py",
     "humor_arena":  ROOT / "prepare" / "humor_arena.py",
+    "nycc":         ROOT / "prepare" / "nycc_lora.py",
 }
 
 for name, script in prepare_scripts.items():

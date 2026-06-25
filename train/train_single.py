@@ -176,36 +176,62 @@ def main():
     torch.save(head.state_dict(), save / "head.pt")
     print(f"Saved to {save}")
 
+    # ── Shared scorer ─────────────────────────────────────────────────────────
+    base.eval(); head.eval()
+
+    @torch.inference_mode()
+    def score_all(prompts):
+        out = []
+        for i in range(0, len(prompts), BATCH_SIZE):
+            enc = tok(prompts[i:i+BATCH_SIZE], truncation=True, max_length=MAX_LENGTH,
+                      padding=True, return_tensors="pt")
+            enc = {k: v.to(dev) for k, v in enc.items()}
+            h   = base(**enc, output_hidden_states=True).hidden_states[TARGET_LAYER][:, -1, :].to(dev)
+            out.extend(head(h.float()).squeeze(-1).cpu().tolist())
+        return np.array(out)
+
+    def log_result(model_name, n, acc, dataset_tag):
+        row = {"model": model_name, "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S"),
+               "n_examples": n, "overall_acc": round(acc, 1), "unknown_count": 0,
+               "dataset": dataset_tag}
+        SUMMARY_PATH.parent.mkdir(parents=True, exist_ok=True)
+        pd.DataFrame([row]).to_csv(SUMMARY_PATH, mode="a", header=not SUMMARY_PATH.exists(), index=False)
+
     # ── Eval on HaHa pairwise benchmark ──────────────────────────────────────
     pairwise_path = ROOT / "datasets" / "hahackathon" / "pairwise.csv"
     if pairwise_path.exists():
         print("\nEval on HaHa pairwise held-out test...")
-        base.eval(); head.eval()
-        pw       = pd.read_csv(pairwise_path)
-        prefix   = "Consider the amount of funniness in the following: "
-        prompts  = [make_prompt(tok, prefix + j) for j in pw["text_a"].tolist() + pw["text_b"].tolist()]
-
-        @torch.inference_mode()
-        def score_all(prompts):
-            out = []
-            for i in range(0, len(prompts), BATCH_SIZE):
-                enc = tok(prompts[i:i+BATCH_SIZE], truncation=True, max_length=MAX_LENGTH,
-                          padding=True, return_tensors="pt")
-                enc = {k: v.to(dev) for k, v in enc.items()}
-                h   = base(**enc, output_hidden_states=True).hidden_states[TARGET_LAYER][:, -1, :].to(dev)
-                out.extend(head(h.float()).squeeze(-1).cpu().tolist())
-            return np.array(out)
-
-        scores   = score_all(prompts)
-        n        = len(pw)
-        acc      = (np.where(scores[:n] > scores[n:], "A", "B") == np.array(pw["expected"].tolist())).mean() * 100
+        pw      = pd.read_csv(pairwise_path)
+        prefix  = "Consider the amount of funniness in the following: "
+        prompts = [make_prompt(tok, prefix + j) for j in pw["text_a"].tolist() + pw["text_b"].tolist()]
+        scores  = score_all(prompts)
+        n       = len(pw)
+        acc     = (np.where(scores[:n] > scores[n:], "A", "B") == np.array(pw["expected"].tolist())).mean() * 100
         print(f"HaHa pairwise accuracy ({name}): {acc:.1f}%")
+        log_result(f"qwen4b-lora-{name}", n, acc, f"individual-lora-layer{TARGET_LAYER}")
 
-        row = {"model": f"qwen4b-lora-{name}", "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S"),
-               "n_examples": n, "overall_acc": round(acc, 1), "unknown_count": 0,
-               "dataset": f"individual-lora-layer{TARGET_LAYER}"}
-        SUMMARY_PATH.parent.mkdir(parents=True, exist_ok=True)
-        pd.DataFrame([row]).to_csv(SUMMARY_PATH, mode="a", header=not SUMMARY_PATH.exists(), index=False)
+    # ── Eval on NYCC pairwise benchmark (when training on NYCC) ──────────────
+    nycc_test_path = ROOT / "datasets" / "nycc_pairwise_test.csv"
+    if name == "nycc" and nycc_test_path.exists():
+        print("\nEval on NYCC pairwise held-out test...")
+        pw = pd.read_csv(nycc_test_path)
+
+        def build_nycc_prompt(caption: str, image_desc: str) -> str:
+            return (
+                f"Consider the amount of funniness in the following New Yorker cartoon caption.\n\n"
+                f"Image: {image_desc.strip()}\n"
+                f"Caption: {caption.strip()}"
+            )
+
+        prompts_a = [make_prompt(tok, build_nycc_prompt(c, img))
+                     for c, img in zip(pw["caption_a"], pw["image_description"])]
+        prompts_b = [make_prompt(tok, build_nycc_prompt(c, img))
+                     for c, img in zip(pw["caption_b"], pw["image_description"])]
+        scores = score_all(prompts_a + prompts_b)
+        n      = len(pw)
+        acc    = (np.where(scores[:n] > scores[n:], "A", "B") == np.array(pw["expected"].tolist())).mean() * 100
+        print(f"NYCC pairwise accuracy: {acc:.1f}%  (n={n})")
+        log_result(f"qwen4b-lora-{name}", n, acc, f"nycc-lora-layer{TARGET_LAYER}")
 
     del base, head, optimizer, scheduler, dataset, loader
     gc.collect()
