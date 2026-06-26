@@ -261,6 +261,7 @@ print(f"\nSaved to {MODEL_SAVE}")
 del optimizer, scheduler, dataset, loader
 gc.collect()
 torch.cuda.empty_cache()
+torch.cuda.synchronize()
 
 
 # ── Eval on HaHa pairwise (same benchmark as single-dataset runs) ─────────────
@@ -283,7 +284,7 @@ all_prompts = [make_chat_prompt(prompt_prefix + j) for j in jokes_a + jokes_b]
 @torch.inference_mode()
 def score_all(prompts):
     all_scores = []
-    bs = BATCH_SIZE
+    bs = 4  # small batch to avoid OOM during eval
     for i in range(0, len(prompts), bs):
         batch_p = prompts[i:i + bs]
         enc     = tok(batch_p, truncation=True, max_length=MAX_LENGTH, padding=True, return_tensors="pt")
@@ -292,7 +293,7 @@ def score_all(prompts):
         h       = out.hidden_states[TARGET_LAYER][:, -1, :].to(head_device)
         s       = head(h.float()).squeeze(-1)
         all_scores.extend(s.cpu().tolist())
-        if i % (bs * 20) == 0:
+        if i % (bs * 50) == 0:
             print(f"  {min(i + bs, len(prompts))}/{len(prompts)}")
     return np.array(all_scores)
 
