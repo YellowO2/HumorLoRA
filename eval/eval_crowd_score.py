@@ -77,7 +77,8 @@ def is_funny(joke: str, personality: str) -> bool:
     if is_funny._debug_count < 8:
         print(f"  [debug] personality={personality!r} → {generated!r}")
         is_funny._debug_count += 1
-    return generated.lower().startswith("funny")
+    g = generated.lower()
+    return "funny" in g and "boring" not in g
 
 
 def crowd_score(joke: str) -> int:
