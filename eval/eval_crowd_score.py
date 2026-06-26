@@ -72,6 +72,11 @@ def is_funny(joke: str, personality: str) -> bool:
         pad_token_id=tok.pad_token_id,
     )
     generated = tok.decode(out[0][enc["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+    if not hasattr(is_funny, "_debug_count"):
+        is_funny._debug_count = 0
+    if is_funny._debug_count < 8:
+        print(f"  [debug] personality={personality!r} → {generated!r}")
+        is_funny._debug_count += 1
     return generated.lower().startswith("funny")
 
 

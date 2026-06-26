@@ -12,11 +12,11 @@
 [1 — Hook]
 Suppose you want to make an LLM that generates engaging online content, humor is definitely an important factor. One might wonder: how do you make a humorous LLM? Perhaps via prompt engineering, giving it a persona, or grounding it in theory of humor? And hence we started out researching this.
 
-[2 — Why LLM-as-judge fails]
-A big problem is: how are we supposed to tell that a technique is actually making the LLM more or less funny? After all, humor is highly subjective (cite). We could easily feel we are getting the LLM funnier, or less funny, but it's hard to claim objectively. Typically, what is done is utilizing a human crowd to evaluate, which is costly. A next logical step when this is infeasible might be LLM-as-a-judge. This has become popular and works well for certain more objective tasks. However, anyone who has asked the LLM to say something funny given a context, will feel that they have a bad sense of humor. But ofcourse, this is just, in my opinion. How can i prove that it does have a bad sense of humor? What is a good sense of humor? How do we even measure sense of humor?
-
-[3 — Reframe: bottleneck is selection]
+[2 — Reframe: bottleneck is selection]
 Consider this thought experiment: give a generative LLM a prompt, sample 100 responses at high temperature. If you can pick the funniest one, the result is likely quite funny. Add a refinement loop — refine on the funniest, create variations, select again. This is how humans make jokes internally. The bottleneck, then, is not generation — it is selection. A "sense of humor" for AI is the missing piece: a reward model that can reliably pick the funnier output.
+
+[3 — Why LLM-as-judge fails]
+The obvious candidate for this selector is an LLM-as-a-judge — this has become popular and works well for certain more objective tasks. But this just pushes the problem back: it requires the judge to already have a good sense of humor. And a big problem is: how are we supposed to tell that a technique is actually making the LLM more or less funny? After all, humor is highly subjective (cite). We could easily feel we are getting the LLM funnier, or less funny, but it's hard to claim objectively. Typically, what is done is utilizing a human crowd to evaluate, which is costly and slow. Anyone who has asked an LLM to say something funny will feel that they have a bad sense of humor — but how do we prove this objectively? What does it even mean to have a good sense of humor, and how do we measure it?
 
 [4 — Define sense of humor / taste]
 We believe that this "taste" for humor is an important concept. Taste is really just a weight vector over a set of more observable features that differs from person to person. In the case of humor, we can break it down into many different features — dimensions like incongruity, logical mechanism, target, language (cite Attardo & Raskin; Warren et al.) — and then taste is simply a weighted sum of all these factors that returns an output of how funny you feel. This is your sense of humor.
