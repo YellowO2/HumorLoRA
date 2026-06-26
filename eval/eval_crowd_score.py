@@ -12,11 +12,9 @@ Skips auditing step for simplicity (adds 2x LLM calls with marginal benefit per 
 
 Usage: python eval/eval_crowd_score.py
 """
-import re
 import random
 import torch
 import pandas as pd
-import numpy as np
 from pathlib import Path
 from datetime import datetime
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -89,13 +87,12 @@ pw = pd.read_csv(pairwise_path)
 print(f"\nEvaluating {len(pw)} pairs on HaHa pairwise benchmark...")
 print(f"4 personalities × 2 jokes × {len(pw)} pairs = {4*2*len(pw)} LLM calls\n")
 
-prefix = "Consider the amount of funniness in the following: "
 correct = 0
 ties = 0
 
 for i, row in pw.iterrows():
-    joke_a = prefix + row["text_a"]
-    joke_b = prefix + row["text_b"]
+    joke_a = row["text_a"]
+    joke_b = row["text_b"]
 
     score_a = crowd_score(joke_a)
     score_b = crowd_score(joke_b)
