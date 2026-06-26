@@ -70,6 +70,7 @@ def is_funny(joke: str, personality: str) -> bool:
         max_new_tokens=MAX_NEW_TOKENS,
         do_sample=False,
         pad_token_id=tok.pad_token_id,
+        enable_thinking=False,
     )
     generated = tok.decode(out[0][enc["input_ids"].shape[1]:], skip_special_tokens=True).strip()
     if not hasattr(is_funny, "_debug_count"):
