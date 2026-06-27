@@ -77,41 +77,41 @@ def log_result(model_name, n, acc, dataset_tag):
 
 
 # ── HaHa pairwise ─────────────────────────────────────────────────────────────
-haha_path = ROOT / "datasets" / "hahackathon" / "pairwise.csv"
-if haha_path.exists():
-    print("\n── Eval: HaHa pairwise ──")
-    pw      = pd.read_csv(haha_path)
-    prefix  = "Consider the amount of funniness in the following: "
-    prompts = [make_prompt(prefix + j) for j in pw["text_a"].tolist() + pw["text_b"].tolist()]
-    scores  = score_all(prompts)
-    n       = len(pw)
-    acc     = (np.where(scores[:n] > scores[n:], "A", "B") == np.array(pw["expected"].tolist())).mean() * 100
-    print(f"HaHa pairwise accuracy: {acc:.1f}%  (n={n})")
-    log_result("qwen4b-lora-joint", n, acc, "joint-lora-haha")
-
-
-# ── NYCC pairwise ─────────────────────────────────────────────────────────────
-nycc_path = ROOT / "datasets" / "nycc_pairwise_test.csv"
-if nycc_path.exists():
-    print("\n── Eval: NYCC pairwise ──")
-    pw = pd.read_csv(nycc_path)
-
-    def build_nycc_prompt(caption, image_desc):
-        return (
-            f"Consider the amount of funniness in the following New Yorker cartoon caption.\n\n"
-            f"Image: {image_desc.strip()}\n"
-            f"Caption: {caption.strip()}"
-        )
-
-    prompts_a = [make_prompt(build_nycc_prompt(c, img))
-                 for c, img in zip(pw["caption_a"], pw["image_description"])]
-    prompts_b = [make_prompt(build_nycc_prompt(c, img))
-                 for c, img in zip(pw["caption_b"], pw["image_description"])]
-    scores = score_all(prompts_a + prompts_b)
-    n      = len(pw)
-    acc    = (np.where(scores[:n] > scores[n:], "A", "B") == np.array(pw["expected"].tolist())).mean() * 100
-    print(f"NYCC pairwise accuracy: {acc:.1f}%  (n={n})")
-    log_result("qwen4b-lora-joint", n, acc, "joint-lora-nycc")
+# haha_path = ROOT / "datasets" / "hahackathon" / "pairwise.csv"
+# if haha_path.exists():
+#     print("\n── Eval: HaHa pairwise ──")
+#     pw      = pd.read_csv(haha_path)
+#     prefix  = "Consider the amount of funniness in the following: "
+#     prompts = [make_prompt(prefix + j) for j in pw["text_a"].tolist() + pw["text_b"].tolist()]
+#     scores  = score_all(prompts)
+#     n       = len(pw)
+#     acc     = (np.where(scores[:n] > scores[n:], "A", "B") == np.array(pw["expected"].tolist())).mean() * 100
+#     print(f"HaHa pairwise accuracy: {acc:.1f}%  (n={n})")
+#     log_result("qwen4b-lora-joint", n, acc, "joint-lora-haha")
+# 
+# 
+# # ── NYCC pairwise ─────────────────────────────────────────────────────────────
+# nycc_path = ROOT / "datasets" / "nycc_pairwise_test.csv"
+# if nycc_path.exists():
+#     print("\n── Eval: NYCC pairwise ──")
+#     pw = pd.read_csv(nycc_path)
+# 
+#     def build_nycc_prompt(caption, image_desc):
+#         return (
+#             f"Consider the amount of funniness in the following New Yorker cartoon caption.\n\n"
+#             f"Image: {image_desc.strip()}\n"
+#             f"Caption: {caption.strip()}"
+#         )
+# 
+#     prompts_a = [make_prompt(build_nycc_prompt(c, img))
+#                  for c, img in zip(pw["caption_a"], pw["image_description"])]
+#     prompts_b = [make_prompt(build_nycc_prompt(c, img))
+#                  for c, img in zip(pw["caption_b"], pw["image_description"])]
+#     scores = score_all(prompts_a + prompts_b)
+#     n      = len(pw)
+#     acc    = (np.where(scores[:n] > scores[n:], "A", "B") == np.array(pw["expected"].tolist())).mean() * 100
+#     print(f"NYCC pairwise accuracy: {acc:.1f}%  (n={n})")
+#     log_result("qwen4b-lora-joint", n, acc, "joint-lora-nycc")
 
 
 # ── Humicroedit pairwise ──────────────────────────────────────────────────────
