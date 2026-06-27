@@ -5,6 +5,8 @@ Usage: python eval/eval_joint_lora.py
 """
 import gc
 import re
+import sys
+import time
 import torch
 import torch.nn as nn
 import pandas as pd
@@ -13,6 +15,10 @@ from pathlib import Path
 from datetime import datetime
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from peft import PeftModel
+
+
+def _log(msg):
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}", flush=True)
 
 BASE_MODEL   = "unsloth/Qwen3.5-4B"
 TARGET_LAYER = 16
@@ -23,13 +29,16 @@ ROOT         = Path(__file__).parent.parent
 MODEL_SAVE   = ROOT / "results" / "probe" / "cache" / "lora_joint_pairwise"
 SUMMARY_PATH = ROOT / "results" / "summary.csv"
 
-print("Loading tokenizer...")
+_log(f"Device: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU'}, cuda memory: {torch.cuda.mem_get_info() if torch.cuda.is_available() else 'N/A'}")
+
+_log("Loading tokenizer...")
 tok = AutoTokenizer.from_pretrained(BASE_MODEL, local_files_only=True)
 if tok.pad_token is None:
     tok.pad_token = tok.eos_token
 tok.padding_side = "left"
+_log("Tokenizer loaded")
 
-print("Loading model in 4-bit...")
+_log("Loading base model in 4-bit...")
 bnb = BitsAndBytesConfig(
     load_in_4bit=True, bnb_4bit_quant_type="nf4",
     bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_use_double_quant=True,
@@ -37,15 +46,18 @@ bnb = BitsAndBytesConfig(
 base = AutoModelForCausalLM.from_pretrained(
     BASE_MODEL, quantization_config=bnb, device_map="auto", local_files_only=True,
 )
+_log("Base model loaded, applying LoRA...")
 base = PeftModel.from_pretrained(base, MODEL_SAVE)
 base.eval()
+_log("LoRA applied")
 
 dev  = next(base.parameters()).device
+_log(f"Model device: {dev}, loading head...")
 head = nn.Linear(base.config.hidden_size, 1).to(dev)
 head.load_state_dict(torch.load(MODEL_SAVE / "head.pt", map_location=dev))
 head.eval()
 
-print(f"Loaded joint LoRA from {MODEL_SAVE}")
+_log(f"Loaded joint LoRA from {MODEL_SAVE}")
 
 
 def make_prompt(text: str) -> str:
@@ -117,27 +129,28 @@ def log_result(model_name, n, acc, dataset_tag):
 # ── Humicroedit pairwise ──────────────────────────────────────────────────────
 humicroedit_path = ROOT / "datasets" / "humicroedit" / "semeval-2020-task-7-dataset" / "subtask-2" / "test.csv"
 if humicroedit_path.exists():
-    print("\n── Eval: Humicroedit pairwise ──")
+    _log("Eval: Humicroedit pairwise")
 
     def apply_edit(original, edit):
         return re.sub(r"<[^/]+/>", edit, original).strip()
 
     s2 = pd.read_csv(humicroedit_path)
     s2 = s2[s2["label"] != 0].reset_index(drop=True)
-    print(f"  {len(s2)} non-tie pairs")
+    _log(f"{len(s2)} non-tie pairs loaded")
 
     prefix = "Consider the amount of funniness in the following: "
     headlines_a = [apply_edit(r.original1, r.edit1) for r in s2.itertuples()]
     headlines_b = [apply_edit(r.original2, r.edit2) for r in s2.itertuples()]
     prompts = [make_prompt(prefix + h) for h in headlines_a + headlines_b]
+    _log(f"Scoring {len(prompts)} prompts...")
     scores = score_all(prompts)
     n = len(s2)
     predicted = np.where(scores[:n] > scores[n:], 1, 2)
     acc = (predicted == s2["label"].values).mean() * 100
-    print(f"Humicroedit pairwise accuracy: {acc:.1f}%  (n={n})")
+    _log(f"Humicroedit pairwise accuracy: {acc:.1f}%  (n={n})")
     log_result("qwen4b-lora-joint", n, acc, "joint-lora-humicroedit")
 
 
 gc.collect()
 torch.cuda.empty_cache()
-print("\nDone.")
+_log("Done.")
