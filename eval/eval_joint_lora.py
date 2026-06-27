@@ -1,9 +1,10 @@
 """
-Eval the saved joint LoRA on HaHa pairwise and NYCC pairwise benchmarks.
+Eval the saved joint LoRA on HaHa, NYCC, and Humicroedit pairwise benchmarks.
 
 Usage: python eval/eval_joint_lora.py
 """
 import gc
+import re
 import torch
 import torch.nn as nn
 import pandas as pd
@@ -111,6 +112,30 @@ if nycc_path.exists():
     acc    = (np.where(scores[:n] > scores[n:], "A", "B") == np.array(pw["expected"].tolist())).mean() * 100
     print(f"NYCC pairwise accuracy: {acc:.1f}%  (n={n})")
     log_result("qwen4b-lora-joint", n, acc, "joint-lora-nycc")
+
+
+# ── Humicroedit pairwise ──────────────────────────────────────────────────────
+humicroedit_path = ROOT / "datasets" / "humicroedit" / "semeval-2020-task-7-dataset" / "subtask-2" / "test.csv"
+if humicroedit_path.exists():
+    print("\n── Eval: Humicroedit pairwise ──")
+
+    def apply_edit(original, edit):
+        return re.sub(r"<[^/]+/>", edit, original).strip()
+
+    s2 = pd.read_csv(humicroedit_path)
+    s2 = s2[s2["label"] != 0].reset_index(drop=True)
+    print(f"  {len(s2)} non-tie pairs")
+
+    prefix = "Consider the amount of funniness in the following: "
+    headlines_a = [apply_edit(r.original1, r.edit1) for r in s2.itertuples()]
+    headlines_b = [apply_edit(r.original2, r.edit2) for r in s2.itertuples()]
+    prompts = [make_prompt(prefix + h) for h in headlines_a + headlines_b]
+    scores = score_all(prompts)
+    n = len(s2)
+    predicted = np.where(scores[:n] > scores[n:], 1, 2)
+    acc = (predicted == s2["label"].values).mean() * 100
+    print(f"Humicroedit pairwise accuracy: {acc:.1f}%  (n={n})")
+    log_result("qwen4b-lora-joint", n, acc, "joint-lora-humicroedit")
 
 
 gc.collect()
