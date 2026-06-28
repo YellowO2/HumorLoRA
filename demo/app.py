@@ -11,8 +11,9 @@ from peft import PeftModel
 # Config
 # ---------------------------------------------------------------------------
 BASE_MODEL_ID = os.getenv("BASE_MODEL_ID", "Qwen/Qwen2.5-3B-Instruct")
-LORA_MODEL_ID = os.getenv("LORA_MODEL_ID", "")  # HF Hub ID or local path
+LORA_MODEL_ID = os.getenv("LORA_MODEL_ID", "potato-bug/haha-lora")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
+TARGET_LAYER = 16
 
 SUBREDDITS = ["tifu", "confessions", "AITAH"]
 N_REPLIES = 5
@@ -31,12 +32,12 @@ HUMOR_PERSONAS = [
 _model = None
 _tokenizer = None
 
+_head = None
+
 def load_model():
-    global _model, _tokenizer
+    global _model, _tokenizer, _head
     if _model is not None:
-        return _model, _tokenizer
-    if not LORA_MODEL_ID:
-        return None, None
+        return _model, _tokenizer, _head
     print(f"Loading base model {BASE_MODEL_ID}...")
     _tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_ID)
     base = AutoModelForCausalLM.from_pretrained(
@@ -45,19 +46,28 @@ def load_model():
     print(f"Loading LoRA from {LORA_MODEL_ID}...")
     _model = PeftModel.from_pretrained(base, LORA_MODEL_ID)
     _model.eval()
-    return _model, _tokenizer
+
+    # Load the linear scoring head
+    from huggingface_hub import hf_hub_download
+    head_path = hf_hub_download(repo_id=LORA_MODEL_ID, filename="head.pt")
+    hidden_size = _model.config.hidden_size
+    device = next(_model.parameters()).device
+    _head = torch.nn.Linear(hidden_size, 1).to(device)
+    _head.load_state_dict(torch.load(head_path, map_location=device))
+    _head.eval()
+
+    return _model, _tokenizer, _head
 
 
-def score_text(text: str, model, tokenizer) -> float:
-    """Score a single text using the LoRA regression head."""
+def score_text(text: str, model, tokenizer, head) -> float:
     prompt = f"Consider the amount of funniness in the following: {text}"
     inputs = tokenizer(prompt, return_tensors="pt", truncation=True, max_length=512)
-    inputs = {k: v.to(model.device) for k, v in inputs.items()}
+    device = next(model.parameters()).device
+    inputs = {k: v.to(device) for k, v in inputs.items()}
     with torch.no_grad():
-        outputs = model(**inputs, output_hidden_states=False)
-        # Use mean logit of last token as scalar score proxy
-        logits = outputs.logits[:, -1, :]
-        score = logits.mean().item()
+        outputs = model(**inputs, output_hidden_states=True)
+        h = outputs.hidden_states[TARGET_LAYER][:, -1, :].float()
+        score = head(h).squeeze(-1).item()
     return score
 
 
@@ -136,11 +146,11 @@ def run_demo(subreddit: str):
 
     replies = generate_replies(title, body)
 
-    model, tokenizer = load_model()
+    model, tokenizer, head = load_model()
     if model is not None:
         scored = []
         for persona, reply in replies:
-            s = score_text(reply, model, tokenizer)
+            s = score_text(reply, model, tokenizer, head)
             scored.append((persona, reply, s))
         scored.sort(key=lambda x: x[2], reverse=True)
         table = [[f"#{i+1}", p, r, f"{s:.3f}"] for i, (p, r, s) in enumerate(scored)]

@@ -16,7 +16,7 @@ Beat 2: What we do — systematically evaluate approaches ranging from prompting
          pairwise format as a reusable training collection
 Beat 3: Key results — most prompting approaches plateau at 54–57% (near random);
          CoT and persona simulation actively hurt or add nothing; supervised
-         fine-tuning on crowd-labeled pairwise data reaches 65–68%, near human ceiling
+         fine-tuning on crowd-labeled pairwise data reaches 65–68%, near human agreement
 Beat 4: Takeaway — crowd supervision is the key ingredient; our dataset collection
          and findings provide a foundation for building humor-aware LLMs
 
@@ -45,7 +45,7 @@ Beat 1: Humor datasets and shared tasks
   - SemEval 2021 Task 7 — HaHackathon [CITE Meaney et al. 2021]
     Humor rating + detection; 20 crowd annotators per item; no pairwise subtask
   - Hessel et al. 2023 — NYCC [CITE]
-    Native pairwise captions; human ceiling 64.6%
+    Native pairwise captions; human agreement 64.6%
   - Key observation: all prior work trains/evals per-dataset; we unify 5 datasets
     into one collection and study joint training
 
@@ -66,8 +66,6 @@ Beat 3: CoT / reasoning for subjective tasks
 Beat 4: Supervised preference learning
   - Hu et al. 2021 LoRA [CITE] — parameter-efficient fine-tuning
   - Ouyang et al. 2022 InstructGPT [CITE] — pairwise preference training paradigm
-  - Baranov et al. 2023 [CITE hri_tools] — cross-dataset transfer for humor classification;
-    diversity aids generalization (binary labels only, not preference)
   - Santurkar et al. 2023 OpinionsQA [CITE] — LLMs misrepresent crowd views by default;
     fine-tuning on group data helps → motivates our supervised approach
   - We extend to pairwise preference training jointly across 5 datasets
@@ -101,7 +99,7 @@ Beat 3: Cap and balance
 
 Beat 4: Test sets (held out, never used in training)
   - HaHa pairwise: [N] pairs from hahackathon test split (20% hold-out)
-  - NYCC pairwise: fold0_test + fold0_val ~1020 pairs; human ceiling 64.6% [CITE Hessel]
+  - NYCC pairwise: fold0_test + fold0_val ~1020 pairs; human agreement 64.6% [CITE Hessel]
   - Note: Humicroedit and reddit_jokes have no held-out pairwise eval;
     we use HaHa and NYCC as the two primary benchmarks
 
@@ -164,7 +162,7 @@ Beat B1: Activation probing — linear funniness direction exists
 
 Beat B2: Single-dataset LoRA — supervised signal is learnable
   - HaHa LoRA regression: 68.3% on HaHa pairwise — beats SemEval 2020 winner 67.43%
-  - NYCC LoRA (2k pairs, 3 epochs): 65.7% on NYCC — near/above human ceiling 64.6%
+  - NYCC LoRA (2k pairs, 3 epochs): 65.7% on NYCC — matching human agreement (64.6%)
   - In-batch pairwise BCE ≈ LoRA regression (67.7% vs 68.3%, within noise)
   - Each dataset teaches a domain-specific signal; cross-domain transfer is partial
 

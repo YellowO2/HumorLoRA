@@ -8,7 +8,7 @@ All papers cited or considered for the paper.
 
 | Paper | Link | Notes |
 |-------|------|-------|
-| Hessel et al. (2023), *Do Androids Laugh at Electric Sheep? Humor "Understanding" Benchmarks from The New Yorker Caption Contest* | https://arxiv.org/abs/2209.06293 | NYCC dataset. CrowdAcc=83.7%, NYAcc=64.6% (human ceiling we use). Native pairwise format. |
+| Hessel et al. (2023), *Do Androids Laugh at Electric Sheep? Humor "Understanding" Benchmarks from The New Yorker Caption Contest* | https://arxiv.org/abs/2209.06293 | NYCC dataset. CrowdAcc=83.7%, NYAcc=64.6% (NYAcc: individual human agreement with crowd majority). Native pairwise format. |
 | Meaney et al. (2021), *SemEval-2021 Task 7: HaHackathon, Detecting and Rating Humor and Offense* | https://aclanthology.org/2021.semeval-1.9 | HaHackathon dataset. 10,000 texts (Twitter + Kaggle jokes), 20 annotators per text, rated 0–5. Task 1a winner F1=0.9854, Task 1b winner RMSE=0.4959. No pairwise subtask — our pairwise eval is synthetic. |
 | Hossain et al. (2020), *SemEval-2020 Task 7: Assessing Humor in Edited News Headlines* | https://aclanthology.org/2020.semeval-1.98/ | Humicroedit dataset. Subtask 1: regression (0–3). Subtask 2: pairwise. 48/31 teams. Best pairwise acc = 67.43% (Hitachi). Baseline 49.0%. |
 | Potash et al. (2017), *SemEval-2017 Task 6: #HashtagWars: Learning a Sense of Humor* | https://aclanthology.org/S17-2004/ | Pairwise humor ranking on @midnight tweets (crowd votes = ground truth). 7 teams; best pairwise acc 67.5% (HumorHawk). Structurally identical to our task. |
@@ -62,8 +62,9 @@ All papers cited or considered for the paper.
 
 ---
 
-## Cross-dataset Humor Transfer
+## Humor Theory
 
 | Paper | Link | Notes |
 |-------|------|-------|
-| Baranov et al. (2023), *hri_tools humor dataset bundle* | TBD — find arxiv link | Trained on multiple humor datasets, evaluated cross-dataset; diversity aids generalization. All 11 datasets are binary-labeled (no continuous crowd preference signal). We differ: pairwise preference objective, continuous crowd labels. |
+| Attardo & Raskin (1991), *Script Theory Revis(it)ed: Joke Similarity and Joke Representation Model* | https://doi.org/10.1515/humr.1991.4.3-4.293 | General Theory of Verbal Humor (GTVH). Humor decomposes into dimensions: incongruity, logical mechanism, target, language, etc. |
+| Warren & McGraw (2016), *Differentiating What Is Humorous From What Is Not* | https://doi.org/10.1037/pspp0000055 | Benign violation theory of humor. Dimensions of what makes things funny across individuals. |

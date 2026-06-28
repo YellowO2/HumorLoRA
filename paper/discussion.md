@@ -1,12 +1,13 @@
+
+[todo what is the point of our discussion section and intuition? need to rethink]
+
 # Discussion
 
-Humor is highly subjective. Studies measuring inter-annotator agreement on funniness ratings find Krippendorff's alpha of 0.1625 and 0.224 across two iterations of the same task (Castro et al., 2018; Chiruzzo et al., 2019), indicating low inter-rater agreement on individual funniness judgments. Yet individual variation does not mean anything goes. Much like how people disagree on their favorite food but broadly converge on what is generally good, humor preferences follow a population-level distribution with a learnable center. On NYCC, individual humans agree with the crowd majority 64.6% of the time (Hessel et al., 2023), confirming that a stable crowd signal exists even when individual taste varies widely. Fine-tuning on crowd labels reaches 65.7% on the same benchmark, matching individual human performance against crowd consensus.
+Humor is highly subjective. Studies measuring inter-annotator agreement on funniness ratings find Krippendorff's alpha of 0.1625 and 0.224 across two iterations of the same task (Castro et al., 2018; Chiruzzo et al., 2019), indicating low inter-rater agreement on individual funniness judgments. Yet individual variation does not mean anything goes. Much like how people disagree on their favorite food but broadly converge on what is generally good, humor preferences follow a population-level distribution with a learnable center. On NYCC, individual humans agree with the crowd majority 64.6% of the time (Hessel et al., 2023), confirming that a stable crowd signal exists even when individual taste varies widely. Fine-tuning on crowd labels reaches 65.7% on the same benchmark, matching individual human performance against crowd consensus. [todo, is this a repeat? i think we said some of these in previous section]
 
 ## 6.1 Why Prompting-Based Approaches Plateau
 
 The zero-shot plateau at 54–57% is not a coincidence or a model-size issue. It reflects a structural gap: LLMs are preference-trained on helpfulness (via RLHF on human feedback), which is why they reach ~63% zero-shot on SHP. No equivalent crowd-calibrated signal exists for humor in standard pretraining or alignment pipelines. The model has opinions about what is funny, but those opinions are not anchored to what crowds actually find funny.
-
-GPT-4 is a notable exception: it achieves 64.3% zero-shot on NYCC (Hessel et al., 2023), suggesting that at sufficient scale and with more extensive alignment training, models may absorb enough humor-relevant signal to partially escape the plateau without fine-tuning. For smaller open models, however, no prompting variant we tested breaks through.
 
 Prompt restructuring cannot fix this. Changing framing from gut-feeling to crowd-prediction to humor-expert persona all produce the same result within noise, because the weights carry the prior and the prior is uncalibrated. Chain-of-thought makes things worse: humor preference has no ground-truth reasoning path, so asking the model to verbalize a rationale either rationalizes noise or forces a confident answer on a question that is inherently probabilistic. Wang et al. (2025) observe the same collapse in 30/40 scoring scenarios; our results replicate it in humor.
 
@@ -22,10 +23,10 @@ Third, crowd preference signals from diverse humor domains are compatible. Train
 
 ## 6.3 Limitations
 
-Our evaluation targets crowd-aggregated preference, which smooths over individual taste variation. A model that fits the crowd average well may still fail to match any specific person's sense of humor.
+- no verification that this sense of humor trained is truely out of domain humor and true sense of humor 
 
-The Spanish dataset (haha\_spanish) is included in joint training but we have no Spanish eval benchmark, so its contribution to the joint LoRA is unverified.
+Our evaluation targets crowd-aggregated preference, which smooths over individual taste variation. A model that fits the crowd average well may still fail to match any specific person's sense of humor.
 
 For NYCC, we substitute a text description of the cartoon image rather than the actual image. The model never sees the visual content that human annotators saw, which likely limits NYCC performance below what a multimodal model could achieve.
 
-All experiments use 4B parameter base models. Larger models may respond differently to the same supervision.
+Our largest model tested is with 9B parameters. Larger models may respond differently to the same supervision.
