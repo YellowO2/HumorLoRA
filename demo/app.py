@@ -196,7 +196,7 @@ def generate_and_rank(title, body, num_funny):
     n_request = min(num_funny * 3, 60)
     print(f"[generate] brainstorming {n_request} angles...")
     brainstorm_messages = [
-        {"role": "system", "content": "You are a comedy writer."},
+        {"role": "system", "content": "You are someone who likes to joke around."},
         {"role": "user", "content": (
             f"Someone posted this on Reddit:\n\n{context}\n\n"
             f"List {n_request} distinct, specific funny angles or observations about this situation. "
@@ -277,7 +277,7 @@ def compare_approaches(title, body):
     # shared brainstorm angles (same angles fed to both approaches)
     print("[compare] === BRAINSTORM (shared angles) ===")
     bm_messages = [
-        {"role": "system", "content": "You are a comedy writer."},
+        {"role": "system", "content": "You are someone who likes to joke around."},
         {"role": "user", "content": (
             f"Someone posted this on Reddit:\n\n{context}\n\n"
             f"List {BRAINSTORM_REQUEST} distinct, specific funny angles or observations about this situation. "
