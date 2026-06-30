@@ -68,7 +68,9 @@ def _fetch_batch(subreddit, after=None):
         entry_id = e.findtext("atom:id", "", _NS)
         if entry_id:
             last_id = entry_id.split("_")[-1]
-        if 150 < len(body) < 4000 and num_comments >= 20:
+        # use title+body combined so short-body posts (common on asksingapore) still qualify
+        combined = (title + " " + body).strip()
+        if 50 < len(combined) < 4000 and num_comments >= 10:
             candidates.append((title, body))
     return candidates, last_id
 
