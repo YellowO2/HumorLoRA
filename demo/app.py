@@ -184,6 +184,7 @@ N_PLAIN = 3
 @GPU
 def generate_and_rank(title, body, num_funny):
     num_funny = int(num_funny)
+    total = num_funny + N_PLAIN
     print(f"[generate] called, num_funny={num_funny}, _model is None:", _model is None)
     try:
         _load_model()
@@ -192,8 +193,8 @@ def generate_and_rank(title, body, num_funny):
     context = f"Title: {title}\n\n{body}"
     t0 = time.time()
 
-    # Step 1: brainstorm angles naturally (ask for ~20, use whatever parses)
-    print(f"[generate] brainstorming angles...")
+    yield "Brainstorming angles...", None, None
+
     brainstorm_messages = [
         {"role": "system", "content": "You are someone who likes to joke around."},
         {"role": "user", "content": (
@@ -215,12 +216,11 @@ def generate_and_rank(title, body, num_funny):
     if not angles:
         raise gr.Error("Failed to brainstorm angles.")
 
-    # Step 2: cycle through angles+tones until we have num_funny replies
     scored = []
     for i in range(num_funny):
         angle = angles[i % len(angles)]
         tone = REDDIT_TONES[i % len(REDDIT_TONES)]
-        print(f"[generate] funny {i+1}/{num_funny} [{tone}]: {angle[:50]}")
+        yield f"Generating reply {i+1}/{total}...", None, None
         msgs = [
             {"role": "system", "content": f"You are a Reddit user {tone}. Write casually."},
             {"role": "user", "content": (
@@ -234,9 +234,8 @@ def generate_and_rank(title, body, num_funny):
         print(f"[generate]   score={s:.4f} reply={reply[:60]!r}")
         scored.append(("funny", reply, s))
 
-    # Step 3: plain replies (no humor instruction)
-    print(f"[generate] generating {N_PLAIN} plain replies...")
     for i in range(N_PLAIN):
+        yield f"Generating reply {num_funny+i+1}/{total}...", None, None
         msgs = [
             {"role": "system", "content": "You are a Reddit user. Write casually."},
             {"role": "user", "content": f"Someone posted this on Reddit:\n\n{context}\n\nWrite a reply. /no_think"},
@@ -261,7 +260,7 @@ def generate_and_rank(title, body, num_funny):
             for i, (kind, reply, s) in enumerate(entries)
         ]
 
-    return _to_rows(top_half), _to_rows(bot_half, rank_offset=mid+1)
+    yield "Done!", _to_rows(top_half), _to_rows(bot_half, rank_offset=mid+1)
 
 @GPU
 def compare_approaches(title, body):
@@ -402,6 +401,8 @@ Step 2. Generate replies and see how the judge ranks them.""")
         num_slider = gr.Slider(minimum=5, maximum=20, value=10, step=1, label="Number of funny replies")
         rank_btn = gr.Button("Generate & rank replies", variant="primary", interactive=False, scale=0)
 
+    status_box = gr.Markdown(value="")
+
     with gr.Row():
         top_table = gr.Dataframe(
             headers=["Rank", "Type", "Score", "Reply"],
@@ -422,7 +423,7 @@ Step 2. Generate replies and see how the judge ranks them.""")
     rank_btn.click(
         fn=generate_and_rank,
         inputs=[_title_state, _body_state, num_slider],
-        outputs=[top_table, bot_table],
+        outputs=[status_box, top_table, bot_table],
     )
 
 if __name__ == "__main__":
