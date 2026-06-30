@@ -230,8 +230,9 @@ def compare_approaches(title, body):
         raise gr.Error(f"Model load failed: {e}")
     context = f"Title: {title}\n\n{body}"
 
-    COMPARE_N = 20
-    PERSONA_REPS = 3
+    COMPARE_N = 50
+    PERSONA_REPS = 7
+    BRAINSTORM_REQUEST = 60  # ask for more than needed in case some lines don't parse
 
     def _run_brainstorm(system_reply_prompt, label):
         print(f"[compare] === BRAINSTORM ({label}) ===")
@@ -239,11 +240,11 @@ def compare_approaches(title, body):
             {"role": "system", "content": "You are a comedy writer."},
             {"role": "user", "content": (
                 f"Someone posted this on Reddit:\n\n{context}\n\n"
-                f"List {COMPARE_N} distinct, specific funny angles or observations about this situation. "
-                f"Number them 1-{COMPARE_N}, one per line. /no_think"
+                f"List {BRAINSTORM_REQUEST} distinct, specific funny angles or observations about this situation. "
+                f"Number them 1-{BRAINSTORM_REQUEST}, one per line. /no_think"
             )},
         ]
-        raw = _generate(bm_messages, max_new_tokens=500)
+        raw = _generate(bm_messages, max_new_tokens=1000)
         parsed = []
         for line in raw.splitlines():
             m = re.match(r'^\d+[\.\)]\s*(.+)', line.strip())
