@@ -363,15 +363,21 @@ def compare_approaches(title, body):
 def do_fetch(subreddit):
     post, display = fetch_reddit_post(subreddit)
     if post is None:
-        return display, gr.update(interactive=False), gr.update(interactive=False), None, None
+        return display, gr.update(interactive=False), None, None
     title, body = post
-    return display, gr.update(interactive=True), gr.update(interactive=True), title, body
+    return display, gr.update(interactive=True), title, body
 
 # ---------------------------------------------------------------------------
 # UI
 # ---------------------------------------------------------------------------
 with gr.Blocks(title="Humor Judge") as demo:
-    gr.Markdown("## Humor Judge\nFetches a real Reddit post, brainstorms funny angles, generates a reply per angle, and ranks them by crowd-calibrated funniness.")
+    gr.Markdown("""# Humor Judge
+
+Can a model learn what's funny? This demo uses a humor judge fine-tuned on crowd-labeled pairwise humor data to rank Reddit replies by funniness. It generates both humor-directed and plain replies, scores them all, then shows you the top and bottom half — so you can see whether the judge actually discriminates.
+
+**Step 1.** Pick a subreddit and fetch a real post.
+
+**Step 2.** Generate replies and see how the judge ranks them.""")
 
     _title_state = gr.State(None)
     _body_state = gr.State(None)
@@ -379,11 +385,13 @@ with gr.Blocks(title="Humor Judge") as demo:
     with gr.Row():
         subreddit_dd = gr.Dropdown(choices=SUBREDDITS, value="asksingapore", label="Subreddit")
         fetch_btn = gr.Button("Fetch post", variant="secondary")
-        rank_btn = gr.Button("Generate & rank replies", variant="primary", interactive=False)
-        compare_btn = gr.Button("Compare approaches", variant="secondary", interactive=False)
 
-    num_slider = gr.Slider(minimum=5, maximum=20, value=10, step=1, label="Number of funny replies to generate")
     post_box = gr.Markdown()
+
+    with gr.Row():
+        num_slider = gr.Slider(minimum=5, maximum=20, value=10, step=1, label="Number of funny replies")
+        rank_btn = gr.Button("Generate & rank replies", variant="primary", interactive=False, scale=0)
+
     with gr.Row():
         top_table = gr.Dataframe(
             headers=["Rank", "Type", "Score", "Reply"],
@@ -395,22 +403,16 @@ with gr.Blocks(title="Humor Judge") as demo:
             label="Least funny",
             wrap=True,
         )
-    compare_out = gr.Markdown(label="Approach comparison")
 
     fetch_btn.click(
         fn=do_fetch,
         inputs=[subreddit_dd],
-        outputs=[post_box, rank_btn, compare_btn, _title_state, _body_state],
+        outputs=[post_box, rank_btn, _title_state, _body_state],
     )
     rank_btn.click(
         fn=generate_and_rank,
         inputs=[_title_state, _body_state, num_slider],
         outputs=[top_table, bot_table],
-    )
-    compare_btn.click(
-        fn=compare_approaches,
-        inputs=[_title_state, _body_state],
-        outputs=[compare_out],
     )
 
 if __name__ == "__main__":
