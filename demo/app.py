@@ -42,9 +42,8 @@ _NS = {"atom": "http://www.w3.org/2005/Atom"}
 
 def _strip_html(html):
     text = re.sub(r"<[^>]+>", "", html).strip()
-    # remove Reddit submission footer
-    text = re.sub(r"\s*submitted by /u/\S+.*", "", text, flags=re.DOTALL).strip()
-    text = re.sub(r"\s*\[link\]\s*\[comments\].*", "", text, flags=re.DOTALL).strip()
+    text = re.sub(r"\s*submitted by /u/.*", "", text, flags=re.DOTALL).strip()
+    text = re.sub(r"\s*\[link\].*", "", text, flags=re.DOTALL).strip()
     return text
 
 def _fetch_batch(subreddit, after=None):
@@ -186,6 +185,7 @@ def generate_and_rank(title, body, num_funny):
     num_funny = int(num_funny)
     total = num_funny + N_PLAIN
     print(f"[generate] called, num_funny={num_funny}, _model is None:", _model is None)
+    yield "Loading model...", None, None
     try:
         _load_model()
     except Exception as e:
@@ -256,7 +256,7 @@ def generate_and_rank(title, body, num_funny):
 
     def _to_rows(entries, rank_offset=1):
         return [
-            [f"#{rank_offset + i}", "Plain" if kind == "plain" else "Funny", f"{s:.4f}", reply]
+            [f"#{rank_offset + i}", f"{s:.4f}", reply]
             for i, (kind, reply, s) in enumerate(entries)
         ]
 
@@ -405,12 +405,12 @@ Step 2. Generate replies and see how the judge ranks them.""")
 
     with gr.Row():
         top_table = gr.Dataframe(
-            headers=["Rank", "Type", "Score", "Reply"],
+            headers=["Rank", "Score", "Reply"],
             label="Funniest",
             wrap=True,
         )
         bot_table = gr.Dataframe(
-            headers=["Rank", "Type", "Score", "Reply"],
+            headers=["Rank", "Score", "Reply"],
             label="Least funny",
             wrap=True,
         )
