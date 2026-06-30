@@ -7,3 +7,6 @@ outputs
 old_reference
 references
 datasets/lora_train_data/
+unsloth_compiled_cache/
+.claude/
+results/feature_cache/

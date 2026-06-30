@@ -1,0 +1,384 @@
+\documentclass[10pt, a4paper]{article}
+
+% Encoding
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Font: Arial via helvet
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Page layout
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=1.9cm, right=1.9cm]{geometry}
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\chead{\textit{Proceedings of URECA@NTU 2025-26}}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{14pt}
+
+% Two-column body via multicol
+\usepackage{multicol}
+\setlength{\columnsep}{0.6cm}
+
+% Section headings: bold, ALL CAPS, numbered
+\usepackage{titlesec}
+\titleformat{\section}{\bfseries\normalsize}{\thesection.}{0.5em}{\MakeUppercase}
+\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{6pt}{2pt}
+\titlespacing*{\subsection}{0pt}{4pt}{2pt}
+
+% Tables
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf, skip=4pt}
+
+% Typography
+\usepackage{microtype}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% References
+\usepackage{cite}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+% Title block (one column, before multicols)
+\begin{center}
+{\large\bfseries Can LLMs Learn a Sense of Humor?\\
+Crowd-Supervised Fine-Tuning for Humor Preference Judgment}\\[0.8em]
+Yuxuan Huang\\
+{\small School of Computer Science and Engineering, Nanyang Technological University}\\[0.4em]
+Asst Prof Lee Wee Kiat (Supervisor)\\
+{\small Nanyang Business School, Nanyang Technological University}
+\end{center}
+
+\vspace{0.4em}
+\noindent\hrule
+\vspace{0.4em}
+
+{\small
+\noindent\textbf{Abstract} \vspace{0.4em}
+\\
+We study whether LLMs can learn to judge humor as a human crowd would, using crowd-labeled pairwise datasets as ground truth. We find that prompting-based approaches fail to improve humor judgment accuracy regardless of framing, chain-of-thought, or model size (50--57\%), while crowd-supervised LoRA fine-tuning reliably does, reaching $\sim$65--68\% and matching average human performance on NYCC. This yields a more objective automated humor judge, useful as a reward model for training funnier LLMs or for evaluating whether prompt strategies are actually improving humor generation.
+
+\smallskip
+\noindent\textbf{Keywords:} humor, LLM-as-a-judge, preference learning, fine-tuning, crowd annotation
+}
+
+\vspace{0.4em}
+\noindent\hrule
+\vspace{0.8em}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{multicols}{2}
+
+\section{Introduction}
+
+When I see an LLM persona online, my first impression is, eww, disgusting. Suppose you want to make one that is less disgusting, having a sense of humor is quite important. To make a humorous LLM, perhaps I can do some prompt engineering, like giving it a persona of a comedian, grounding it in the theory of humor, giving it some examples, then finally, judging if its output becomes funnier.
+
+But how do I judge if it is becoming funnier? After all, humor is highly subjective (inter-annotator alpha = 0.16--0.22; \cite{castro2018,chiruzzo2019}). I could find I'm getting the LLM funnier, but Mr Joe says otherwise. A standard solution for subjective things is to recruit a crowd and rate the outputs, BUT Ain't nobody got time for that man! Hmmm, so what comes to mind as replacements for people then? \ldots\ It's goddamn AI of course!!! LLM as a judge!
+
+This sounds good. However, notice this just pushes the problem back again. How do we know if the LLM Judge itself even has a good sense of humor? Can we measure it?
+
+To do that, we first need to define sense of humor itself, then what makes one ``good.'' We can think of sense of humor as a taste for humor. Each person's taste is a unique weighted combination of features like incongruity, logical mechanism, target, and language \cite{attardo1991,warren2016}: $w_1{\cdot}f_1 + w_2{\cdot}f_2 + \cdots$ that outputs how funny something is to them.
+
+Individual tastes for humor vary, but they cluster around a center, analogous to how people have different tastes for food but broadly agree on what's good. We can therefore define a ``good'' sense of humor as one that aligns with the crowd: given a pairwise choice, a good judge picks what more people find funnier. This definition lets us measure sense of humor objectively by using crowd-labeled datasets.
+
+In fact, it can be argued that this good sense of humor is all you need for a funny LLM. Consider this thought experiment: Prompt an LLM to generate 1000 joke attempts at high temperature. If you can pick the funniest response, the result is likely quite funny. This strategy is validated by the SemEval 2026 Task 1 (MWAHAHA) winner \cite{semeval2026}, where they framed humor generation as a selection problem, not a generation one.
+
+We therefore study whether an LLM judge can acquire this good sense of humor, and what approaches actually work. We evaluate approaches spanning prompting, CoT, persona simulation, crowd simulation, activation probing, and fine-tuning. Such a judge can then further serve as a reward model to train a humorous LLM directly, bypassing the selection step.
+
+Key findings: (1) prompting-based approaches all plateau at 50--57\% regardless of framing, CoT, few-shot (5 examples), or model size, and (2) crowd-supervised Low-Rank Adaptation (LoRA) fine-tuning reliably improves over zero-shot. A single-dataset LoRA accuracy (65.7\%) matches average human accuracy (64.6\%) on NYCC, and a joint LoRA across all five datasets achieves 65.2\% on HaHa and 63.2\% on NYCC.
+
+\section{Related Work}
+
+We draw on prior work in two areas: humor datasets and benchmarks, and computational approaches to humor judgment.
+
+\textbf{Humor datasets and benchmarks.} A series of SemEval tasks have produced crowd-labeled humor datasets: SemEval-2017 Task 6 \cite{potash2017} collected pairwise rankings of crowd-voted tweets; SemEval-2020 Task 7 \cite{hossain2020} collected crowd funniness ratings for edited news headlines with a pairwise subtask; SemEval-2021 Task 7 \cite{meaney2021} rated 10,000 texts with 20 annotators each. Outside of shared tasks, Chiruzzo et al.\ \cite{chiruzzo2019} collected Spanish Twitter jokes with crowd funniness ratings, and Weller and Seppi \cite{weller2019} provide Reddit posts with upvote ratios as a funniness proxy. Hessel et al.\ \cite{hessel2023} introduced NYCC, a native pairwise dataset of New Yorker caption contest entries, where individual human agreement on the pairwise task is 64.6\%. All prior work trains and evaluates on individual datasets in isolation. We unify five crowd-labeled datasets spanning text jokes, news headlines, Reddit posts, Spanish tweets, and cartoon captions into one pairwise training collection and study whether joint training across humor domains generalizes.
+
+\textbf{Prior approaches to humor judgment.} Prior work on computational humor judgment spans several approaches. LLM-as-judge \cite{zheng2023} works well for helpfulness evaluation but degrades on subjective and cultural tasks including humor \cite{verga2024}. Goes et al.\ \cite{goes2022} propose simulating crowd judgment by prompting the same LLM with four HSQ humor personality types, but Santurkar et al.\ \cite{santurkar2023} show persona prompts have low steerability and models default to their prior regardless of instruction. Chain-of-thought prompting has been shown to collapse LLM judgment distributions on subjective tasks \cite{wang2025}. The SemEval 2026 lmfaoooo system scores jokes on 17 humor dimensions pointwise, but without fine-tuning, the pointwise variant does not improve over zero-shot. Zou et al.\ \cite{zou2023} propose reading model representations directly to extract linear concept directions, though this approach is not task-specific to humor. We empirically test all of these approaches and find none break the zero-shot plateau for models below GPT-4 scale, motivating direct supervision on crowd-labeled pairwise data via LoRA fine-tuning \cite{hu2021,ouyang2022}.
+
+\section{Datasets}
+
+We assemble five crowd-labeled humor datasets spanning different domains, label types, and languages, and unify them into a single pairwise training format.
+
+\subsection{Overview}
+
+\end{multicols}
+
+% Dataset overview table -- full page width
+\begin{table}[H]
+\centering
+\caption*{\small\textbf{Dataset overview}}
+\small
+\begin{tabularx}{\textwidth}{llXrr}
+\toprule
+\textbf{Dataset} & \textbf{Domain} & \textbf{Label type} & \textbf{Train rows} & \textbf{Source} \\
+\midrule
+hahackathon   & Short text jokes          & Crowd rating 1--5   & $\sim$3.9k          & \cite{meaney2021}   \\
+humicroedit   & News headline edits       & Crowd rating 0--3   & $\sim$10k (capped)  & \cite{hossain2020}  \\
+reddit\_jokes & Reddit posts              & Upvote ratio        & $\sim$10k (capped)  & \cite{weller2019}   \\
+haha\_spanish & Spanish twitter jokes     & Crowd rating 1--5   & $\sim$10k (capped)  & \cite{chiruzzo2019} \\
+nycc          & New Yorker cartoon captions & Native pairwise   & 2k pairs            & \cite{hessel2023}   \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{multicols}{2}
+
+\subsection{Data Preparation}
+
+Rated datasets (hahackathon, humicroedit, haha\_spanish) are converted to pairwise format by sampling (high-score, low-score) pairs within each source. reddit\_jokes uses upvote ratio as a funniness proxy with a score $\geq$ 10 filter and deduplication. nycc is already native pairwise; we use fold0 only with non-overlapping train/test/val splits, and use text description of the cartoon image since we work in a text-only setting. For humicroedit, subtask-1 ratings are used for training, and the subtask-2 test set is held out for evaluation, with no overlap between the two.
+
+By converting everything to pairwise format, we can train jointly across all five datasets without cross-dataset label normalization. Each dataset is capped at 10k rows to prevent larger datasets from dominating, giving roughly 22k training pairs in total.
+
+\subsection{Considered but Excluded}
+
+The following datasets were considered but not included due to various reasons.
+
+\begin{itemize}\setlength\itemsep{0pt}
+  \item \textbf{humor\_arena} ($\sim$2.5k pairwise, LLM-generated jokes): a LoRA trained on humor\_arena scored 52.8\% cross-domain on HaHa pairwise, below the zero-shot baseline ($-$2.6pp), so it was excluded from joint training.
+  \item \textbf{Jester} (dataset 3): only 140 unique jokes (though rated by 54k users). The content diversity is too low.
+  \item \textbf{Open Mic} (Mittal et al.): stand-up transcripts with audience laughter as ground truth; not publicly accessible.
+  \item \textbf{Cards Against Humanity (CAH Lab)}: requires contacting the lab directly; did not respond.
+  \item \textbf{Yelp Funny Reviews}: not explored due to time constraints.
+  \item \textbf{Oogiri-GO} (Murakami et al.): not explored due to time constraints.
+  \item \textbf{SemEval-2017 Task 6} \cite{potash2017}: pairwise rankings of crowd-voted tweets from a Comedy Central hashtag comedy show. Not explored due to time constraints.
+\end{itemize}
+
+\section{Experiments}
+
+We evaluate a range of approaches to humor preference judgment on three pairwise benchmarks: HaHa pairwise ($N$=2000), NYCC pairwise ($N$=1020--2616 depending on the eval), and Humicroedit pairwise ($N$=2628). We also use SHP (Stanford Human Preferences; \cite{ethayarajh2022}), a Reddit comment preference dataset, as a non-humor control to help distinguish humor preference gains from general capability changes. Qwen3.5-4B achieves 63.2\% on SHP zero-shot, compared to 54.5\% on NYCC humor pairwise. We use instruct instead of a pretrained model unless stated otherwise. Greedy decoding throughout. 95\% CI: $\pm$2.2pp at $n$=2000, $\pm$3.1pp at $n$=1020, $\pm$1.9pp at $n$$\approx$2600.
+
+We organize the tested methods into two groups:
+
+\textbf{Fail to improve over zero-shot (Section~\ref{sec:fails}):}
+\begin{itemize}\setlength\itemsep{0pt}
+  \item Prompt framing variants: gut-feeling, crowd-framing, CoT
+  \item Style fine-tuning: Discord SFT (human conversation), De-GPT DPO (human-vs-AI)
+  \item Persona simulation: Crowd Score, 4 HSQ humor archetypes \cite{goes2022}
+  \item Humor basis prompting: 17-dimension decomposition (SemEval 2026)
+  \item Few-shot (5 examples)
+  \item Varying model size (2B--9B): no improvement trends across different sizes
+\end{itemize}
+
+\textbf{Work (Section~\ref{sec:works}):}
+\begin{itemize}\setlength\itemsep{0pt}
+  \item Linear activation probing on crowd-labeled funniness
+  \item LoRA fine-tuning with pairwise preference objective, single-dataset and joint
+\end{itemize}
+
+\subsection{What Fails}
+\label{sec:fails}
+
+Table~\ref{tab:fails} summarizes all approaches that fail to meaningfully exceed zero-shot performance.
+
+\end{multicols}
+
+% Table 1: Failures -- full page width
+\begin{table}[H]
+\centering
+\caption{Approaches that do not improve over zero-shot}
+\label{tab:fails}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{5.0cm}
+                              >{\centering\arraybackslash}p{1.6cm}
+                              >{\centering\arraybackslash}p{1.6cm}
+                              >{\centering\arraybackslash}p{2.1cm}
+                              >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Approach} & \textbf{HaHa} & \textbf{NYCC} & \textbf{Humicroedit} & \textbf{Notes} \\
+\midrule
+Zero-shot (Gemma-4-E2B)            & ---     & 52.3\%       & ---         & 2B model \\
+Zero-shot (Qwen3-4B)               & ---     & 52.0\%       & ---         & $n$=300 only \\
+Zero-shot (Gemma-4-E4B)            & ---     & 53.7\%       & ---         & \\
+Zero-shot (Qwen3.5-4B)             & 55.4\%  & 54.5\%       & 56.3\%      & Prompt framing (gut/plain/crowd) identical within noise \\
++ CoT prompting (Qwen3.5-4B)       & 54.4\%  & 53.2\%       & ---         & $-$1.0pp / $-$1.3pp, within noise \\
++ Few-shot rating, 5 anchors (Qwen3.5-4B) & 56.3\% & ---   & 57.1\%      & Derived pairwise from ratings; +0.9pp / +0.8pp, within noise \\
+Zero-shot (Llama-3.1-8B)           & ---     & $\sim$50\%   & ---         & \\
+Zero-shot (Hermes-3-8B)            & ---     & 55.6\%       & ---         & \\
+Zero-shot (Qwen3.5-9B)             & ---     & 52.4\%       & ---         & 9B model; same plateau as 4B \\
+Discord SFT (Hermes-3-8B)          & ---     & 50.6\%       & ---         & $-$5pp vs base, general degradation \\
+De-GPT DPO (Qwen3.5-4B)           & 54.8\%  & 53.5\%       & ---         & Flat across all datasets \\
+Crowd Score \cite{goes2022} (Qwen3.5-4B) & $\sim$53\% & ---   & ---    & 4 personas $\times$ same LLM; near random \\
+17-dim humor basis prompting (Qwen3.5-4B) & --- & ---       & 56.1--56.3\% & SemEval 2026 pointwise approach; no gain \\
+\bottomrule
+\end{tabularx}
+\smallskip\\
+\textit{\small NYCC results in this table use varying eval sizes ($n$=1020--2616) across runs; all fall within the 53--56\% plateau regardless of $n$.}
+\end{table}
+
+\begin{multicols}{2}
+
+\textbf{Prompt framing variants.} We tested several prompt variants on Qwen3.5-4B: plain (``return A or B''), gut-feeling (``use your gut feeling''), crowd-framing (``which would a crowd find funnier''), and role-based (``you are an expert in humor''). All produce identical results within noise on both NYCC and HaHa pairwise (differences $\leq$1.0pp). We also tested few-shot rating prompts (5 labeled anchors from the training set), deriving pairwise predictions from the model's per-joke scores. This yields 56.3\% on HaHa and 57.1\% on Humicroedit, both within noise of zero-shot. Prompt variations appear to have no effect on humor judgment performance.
+
+\textbf{Chain-of-thought prompting.} CoT produces a significant drop on SHP ($-$3.4pp, $n$=2000) and a neutral result on NYCC ($-$1.3pp, within CI). An explanation is that there is no clear reasoning path for subjective preference, hence, verbalizing a rationale introduces noise rather than signal. This is consistent with Wang et al.\ \cite{wang2025}, who find CoT collapses LLM judgment distributions in 30/40 scoring scenarios.
+
+\textbf{Varying model size.} Across seven base models ranging from 2B to 9B parameters (Gemma-4-E2B 52.3\%, Gemma-4-E4B 53.7\%, Qwen3-4B 52.0\%, Qwen3.5-4B 54.5\%, Llama-3.1-8B $\sim$50\%, Hermes-3-8B 55.6\%, Qwen3.5-9B 52.4\%), all plateau within 52--56\% on NYCC with no significant trend.
+
+\textbf{Style fine-tuning.} The motivation was the self-preference bias hypothesis \cite{wataoka2024}: LLMs prefer outputs stylistically similar to what they would generate. Since standard LLMs are RLHF-trained for helpfulness, they may favor helpful-sounding outputs even when judging humor. Fine-tuning on human conversation could shift the model's style away from assistant-speak, and in turn shift its humor preferences. However, DPO on human-vs-AI style data (De-GPT) is entirely flat across all benchmarks (within $\pm$2.2pp noise), falsifying this hypothesis. SFT on Discord conversations degrades general capability (NYCC $-$5pp, SHP $-$3.7pp), suggesting the style shift came at the cost of language understanding. The contrast with DPO (flat across all benchmarks) points to a capability issue rather than a failed preference shift.
+
+\textbf{Crowd Score \cite{goes2022}.} Crowd Score achieves $\sim$53\% on HaHa pairwise, worse than zero-shot. The method attempts to simulate crowd judgment by prompting the same LLM four times with different humor personality instructions, but this fails to actually approximate a crowd's sense of humor. Santurkar et al.\ \cite{santurkar2023} show LLMs have low persona steerability regardless of instruction, and the original evaluation covered only 52 jokes. Our evaluation at scale confirms the method does not generalize.
+
+\textbf{17-dimension humor basis prompting.} We score each joke on 17 humor dimensions (Clear Punchline, Wordplay, Universality, etc.), following the SemEval 2026 lmfaoooo system, and aggregate into a pairwise prediction. This achieves 56.1--56.3\% on Humicroedit pairwise, identical to zero-shot; a logistic regression on the 17-dim feature difference vector produces the same result, suggesting the features carry no useful signal without fine-tuning. Note that the full lmfaoooo system fine-tunes on these features, and their 17 humor dimensions were derived from their specific model's outputs rather than Qwen3.5-4B, so our results may not reflect the full method's potential.
+
+\subsection{What Works}
+\label{sec:works}
+
+\end{multicols}
+
+% Table 2: What Works -- full page width
+\begin{table}[H]
+\centering
+\caption{Our approaches on held-out benchmarks (Qwen3.5-4B)}
+\label{tab:works}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{5.0cm}
+                              >{\centering\arraybackslash}p{1.6cm}
+                              >{\centering\arraybackslash}p{1.6cm}
+                              >{\centering\arraybackslash}p{2.1cm}
+                              >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Approach} & \textbf{HaHa} & \textbf{NYCC} & \textbf{Humicroedit} & \textbf{Notes} \\
+\midrule
+Zero-shot baseline                         & 55.4\%         & 54.5\%         & 56.3\%         & For reference \\
+Individual human agreement                 & ---            & 64.6\%         & ---            & NYAcc \cite{hessel2023} \\
+SemEval 2020 winner (Hitachi)              & ---            & ---            & 67.43\%        & Fine-tuned ensemble on Humicroedit \\
+Activation probe (binary labels)           & ---            & ---            & 61.9\%         & Layer 16; trained on Humicroedit; cross-domain HaHa transfer: 55.5\% (near baseline) \\
+LoRA regression (single dataset)           & 68.3\%         & 65.7\%         & 64.8\%         & Trained to predict crowd funniness score per joke \\
+Pairwise LoRA (single dataset)             & 67.7\%         & 65.7\%         & ---            & Trained directly on crowd pairwise preference; same result as regression \\
+\textbf{Joint pairwise LoRA (5 datasets)}  & \textbf{65.2\%} & \textbf{63.2\%} & \textbf{59.8\%} & Our main result used for demo \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{multicols}{2}
+
+\textbf{Activation probing.} Zou et al.\ \cite{zou2023} show that concepts are linearly represented in LLM activation space and can be extracted via probing. We apply this to funniness. By using the prompt template \textit{``Consider the amount of funniness in the following: [text]''}, we extract hidden-state activations and train a logistic regression probe on binary funny/unfunny labels from Humicroedit. The probe achieves 61.9\% on Humicroedit pairwise (layer 16). We also tried supervising the probe directly on pairwise crowd labels, which gives $\sim$60\%. Cross-domain transfer is limited (55.5\% on HaHa), indicating the direction is partly domain-specific.
+
+\textbf{Single-dataset LoRA.} We fine-tune a LoRA adapter \cite{hu2021} using the same prompt template, \textit{``Consider the amount of funniness in the following: [text]''}, to score each joke, then apply MSE loss against crowd ratings (regression variant) or in-batch pairwise binary cross-entropy (BCE) loss (pairwise variant). Regression achieves 68.3\% on HaHa pairwise and 65.7\% on NYCC, the latter matching human agreement (64.6\%) using only 2,000 training pairs. Pairwise BCE produces equivalent results (67.7\% HaHa), validating it as the training objective for joint training. We also test each single-dataset LoRA on HaHa to measure cross-domain transfer (zero-shot baseline: 55.4\%): reddit\_jokes achieves 58.9\% (+3.5pp), haha\_spanish 57.0\% (+1.6pp, within noise), and humicroedit 54.8\% (no transfer).
+
+\textbf{Joint LoRA.} The motivation is that training on diverse humor domains, rather than a single domain, should produce a more general sense of humor. Training jointly on all five datasets (hahackathon, humicroedit, reddit\_jokes, haha\_spanish, nycc; capped at 10k rows each, within-source masking) achieves 65.2\% on HaHa pairwise, 63.2\% on NYCC, and 59.8\% on Humicroedit. There is a slight drop versus single-dataset LoRAs, but is expected due to less overfitting. Training on all five datasets does not significantly dilute per-domain performance, suggesting they share a learnable common direction. The larger drop on Humicroedit ($-$5pp from its single-dataset 64.8\%) is likely due to the training cap limiting Humicroedit-specific exposure, and news headline edits being a structurally different domain from the other four text-joke-style datasets.
+
+\section{Discussion}
+
+Here we discuss why prompting-based approaches fail and why fine-tuning on crowd labels succeeds.
+
+\subsection{Why Prompting-Based Approaches Plateau}
+
+Prompting is powerful and flexible. You can change framing, add personas, provide examples, or ask the model to reason in specific steps. Yet all variants we tested plateau at the same level.
+
+Why so? An interpretation is that ``taste'', as theorized, is a high-dimensional weighted sum consisting of many factors. It is hence very difficult to capture or shift the model to behave correctly across many of these factors at once. In fact, this is why we often describe it as ``taste'': we can't even verbalize the factors ourselves. Hence, trying to use prompting to nudge this preference into a correct one is very unlikely to work. Crowd Score \cite{goes2022} failing can be explained by the same reason: prompting the model four times with different humor personas just isn't enough to simulate these factors. Similarly, few-shot approaches don't work because a handful of examples is not enough for the model to infer the full set of taste factors. By contrast, Qwen3.5-4B reaches 63.2\% on SHP zero-shot, because RLHF directly trains it on human helpfulness preferences, which can capture these complex factors that we are not able to list out verbally.
+
+Another interesting point is specific to CoT, which improves most tasks, but not here. An explanation is, again, building on the above, since ``taste'' has so many factors, there is no real reasoning path, and behaves more like a gut reaction. Asking the model to reason through it creates the sharpening effect proposed by Wang et al.\ \cite{wang2025}, where the model commits to one reasoning trace, and since there is no real basis for that path, committing to it just increases the chance of being wrong.
+
+\subsection{Why Training on Crowd Labels Works}
+
+Why does training on crowd labels work? It can be explained by the same reason as above. Put simply, it is able to capture the complexity of taste, i.e.,\ the list of factors that is hard for us to verbalize. Another reason that training on crowd labels works is that a stable crowd signal does in fact exist. People do somewhat converge on what is funny, creating something the training can learn.
+
+Additionally, crowd preference signals from diverse humor domains are compatible. Training jointly on five datasets (Spanish jokes, news headline edits, Reddit posts, cartoon captions, and English text jokes) loses only a few points versus single-dataset LoRAs across both benchmarks. This seems to imply there is a shared learnable direction in the model's representation space corresponding to general humor preference, pointing towards ``humor'' isolated from format, even if imperfectly.
+
+\subsection{Limitations}
+
+A model that fits the crowd average well may still fail to match any specific person's sense of humor. A natural extension would be personalized humor models that fine-tune on top of general models toward their individual taste, similar to how recommendation systems work for user preferences.
+
+The joint LoRA was only tested on datasets from the same five training domains. We never evaluated on a fully held-out humor domain, so how well the learned sense of humor generalizes beyond these domains remains unknown.
+
+We rely entirely on crowd-labeled benchmark accuracy as the metric. Without a human evaluation study, it is hard to verify whether the model's pairwise judgments align with what real people find funny in practice.
+
+Our largest model tested is 9B parameters. Larger models may respond differently to the same supervision.
+
+\section{Conclusion}
+
+We systematically evaluated a range of approaches to humor preference judgment, spanning prompt-based approaches and crowd simulation to activation probing and LoRA fine-tuning. Prompting-based approaches consistently plateau at 50--57\% across model sizes, prompt variants, and humor domains. Crowd-supervised fine-tuning reliably breaks through this plateau, reaching $\sim$65--68\% on held-out benchmarks and matching average human performance on NYCC (65.7\% vs.\ 64.6\%).
+
+This gives us a more objective way to measure whether prompt strategies are actually making a model funnier, something previously only achievable via crowd annotation. Furthermore, the judge can serve as a reward model: generate many candidate replies, rank by predicted funniness, select the best.
+
+We also find that joint training across five diverse humor domains generalizes, losing only a few points versus single-dataset LoRAs while covering all benchmarks simultaneously. This suggests a shared learnable direction for humor that cuts across format and language.
+
+Future directions include personalization toward individual taste, testing at larger model scales, and evaluation on a fully held-out humor domain. A promising longer-term direction is a reaction model trained on naturalistic signals like laughter and engagement cues from podcasts or video, which would capture how humans actually respond to humor without requiring explicit rating tasks.
+
+\section*{ACKNOWLEDGMENT}
+
+I would like to thank Asst Prof Lee Wee Kiat for his guidance and supervision throughout this project. I would also like to acknowledge the funding support from Nanyang Technological University -- URECA Undergraduate Research Programme for this research project.
+
+\end{multicols}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{multicols}{2}
+\begin{thebibliography}{20}
+\small
+
+\bibitem{attardo1991}
+S. Attardo and V. Raskin, ``Script theory revis(it)ed: Joke similarity and joke representation model,'' \textit{Humor: International Journal of Humor Research}, vol. 4, no. 3--4, pp. 293--347, 1991.
+
+\bibitem{castro2018}
+S. Castro, L. Chiruzzo, A. Ros\'{a}, D. Garat, and G. Moncecchi, ``A crowd-annotated Spanish corpus for humor analysis,'' in \textit{Proc. Workshop on Computational Approaches to Humor}, 2018.
+
+\bibitem{chiruzzo2019}
+L. Chiruzzo, S. Castro, M. Etcheverry, D. Garat, J. J. Prada, and A. Ros\'{a}, ``HAHA 2019: Humor analysis based on human annotation,'' 2019.
+
+\bibitem{ethayarajh2022}
+K. Ethayarajh, Y. Choi, and S. Swayamdipta, ``Understanding dataset difficulty with V-usable information,'' in \textit{Proc. ICML}, 2022.
+
+\bibitem{goes2022}
+F. Goes, P. Sawicki, M. Grzes, and D. Brown, ``Crowd score: A method for the evaluation of jokes using LLM AI voters,'' 2022.
+
+\bibitem{hessel2023}
+J. Hessel, A. Marasovic, J. D. Hwang, L. Lee, J. Da, L. Zettlemoyer, M. Alikhani, and Y. Choi, ``Do androids laugh at electric sheep? Humor `understanding' benchmarks from The New Yorker caption contest,'' 2023.
+
+\bibitem{hossain2020}
+N. Hossain, J. Krumm, M. Gamon, and H. Kautz, ``SemEval-2020 task 7: Assessing humor in edited news headlines,'' in \textit{Proc. SemEval}, 2020.
+
+\bibitem{hu2021}
+E. J. Hu, Y. Shen, P. Wallis, Z. Allen-Zhu, Y. Li, S. Wang, L. Wang, and W. Chen, ``LoRA: Low-rank adaptation of large language models,'' 2021.
+
+\bibitem{meaney2021}
+J. A. Meaney, S. Wilson, L. Chiruzzo, A. Lopez, and W. Magdy, ``SemEval-2021 task 7: HaHackathon, detecting and rating humor and offense,'' in \textit{Proc. SemEval}, 2021.
+
+\bibitem{ouyang2022}
+L. Ouyang et al., ``Training language models to follow instructions with human feedback,'' 2022.
+
+\bibitem{potash2017}
+P. Potash, A. Romanov, and A. Rumshisky, ``SemEval-2017 task 6: \#HashtagWars: Learning a sense of humor,'' in \textit{Proc. SemEval}, 2017.
+
+\bibitem{santurkar2023}
+S. Santurkar, E. Durmus, F. Ladd, C. Lee, P. Liang, and T. Hashimoto, ``Whose opinions do language models reflect?'' in \textit{Proc. ICML}, 2023.
+
+\bibitem{semeval2026}
+SemEval-2026 Task 1, ``MWAHAHA: Multimodal wit and humor for automated humor assessment,'' 2026.
+
+\bibitem{verga2024}
+P. Verga et al., ``A survey on LLM-as-a-judge,'' 2024.
+
+\bibitem{wang2025}
+Y. Wang, Y. Liu, and Y. Zhu, ``Improving LLM-as-a-judge inference with the judgment distribution,'' 2025.
+
+\bibitem{warren2016}
+C. Warren and A. P. McGraw, ``Differentiating what is humorous from what is not,'' \textit{Journal of Personality and Social Psychology}, vol. 110, no. 3, pp. 407--430, 2016.
+
+\bibitem{wataoka2024}
+K. Wataoka, T. Kuribayashi, H. Ouchi, T. Watanabe, and K. Inui, ``Self-preference bias in LLM-as-a-judge,'' 2024.
+
+\bibitem{weller2019}
+O. Weller and K. Seppi, ``Humor detection: A transformer gets the last laugh,'' in \textit{Proc. EMNLP}, 2019.
+
+\bibitem{zheng2023}
+L. Zheng et al., ``Judging LLM-as-a-judge with MT-bench and Chatbot Arena,'' in \textit{Proc. NeurIPS}, 2023.
+
+\bibitem{zou2023}
+A. Zou et al., ``Representation engineering: A top-down approach to AI transparency,'' 2023.
+
+\end{thebibliography}
+\end{multicols}
+
+\end{document}
