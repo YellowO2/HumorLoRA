@@ -249,7 +249,7 @@ def generate_and_rank(title, body, num_funny):
     def _fmt(entries, label):
         lines = [f"### {label}"]
         for i, (kind, reply, s) in enumerate(entries):
-            tag = "😐 Plain" if kind == "plain" else "😂 Funny"
+            tag = "Plain" if kind == "plain" else "Funny"
             lines.append(f"**#{i+1}** {tag} `{s:.4f}`\n{reply}")
         return "\n\n".join(lines)
 
@@ -384,7 +384,7 @@ with gr.Blocks(title="Humor Judge") as demo:
         rank_btn = gr.Button("Generate & rank replies", variant="primary", interactive=False)
         compare_btn = gr.Button("Compare approaches", variant="secondary", interactive=False)
 
-    num_slider = gr.Slider(minimum=5, maximum=50, value=10, step=1, label="Number of funny replies to generate")
+    num_slider = gr.Slider(minimum=5, maximum=20, value=10, step=1, label="Number of funny replies to generate")
     post_box = gr.Markdown()
     rank_out = gr.Markdown(label="Results")
     compare_out = gr.Markdown(label="Approach comparison")
