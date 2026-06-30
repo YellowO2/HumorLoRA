@@ -27,7 +27,7 @@ BASE_MODEL_ID = "unsloth/Qwen3.5-4B"
 LORA_MODEL_ID = "potato-bug/haha-lora"
 TARGET_LAYER = 16
 
-SUBREDDITS = ["tifu", "confessions", "AITAH"]
+SUBREDDITS = ["singapore", "asksingapore", "tifu", "confessions", "AITAH"]
 
 # ---------------------------------------------------------------------------
 # Reddit (RSS, no auth needed)
@@ -345,7 +345,7 @@ with gr.Blocks(title="Humor Judge") as demo:
     _body_state = gr.State(None)
 
     with gr.Row():
-        subreddit_dd = gr.Dropdown(choices=SUBREDDITS, value="tifu", label="Subreddit")
+        subreddit_dd = gr.Dropdown(choices=SUBREDDITS, value="singapore", label="Subreddit")
         fetch_btn = gr.Button("Fetch post", variant="secondary")
         rank_btn = gr.Button("Generate & rank replies", variant="primary", interactive=False)
         compare_btn = gr.Button("Compare approaches", variant="secondary", interactive=False)
