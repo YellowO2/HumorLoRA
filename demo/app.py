@@ -97,14 +97,15 @@ def fetch_reddit_post(subreddit):
         return None, f"Error fetching post: {e}"
 
 # ---------------------------------------------------------------------------
-# Model — lazy, must load inside a @GPU function on ZeroGPU
+import time
+
+# ---------------------------------------------------------------------------
+# Model
 # ---------------------------------------------------------------------------
 _tokenizer = None
 _model = None
 _head = None
 _device = None
-
-import time
 
 N_ANGLES = 7
 
@@ -141,6 +142,11 @@ def _load_model():
     _head.load_state_dict(torch.load(head_path, map_location=_device))
     _head.eval()
     print(f"[load] head done — total {time.time()-t0:.1f}s")
+
+# On HF Spaces, load at module level so the model is warm for every request.
+# Boot will be slow (~2min) but each generate click will be fast after that.
+if ON_SPACES:
+    _load_model()
 
 # ---------------------------------------------------------------------------
 # GPU functions
@@ -185,9 +191,8 @@ def generate_and_rank(title, body, num_funny):
     num_funny = int(num_funny)
     total = num_funny + N_PLAIN
     print(f"[generate] called, num_funny={num_funny}, _model is None:", _model is None)
-    yield "Loading model...", None, None
     try:
-        _load_model()
+        _load_model()  # no-op if already loaded
     except Exception as e:
         raise gr.Error(f"Model load failed: {e}")
     context = f"Title: {title}\n\n{body}"
