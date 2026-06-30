@@ -100,6 +100,16 @@ import time
 
 N_ANGLES = 7
 
+HUMOR_PERSONAS = [
+    ("Dry wit",          "You are a deadpan comedian. Short, no exclamation marks."),
+    ("Absurdist",        "You are an absurdist comic. Escalate one detail to something surreal."),
+    ("Self-deprecating", "You are self-deprecating. This happened to you too, but worse."),
+    ("Dad joke",         "You are a dad. Find the worst pun and commit to it."),
+    ("Roast",            "You lovingly roast the person. Punchy, not mean."),
+    ("Oversharer",       "You overshare a tangentially related story with an unexpected ending."),
+    ("Armchair expert",  "You give unsolicited authoritative advice that misses the point."),
+]
+
 def _load_model():
     global _tokenizer, _model, _head, _device
     if _model is not None:
@@ -211,15 +221,81 @@ def generate_and_rank(title, body):
     scored.sort(key=lambda x: x[2], reverse=True)
     return [[f"#{i+1}", a, r] for i, (a, r, _) in enumerate(scored)]
 
+@GPU
+def compare_approaches(title, body):
+    print("[compare] called, _model is None:", _model is None)
+    try:
+        _load_model()
+    except Exception as e:
+        raise gr.Error(f"Model load failed: {e}")
+    context = f"Title: {title}\n\n{body}"
+
+    # --- Persona approach ---
+    print("[compare] === PERSONA APPROACH ===")
+    persona_scores = []
+    for persona_name, persona_instruction in HUMOR_PERSONAS:
+        messages = [
+            {"role": "system", "content": persona_instruction},
+            {"role": "user", "content": f"Someone posted this on Reddit:\n\n{context}\n\nWrite a single short reply (1-3 sentences). /no_think"},
+        ]
+        reply = _generate(messages, max_new_tokens=80)
+        s = _score(context, reply)
+        persona_scores.append(s)
+        print(f"[compare]   {persona_name}: score={s:.4f} reply={reply[:60]!r}")
+    persona_avg = sum(persona_scores) / len(persona_scores)
+    print(f"[compare] persona avg score: {persona_avg:.4f}")
+
+    # --- Brainstorm approach ---
+    print("[compare] === BRAINSTORM APPROACH ===")
+    brainstorm_messages = [
+        {"role": "system", "content": "You are a comedy writer."},
+        {"role": "user", "content": (
+            f"Someone posted this on Reddit:\n\n{context}\n\n"
+            f"List {N_ANGLES} distinct, specific funny angles or observations about this situation. "
+            f"Number them 1-{N_ANGLES}, one per line. /no_think"
+        )},
+    ]
+    raw_angles = _generate(brainstorm_messages, max_new_tokens=300)
+    angles = []
+    for line in raw_angles.splitlines():
+        m = re.match(r'^\d+[\.\)]\s*(.+)', line.strip())
+        if m:
+            angles.append(m.group(1).strip())
+    angles = angles[:N_ANGLES]
+
+    brainstorm_scores = []
+    for angle in angles:
+        messages = [
+            {"role": "system", "content": "You write funny, natural Reddit replies. No markdown formatting."},
+            {"role": "user", "content": (
+                f"Someone posted this on Reddit:\n\n{context}\n\n"
+                f"Use this comedic angle: {angle}\n\n"
+                f"Write a single short reply (1-3 sentences). /no_think"
+            )},
+        ]
+        reply = _generate(messages, max_new_tokens=80)
+        s = _score(context, reply)
+        brainstorm_scores.append(s)
+        print(f"[compare]   angle={angle[:50]!r}: score={s:.4f} reply={reply[:60]!r}")
+    brainstorm_avg = sum(brainstorm_scores) / len(brainstorm_scores) if brainstorm_scores else 0
+    print(f"[compare] brainstorm avg score: {brainstorm_avg:.4f}")
+
+    print(f"\n[compare] RESULT — persona: {persona_avg:.4f} | brainstorm: {brainstorm_avg:.4f} | winner: {'brainstorm' if brainstorm_avg > persona_avg else 'persona'}")
+    return (
+        f"**Persona avg:** {persona_avg:.4f} ({len(persona_scores)} replies)\n\n"
+        f"**Brainstorm avg:** {brainstorm_avg:.4f} ({len(brainstorm_scores)} replies)\n\n"
+        f"**Winner:** {'Brainstorm' if brainstorm_avg > persona_avg else 'Persona'}"
+    )
+
 # ---------------------------------------------------------------------------
 # Pipeline
 # ---------------------------------------------------------------------------
 def do_fetch(subreddit):
     post, display = fetch_reddit_post(subreddit)
     if post is None:
-        return display, gr.update(interactive=False), None, None
+        return display, gr.update(interactive=False), gr.update(interactive=False), None, None
     title, body = post
-    return display, gr.update(interactive=True), title, body
+    return display, gr.update(interactive=True), gr.update(interactive=True), title, body
 
 # ---------------------------------------------------------------------------
 # UI
@@ -234,6 +310,7 @@ with gr.Blocks(title="Humor Judge") as demo:
         subreddit_dd = gr.Dropdown(choices=SUBREDDITS, value="tifu", label="Subreddit")
         fetch_btn = gr.Button("Fetch post", variant="secondary")
         rank_btn = gr.Button("Generate & rank replies", variant="primary", interactive=False)
+        compare_btn = gr.Button("Compare approaches", variant="secondary", interactive=False)
 
     post_box = gr.Markdown()
     results_table = gr.Dataframe(
@@ -241,16 +318,22 @@ with gr.Blocks(title="Humor Judge") as demo:
         label="Ranked replies (funniest first)",
         wrap=True,
     )
+    compare_out = gr.Markdown(label="Approach comparison")
 
     fetch_btn.click(
         fn=do_fetch,
         inputs=[subreddit_dd],
-        outputs=[post_box, rank_btn, _title_state, _body_state],
+        outputs=[post_box, rank_btn, compare_btn, _title_state, _body_state],
     )
     rank_btn.click(
         fn=generate_and_rank,
         inputs=[_title_state, _body_state],
         outputs=[results_table],
+    )
+    compare_btn.click(
+        fn=compare_approaches,
+        inputs=[_title_state, _body_state],
+        outputs=[compare_out],
     )
 
 if __name__ == "__main__":
