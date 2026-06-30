@@ -1,7 +1,7 @@
-gradio>=4.0
-anthropic
+spaces
 requests
 torch
 transformers
 peft
 accelerate
+huggingface_hub

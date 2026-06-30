@@ -14,17 +14,17 @@ We assemble five crowd-labeled humor datasets spanning different domains, label 
 
 ## 4.2 Data Preparation
 
-Rated datasets (hahackathon, humicroedit, haha\_spanish) are converted to pairwise format by sampling (high-score, low-score) pairs within each source. reddit\_jokes uses upvote ratio as a funniness proxy with a score ≥ 10 filter and deduplication. nycc is already native pairwise; we use fold0 only with non-overlapping train/test/val splits, and use text description of the cartoon image since we work in a text-only setting. 
-By having a uniform dataset format in pairwise comparisons, we can utilise these different datasets together as cross-dataset differences is removed.
+Rated datasets (hahackathon, humicroedit, haha\_spanish) are converted to pairwise format by sampling (high-score, low-score) pairs within each source. reddit\_jokes uses upvote ratio as a funniness proxy with a score ≥ 10 filter and deduplication. nycc is already native pairwise; we use fold0 only with non-overlapping train/test/val splits, and use text description of the cartoon image since we work in a text-only setting. For humicroedit, subtask-1 ratings are used for training and the subtask-2 test set is held out for evaluation, with no overlap between the two.
 
-Each dataset is capped at 10k rows to prevent larger datasets from dominating. Total training data after capping is roughly around 22k training pairs. The 3 main benchmarks used for evaluation are **HaHa pairwise** (N=2000, 20% split from hahackathon) and **NYCC pairwise** (N=1020, fold0 test+val, human agreement 64.6%) and Humicroedit pairwise (N=2628). (todo: wait i sort of forgot what this is about. did we use full humicro or something?) (todo: also is this a repeat with the experiements section?)
+By converting everything to pairwise format, we can train jointly across all five datasets without cross-dataset label normalization. Each dataset is capped at 10k rows to prevent larger datasets from dominating, giving roughly 22k training pairs in total.
 
 ## 4.3 Considered but Excluded
 
-There are several datasets considered but not included due to various reasons.
+The following datasets were considered but not included due to various reasons.
 - **humor\_arena** (~2.5k pairwise, LLM-generated jokes): a LoRA trained on humor\_arena scored 52.8% cross-domain on HaHa pairwise, below the zero-shot baseline (-2.6pp), so it was excluded from joint training.
-- **Jester** (dataset 3): only 140 unique jokes (though rated by 54k users). While pairwise pairs could be sampled abundantly, the content diversity is too low — with just 140 unique texts, the model would memorize item-level ordering rather than learn a generalizable humor signal.
+- **Jester** (dataset 3): only 140 unique jokes (though rated by 54k users). The content diversity is too low.
 - **Open Mic** (Mittal et al.): stand-up transcripts with audience laughter as ground truth; not publicly accessible.
 - **Cards Against Humanity (CAH Lab)**: requires contacting the lab directly; did not respond.
 - **Yelp Funny Reviews**: not explored due to time constraints.
 - **Oogiri-GO** (Murakami et al.): not explored due to time constraints.
+- **SemEval-2017 Task 6** (Potash et al.): pairwise rankings of crowd-voted tweets from a Comedy Central hashtag comedy show. Not explored due to time constraints.

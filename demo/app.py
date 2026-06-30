@@ -147,7 +147,7 @@ def _generate(messages, max_new_tokens=80):
             **inputs,
             max_new_tokens=max_new_tokens,
             do_sample=True,
-            temperature=1.0,
+            temperature=0.98,
             pad_token_id=_tokenizer.eos_token_id,
         )
     text = _tokenizer.decode(output_ids[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
@@ -230,62 +230,106 @@ def compare_approaches(title, body):
         raise gr.Error(f"Model load failed: {e}")
     context = f"Title: {title}\n\n{body}"
 
-    # --- Persona approach ---
-    print("[compare] === PERSONA APPROACH ===")
-    persona_scores = []
-    for persona_name, persona_instruction in HUMOR_PERSONAS:
-        messages = [
-            {"role": "system", "content": persona_instruction},
-            {"role": "user", "content": f"Someone posted this on Reddit:\n\n{context}\n\nWrite a single short reply (1-3 sentences). /no_think"},
-        ]
-        reply = _generate(messages, max_new_tokens=80)
-        s = _score(context, reply)
-        persona_scores.append(s)
-        print(f"[compare]   {persona_name}: score={s:.4f} reply={reply[:60]!r}")
-    persona_avg = sum(persona_scores) / len(persona_scores)
-    print(f"[compare] persona avg score: {persona_avg:.4f}")
+    COMPARE_N = 20
+    PERSONA_REPS = 3
 
-    # --- Brainstorm approach ---
-    print("[compare] === BRAINSTORM APPROACH ===")
-    brainstorm_messages = [
-        {"role": "system", "content": "You are a comedy writer."},
-        {"role": "user", "content": (
-            f"Someone posted this on Reddit:\n\n{context}\n\n"
-            f"List {N_ANGLES} distinct, specific funny angles or observations about this situation. "
-            f"Number them 1-{N_ANGLES}, one per line. /no_think"
-        )},
-    ]
-    raw_angles = _generate(brainstorm_messages, max_new_tokens=300)
-    angles = []
-    for line in raw_angles.splitlines():
-        m = re.match(r'^\d+[\.\)]\s*(.+)', line.strip())
-        if m:
-            angles.append(m.group(1).strip())
-    angles = angles[:N_ANGLES]
-
-    brainstorm_scores = []
-    for angle in angles:
-        messages = [
-            {"role": "system", "content": "You write funny, natural Reddit replies. No markdown formatting."},
+    def _run_brainstorm(system_reply_prompt, label):
+        print(f"[compare] === BRAINSTORM ({label}) ===")
+        bm_messages = [
+            {"role": "system", "content": "You are a comedy writer."},
             {"role": "user", "content": (
                 f"Someone posted this on Reddit:\n\n{context}\n\n"
-                f"Use this comedic angle: {angle}\n\n"
-                f"Write a single short reply (1-3 sentences). /no_think"
+                f"List {COMPARE_N} distinct, specific funny angles or observations about this situation. "
+                f"Number them 1-{COMPARE_N}, one per line. /no_think"
             )},
         ]
-        reply = _generate(messages, max_new_tokens=80)
-        s = _score(context, reply)
-        brainstorm_scores.append(s)
-        print(f"[compare]   angle={angle[:50]!r}: score={s:.4f} reply={reply[:60]!r}")
-    brainstorm_avg = sum(brainstorm_scores) / len(brainstorm_scores) if brainstorm_scores else 0
-    print(f"[compare] brainstorm avg score: {brainstorm_avg:.4f}")
+        raw = _generate(bm_messages, max_new_tokens=500)
+        parsed = []
+        for line in raw.splitlines():
+            m = re.match(r'^\d+[\.\)]\s*(.+)', line.strip())
+            if m:
+                parsed.append(m.group(1).strip())
+        parsed = parsed[:COMPARE_N]
+        print(f"[compare] parsed {len(parsed)} angles")
+        scores, replies, labels = [], [], []
+        for angle in parsed:
+            msgs = [
+                {"role": "system", "content": system_reply_prompt},
+                {"role": "user", "content": (
+                    f"Someone posted this on Reddit:\n\n{context}\n\n"
+                    f"Use this comedic angle: {angle}\n\n"
+                    f"Write a single short reply (1-3 sentences). /no_think"
+                )},
+            ]
+            reply = _generate(msgs, max_new_tokens=80)
+            s = _score(context, reply)
+            scores.append(s); replies.append(reply); labels.append(angle[:50])
+            print(f"[compare]   {label} angle={angle[:40]!r}: score={s:.4f} reply={reply[:60]!r}")
+        return scores, labels, replies
 
-    print(f"\n[compare] RESULT — persona: {persona_avg:.4f} | brainstorm: {brainstorm_avg:.4f} | winner: {'brainstorm' if brainstorm_avg > persona_avg else 'persona'}")
-    return (
-        f"**Persona avg:** {persona_avg:.4f} ({len(persona_scores)} replies)\n\n"
-        f"**Brainstorm avg:** {brainstorm_avg:.4f} ({len(brainstorm_scores)} replies)\n\n"
-        f"**Winner:** {'Brainstorm' if brainstorm_avg > persona_avg else 'Persona'}"
+    # --- Persona approach (×3) ---
+    print("[compare] === PERSONA APPROACH (×3) ===")
+    persona_scores, persona_labels, persona_replies = [], [], []
+    for rep in range(PERSONA_REPS):
+        for persona_name, persona_instruction in HUMOR_PERSONAS:
+            msgs = [
+                {"role": "system", "content": persona_instruction},
+                {"role": "user", "content": f"Someone posted this on Reddit:\n\n{context}\n\nWrite a single short reply (1-3 sentences). /no_think"},
+            ]
+            reply = _generate(msgs, max_new_tokens=80)
+            s = _score(context, reply)
+            persona_scores.append(s); persona_replies.append(reply)
+            persona_labels.append(f"{persona_name} (run {rep+1})")
+            print(f"[compare]   {persona_name} run{rep+1}: score={s:.4f} reply={reply[:60]!r}")
+    persona_avg = sum(persona_scores) / len(persona_scores)
+
+    # --- Brainstorm: comedy writer ---
+    cw_scores, cw_labels, cw_replies = _run_brainstorm(
+        "You write funny, natural Reddit replies. No markdown formatting.", "comedy-writer"
     )
+    cw_avg = sum(cw_scores) / len(cw_scores) if cw_scores else 0
+
+    # --- Brainstorm: reddit user ---
+    ru_scores, ru_labels, ru_replies = _run_brainstorm(
+        "You are a Reddit user. Write a natural, funny reply like a real person would. No markdown formatting.", "reddit-user"
+    )
+    ru_avg = sum(ru_scores) / len(ru_scores) if ru_scores else 0
+
+    def _ranked(scores, labels, replies):
+        return sorted(zip(scores, labels, replies), reverse=True)
+
+    p_ranked  = _ranked(persona_scores, persona_labels, persona_replies)
+    cw_ranked = _ranked(cw_scores, cw_labels, cw_replies)
+    ru_ranked = _ranked(ru_scores, ru_labels, ru_replies)
+
+    def _top_n_avg(ranked, n=3):
+        return sum(s for s, _, _ in ranked[:n]) / min(n, len(ranked)) if ranked else 0
+
+    print(f"\n[compare] persona top1={p_ranked[0][0]:.4f} top3={_top_n_avg(p_ranked):.4f} avg={persona_avg:.4f}")
+    print(f"[compare] comedy-writer top1={cw_ranked[0][0]:.4f} top3={_top_n_avg(cw_ranked):.4f} avg={cw_avg:.4f}")
+    print(f"[compare] reddit-user top1={ru_ranked[0][0]:.4f} top3={_top_n_avg(ru_ranked):.4f} avg={ru_avg:.4f}")
+
+    def _section(title, ranked):
+        lines = [f"### {title} (ranked)"]
+        for i, (s, lbl, r) in enumerate(ranked):
+            lines.append(f"**#{i+1}** _{lbl}_ ({s:.4f})\n{r}")
+        return "\n\n".join(lines)
+
+    summary = (
+        "### Summary\n\n"
+        f"| | Persona ×3 ({len(p_ranked)}) | Brainstorm: comedy writer ({len(cw_ranked)}) | Brainstorm: reddit user ({len(ru_ranked)}) |\n"
+        f"|---|---|---|---|\n"
+        f"| Top-1 | {p_ranked[0][0]:.4f} | {cw_ranked[0][0] if cw_ranked else 0:.4f} | {ru_ranked[0][0] if ru_ranked else 0:.4f} |\n"
+        f"| Top-3 avg | {_top_n_avg(p_ranked):.4f} | {_top_n_avg(cw_ranked):.4f} | {_top_n_avg(ru_ranked):.4f} |\n"
+        f"| Overall avg | {persona_avg:.4f} | {cw_avg:.4f} | {ru_avg:.4f} |"
+    )
+
+    return "\n\n---\n\n".join([
+        _section("Persona ×3", p_ranked),
+        _section("Brainstorm: comedy writer", cw_ranked),
+        _section("Brainstorm: reddit user", ru_ranked),
+        summary,
+    ])
 
 # ---------------------------------------------------------------------------
 # Pipeline

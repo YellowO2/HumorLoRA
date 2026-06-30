@@ -97,7 +97,8 @@ NYCC CoT result at n=2000: -1.3pp (within ±2.2pp CI) — no significant effect.
 ---
 
 ## TODO
-1. ~~**Run qwen3.5:4b CoT on NYCC n=2000**~~ ✓ Done — 53.2% CoT vs 54.5% plain, -1.3pp within noise. CoT has no significant effect on humor judgment (unlike SHP -3.5pp). Humor-is-intuitive theory supported.
+1. **SemEval 2017 Task 6 (Potash et al.) dataset** — pairwise tweets from Comedy Central hashtag wars; compatible format (ordinal labels → pairwise pairs); available on Kaggle (https://www.kaggle.com/datasets/reslanaltinawi/semeval-2017-tweets/data). Train a LoRA and add to joint training. Not yet explored.
+2. ~~**Run qwen3.5:4b CoT on NYCC n=2000**~~ ✓ Done — 53.2% CoT vs 54.5% plain, -1.3pp within noise. CoT has no significant effect on humor judgment (unlike SHP -3.5pp). Humor-is-intuitive theory supported.
 2. ~~**Run discord-hermes-3-8b on SHP**~~ ✓ Done — hermes 59.5% vs discord-hermes 55.8%, degradation is general
 3. ~~**Collect humor datasets**~~ ✓ Decided: eval trio = NYCC + HaHackathon + Jester. All already on disk.
 4. ~~**Build Jester preprocessing script**~~ ✓ Done — 2000 pairs, avg gap 3.13, 50/50 A/B balance
