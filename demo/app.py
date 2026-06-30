@@ -383,11 +383,11 @@ def do_fetch(subreddit):
 with gr.Blocks(title="Humor Judge") as demo:
     gr.Markdown("""# Humor Judge
 
-Can a model learn what's funny? This demo uses a humor judge fine-tuned on crowd-labeled pairwise humor data to rank Reddit replies by funniness. It generates both humor-directed and plain replies, scores them all, then shows you the top and bottom half — so you can see whether the judge actually discriminates.
+Can a model learn what humans think is funny? This demo uses a llm humor judge fine-tuned on crowd-labeled humor data to rank replies by funniness.
 
-**Step 1.** Pick a subreddit and fetch a real post.
+Step 1. Pick a subreddit and fetch a real post.
 
-**Step 2.** Generate replies and see how the judge ranks them.""")
+Step 2. Generate replies and see how the judge ranks them.""")
 
     _title_state = gr.State(None)
     _body_state = gr.State(None)
