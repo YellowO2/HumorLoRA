@@ -27,7 +27,7 @@ BASE_MODEL_ID = "unsloth/Qwen3.5-4B"
 LORA_MODEL_ID = "potato-bug/haha-lora"
 TARGET_LAYER = 16
 
-SUBREDDITS = ["singapore", "asksingapore", "tifu", "confessions", "AITAH"]
+SUBREDDITS = ["asksingapore", "tifu", "confessions", "AITAH"]
 
 # ---------------------------------------------------------------------------
 # Reddit (RSS, no auth needed)
