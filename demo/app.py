@@ -72,8 +72,16 @@ def _fetch_batch(subreddit, after=None):
 def fetch_reddit_post(subreddit):
     try:
         after = None
-        for _ in range(3):
-            candidates, after = _fetch_batch(subreddit, after)
+        for attempt in range(3):
+            if attempt > 0:
+                time.sleep(3)
+            try:
+                candidates, after = _fetch_batch(subreddit, after)
+            except requests.exceptions.HTTPError as e:
+                if e.response is not None and e.response.status_code == 429:
+                    time.sleep(10)
+                    continue
+                raise
             if candidates:
                 title, body = random.choice(candidates)
                 display = (
