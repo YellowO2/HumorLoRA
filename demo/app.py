@@ -319,7 +319,7 @@ def compare_approaches(title, body):
     approach_emoji = {"Persona": "🎭", "Comedy-writer": "✍️", "Reddit-user": "👤"}
     joint_lines = ["### All replies ranked together"]
     for i, (s, approach, lbl, r) in enumerate(all_ranked):
-        joint_lines.append(f"**#{i+1}** {approach_emoji[approach]} **{approach}** — _{lbl}_ ({s:.4f})\n{r}")
+        joint_lines.append(f"**#{i+1}** {approach_emoji[approach]} {approach} `{s:.4f}`\n{r}")
     joint_section = "\n\n".join(joint_lines)
 
     summary = (
