@@ -231,76 +231,68 @@ def compare_approaches(title, body):
     context = f"Title: {title}\n\n{body}"
 
     COMPARE_N = 50
-    PERSONA_REPS = 7
-    BRAINSTORM_REQUEST = 60  # ask for more than needed in case some lines don't parse
+    BRAINSTORM_REQUEST = 60  # ask for more to ensure enough parse
 
-    def _run_brainstorm(system_reply_prompt, label):
-        print(f"[compare] === BRAINSTORM ({label}) ===")
-        bm_messages = [
-            {"role": "system", "content": "You are a comedy writer."},
+    # shared brainstorm angles (same angles fed to both approaches)
+    print("[compare] === BRAINSTORM (shared angles) ===")
+    bm_messages = [
+        {"role": "system", "content": "You are a comedy writer."},
+        {"role": "user", "content": (
+            f"Someone posted this on Reddit:\n\n{context}\n\n"
+            f"List {BRAINSTORM_REQUEST} distinct, specific funny angles or observations about this situation. "
+            f"Number them 1-{BRAINSTORM_REQUEST}, one per line. /no_think"
+        )},
+    ]
+    raw = _generate(bm_messages, max_new_tokens=1000)
+    angles = []
+    for line in raw.splitlines():
+        m = re.match(r'^\d+[\.\)]\s*(.+)', line.strip())
+        if m:
+            angles.append(m.group(1).strip())
+    angles = angles[:COMPARE_N]
+    print(f"[compare] parsed {len(angles)} angles")
+
+    # --- Approach A: brainstorm + persona reply ---
+    print("[compare] === APPROACH A: brainstorm + persona ===")
+    a_scores, a_replies = [], []
+    for i, angle in enumerate(angles):
+        persona_name, persona_instruction = HUMOR_PERSONAS[i % len(HUMOR_PERSONAS)]
+        msgs = [
+            {"role": "system", "content": persona_instruction},
             {"role": "user", "content": (
                 f"Someone posted this on Reddit:\n\n{context}\n\n"
-                f"List {BRAINSTORM_REQUEST} distinct, specific funny angles or observations about this situation. "
-                f"Number them 1-{BRAINSTORM_REQUEST}, one per line. /no_think"
+                f"Use this comedic angle: {angle}\n\n"
+                f"Write a single short reply (1-3 sentences). /no_think"
             )},
         ]
-        raw = _generate(bm_messages, max_new_tokens=1000)
-        parsed = []
-        for line in raw.splitlines():
-            m = re.match(r'^\d+[\.\)]\s*(.+)', line.strip())
-            if m:
-                parsed.append(m.group(1).strip())
-        parsed = parsed[:COMPARE_N]
-        print(f"[compare] parsed {len(parsed)} angles")
-        scores, replies, labels = [], [], []
-        for angle in parsed:
-            msgs = [
-                {"role": "system", "content": system_reply_prompt},
-                {"role": "user", "content": (
-                    f"Someone posted this on Reddit:\n\n{context}\n\n"
-                    f"Use this comedic angle: {angle}\n\n"
-                    f"Write a single short reply (1-3 sentences). /no_think"
-                )},
-            ]
-            reply = _generate(msgs, max_new_tokens=80)
-            s = _score(context, reply)
-            scores.append(s); replies.append(reply); labels.append(angle[:50])
-            print(f"[compare]   {label} angle={angle[:40]!r}: score={s:.4f} reply={reply[:60]!r}")
-        return scores, labels, replies
+        reply = _generate(msgs, max_new_tokens=80)
+        s = _score(context, reply)
+        a_scores.append(s); a_replies.append(reply)
+        print(f"[compare]   A [{persona_name}] score={s:.4f} reply={reply[:60]!r}")
+    a_avg = sum(a_scores) / len(a_scores)
 
-    # --- Persona approach (×3) ---
-    print("[compare] === PERSONA APPROACH (×3) ===")
-    persona_scores, persona_labels, persona_replies = [], [], []
-    for rep in range(PERSONA_REPS):
-        for persona_name, persona_instruction in HUMOR_PERSONAS:
-            msgs = [
-                {"role": "system", "content": persona_instruction},
-                {"role": "user", "content": f"Someone posted this on Reddit:\n\n{context}\n\nWrite a single short reply (1-3 sentences). /no_think"},
-            ]
-            reply = _generate(msgs, max_new_tokens=80)
-            s = _score(context, reply)
-            persona_scores.append(s); persona_replies.append(reply)
-            persona_labels.append(f"{persona_name} (run {rep+1})")
-            print(f"[compare]   {persona_name} run{rep+1}: score={s:.4f} reply={reply[:60]!r}")
-    persona_avg = sum(persona_scores) / len(persona_scores)
+    # --- Approach B: brainstorm + instruction reply ---
+    print("[compare] === APPROACH B: brainstorm + instruction ===")
+    b_scores, b_replies = [], []
+    for angle in angles:
+        msgs = [
+            {"role": "system", "content": "You are a Reddit user. Write a natural, funny reply like a real person would. No markdown formatting."},
+            {"role": "user", "content": (
+                f"Someone posted this on Reddit:\n\n{context}\n\n"
+                f"Use this comedic angle: {angle}\n\n"
+                f"Write a single short reply (1-3 sentences). /no_think"
+            )},
+        ]
+        reply = _generate(msgs, max_new_tokens=80)
+        s = _score(context, reply)
+        b_scores.append(s); b_replies.append(reply)
+        print(f"[compare]   B score={s:.4f} reply={reply[:60]!r}")
+    b_avg = sum(b_scores) / len(b_scores)
 
-    # --- Brainstorm: comedy writer ---
-    cw_scores, cw_labels, cw_replies = _run_brainstorm(
-        "You write funny, natural Reddit replies. No markdown formatting.", "comedy-writer"
-    )
-    cw_avg = sum(cw_scores) / len(cw_scores) if cw_scores else 0
-
-    # --- Brainstorm: reddit user ---
-    ru_scores, ru_labels, ru_replies = _run_brainstorm(
-        "You are a Reddit user. Write a natural, funny reply like a real person would. No markdown formatting.", "reddit-user"
-    )
-    ru_avg = sum(ru_scores) / len(ru_scores) if ru_scores else 0
-
-    # tag each entry with its approach, then pool and rank together
+    # pool and rank together
     all_entries = (
-        [(s, "Persona", lbl, r) for s, lbl, r in zip(persona_scores, persona_labels, persona_replies)] +
-        [(s, "Comedy-writer", lbl, r) for s, lbl, r in zip(cw_scores, cw_labels, cw_replies)] +
-        [(s, "Reddit-user", lbl, r) for s, lbl, r in zip(ru_scores, ru_labels, ru_replies)]
+        [(s, "A-Persona", r) for s, r in zip(a_scores, a_replies)] +
+        [(s, "B-Instruction", r) for s, r in zip(b_scores, b_replies)]
     )
     all_ranked = sorted(all_entries, key=lambda x: x[0], reverse=True)
 
@@ -308,29 +300,27 @@ def compare_approaches(title, body):
         top = sorted(entries, key=lambda x: x[0], reverse=True)[:n]
         return sum(x[0] for x in top) / len(top) if top else 0
 
-    p_entries  = [(s, ap, lbl, r) for s, ap, lbl, r in all_ranked if ap == "Persona"]
-    cw_entries = [(s, ap, lbl, r) for s, ap, lbl, r in all_ranked if ap == "Comedy-writer"]
-    ru_entries = [(s, ap, lbl, r) for s, ap, lbl, r in all_ranked if ap == "Reddit-user"]
+    a_entries = [(s, ap, r) for s, ap, r in all_ranked if ap == "A-Persona"]
+    b_entries = [(s, ap, r) for s, ap, r in all_ranked if ap == "B-Instruction"]
 
-    print(f"\n[compare] persona top1={p_entries[0][0]:.4f} top3={_top_n_avg(p_entries):.4f} avg={persona_avg:.4f}")
-    print(f"[compare] comedy-writer top1={cw_entries[0][0]:.4f} top3={_top_n_avg(cw_entries):.4f} avg={cw_avg:.4f}")
-    print(f"[compare] reddit-user top1={ru_entries[0][0]:.4f} top3={_top_n_avg(ru_entries):.4f} avg={ru_avg:.4f}")
+    print(f"\n[compare] A-Persona     top1={a_entries[0][0]:.4f} top3={_top_n_avg(a_entries):.4f} avg={a_avg:.4f}")
+    print(f"[compare] B-Instruction top1={b_entries[0][0]:.4f} top3={_top_n_avg(b_entries):.4f} avg={b_avg:.4f}")
 
-    # joint ranking section
-    approach_emoji = {"Persona": "🎭", "Comedy-writer": "✍️", "Reddit-user": "👤"}
-    joint_lines = ["### All replies ranked together"]
-    for i, (s, approach, lbl, r) in enumerate(all_ranked):
+    approach_emoji = {"A-Persona": "🎭", "B-Instruction": "👤"}
+    joint_lines = ["### All replies ranked (same angles, different reply prompts)"]
+    for i, (s, approach, r) in enumerate(all_ranked):
         joint_lines.append(f"**#{i+1}** {approach_emoji[approach]} {approach} `{s:.4f}`\n{r}")
     joint_section = "\n\n".join(joint_lines)
 
+    top10 = [ap for _, ap, _ in all_ranked[:10]]
     summary = (
         "### Summary\n\n"
-        f"| | Persona ×3 ({len(p_entries)}) | Brainstorm: comedy writer ({len(cw_entries)}) | Brainstorm: reddit user ({len(ru_entries)}) |\n"
-        f"|---|---|---|---|\n"
-        f"| Top-1 | {p_entries[0][0]:.4f} | {cw_entries[0][0]:.4f} | {ru_entries[0][0]:.4f} |\n"
-        f"| Top-3 avg | {_top_n_avg(p_entries):.4f} | {_top_n_avg(cw_entries):.4f} | {_top_n_avg(ru_entries):.4f} |\n"
-        f"| Overall avg | {persona_avg:.4f} | {cw_avg:.4f} | {ru_avg:.4f} |\n\n"
-        f"Top 10 breakdown: " + ", ".join(f"{approach_emoji[ap]} {ap}" for _, ap, _, _ in all_ranked[:10])
+        f"| | A: Brainstorm + Persona ({len(a_entries)}) | B: Brainstorm + Instruction ({len(b_entries)}) |\n"
+        f"|---|---|---|\n"
+        f"| Top-1 | {a_entries[0][0]:.4f} | {b_entries[0][0]:.4f} |\n"
+        f"| Top-3 avg | {_top_n_avg(a_entries):.4f} | {_top_n_avg(b_entries):.4f} |\n"
+        f"| Overall avg | {a_avg:.4f} | {b_avg:.4f} |\n\n"
+        f"Top 10: " + ", ".join(f"{approach_emoji[ap]} {ap}" for ap in top10)
     )
 
     return "\n\n---\n\n".join([joint_section, summary])
