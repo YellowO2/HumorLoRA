@@ -295,41 +295,44 @@ def compare_approaches(title, body):
     )
     ru_avg = sum(ru_scores) / len(ru_scores) if ru_scores else 0
 
-    def _ranked(scores, labels, replies):
-        return sorted(zip(scores, labels, replies), reverse=True)
+    # tag each entry with its approach, then pool and rank together
+    all_entries = (
+        [(s, "Persona", lbl, r) for s, lbl, r in zip(persona_scores, persona_labels, persona_replies)] +
+        [(s, "Comedy-writer", lbl, r) for s, lbl, r in zip(cw_scores, cw_labels, cw_replies)] +
+        [(s, "Reddit-user", lbl, r) for s, lbl, r in zip(ru_scores, ru_labels, ru_replies)]
+    )
+    all_ranked = sorted(all_entries, key=lambda x: x[0], reverse=True)
 
-    p_ranked  = _ranked(persona_scores, persona_labels, persona_replies)
-    cw_ranked = _ranked(cw_scores, cw_labels, cw_replies)
-    ru_ranked = _ranked(ru_scores, ru_labels, ru_replies)
+    def _top_n_avg(entries, n=3):
+        top = sorted(entries, key=lambda x: x[0], reverse=True)[:n]
+        return sum(x[0] for x in top) / len(top) if top else 0
 
-    def _top_n_avg(ranked, n=3):
-        return sum(s for s, _, _ in ranked[:n]) / min(n, len(ranked)) if ranked else 0
+    p_entries  = [(s, ap, lbl, r) for s, ap, lbl, r in all_ranked if ap == "Persona"]
+    cw_entries = [(s, ap, lbl, r) for s, ap, lbl, r in all_ranked if ap == "Comedy-writer"]
+    ru_entries = [(s, ap, lbl, r) for s, ap, lbl, r in all_ranked if ap == "Reddit-user"]
 
-    print(f"\n[compare] persona top1={p_ranked[0][0]:.4f} top3={_top_n_avg(p_ranked):.4f} avg={persona_avg:.4f}")
-    print(f"[compare] comedy-writer top1={cw_ranked[0][0]:.4f} top3={_top_n_avg(cw_ranked):.4f} avg={cw_avg:.4f}")
-    print(f"[compare] reddit-user top1={ru_ranked[0][0]:.4f} top3={_top_n_avg(ru_ranked):.4f} avg={ru_avg:.4f}")
+    print(f"\n[compare] persona top1={p_entries[0][0]:.4f} top3={_top_n_avg(p_entries):.4f} avg={persona_avg:.4f}")
+    print(f"[compare] comedy-writer top1={cw_entries[0][0]:.4f} top3={_top_n_avg(cw_entries):.4f} avg={cw_avg:.4f}")
+    print(f"[compare] reddit-user top1={ru_entries[0][0]:.4f} top3={_top_n_avg(ru_entries):.4f} avg={ru_avg:.4f}")
 
-    def _section(title, ranked):
-        lines = [f"### {title} (ranked)"]
-        for i, (s, lbl, r) in enumerate(ranked):
-            lines.append(f"**#{i+1}** _{lbl}_ ({s:.4f})\n{r}")
-        return "\n\n".join(lines)
+    # joint ranking section
+    approach_emoji = {"Persona": "🎭", "Comedy-writer": "✍️", "Reddit-user": "👤"}
+    joint_lines = ["### All replies ranked together"]
+    for i, (s, approach, lbl, r) in enumerate(all_ranked):
+        joint_lines.append(f"**#{i+1}** {approach_emoji[approach]} **{approach}** — _{lbl}_ ({s:.4f})\n{r}")
+    joint_section = "\n\n".join(joint_lines)
 
     summary = (
         "### Summary\n\n"
-        f"| | Persona ×3 ({len(p_ranked)}) | Brainstorm: comedy writer ({len(cw_ranked)}) | Brainstorm: reddit user ({len(ru_ranked)}) |\n"
+        f"| | Persona ×3 ({len(p_entries)}) | Brainstorm: comedy writer ({len(cw_entries)}) | Brainstorm: reddit user ({len(ru_entries)}) |\n"
         f"|---|---|---|---|\n"
-        f"| Top-1 | {p_ranked[0][0]:.4f} | {cw_ranked[0][0] if cw_ranked else 0:.4f} | {ru_ranked[0][0] if ru_ranked else 0:.4f} |\n"
-        f"| Top-3 avg | {_top_n_avg(p_ranked):.4f} | {_top_n_avg(cw_ranked):.4f} | {_top_n_avg(ru_ranked):.4f} |\n"
-        f"| Overall avg | {persona_avg:.4f} | {cw_avg:.4f} | {ru_avg:.4f} |"
+        f"| Top-1 | {p_entries[0][0]:.4f} | {cw_entries[0][0]:.4f} | {ru_entries[0][0]:.4f} |\n"
+        f"| Top-3 avg | {_top_n_avg(p_entries):.4f} | {_top_n_avg(cw_entries):.4f} | {_top_n_avg(ru_entries):.4f} |\n"
+        f"| Overall avg | {persona_avg:.4f} | {cw_avg:.4f} | {ru_avg:.4f} |\n\n"
+        f"Top 10 breakdown: " + ", ".join(f"{approach_emoji[ap]} {ap}" for _, ap, _, _ in all_ranked[:10])
     )
 
-    return "\n\n---\n\n".join([
-        _section("Persona ×3", p_ranked),
-        _section("Brainstorm: comedy writer", cw_ranked),
-        _section("Brainstorm: reddit user", ru_ranked),
-        summary,
-    ])
+    return "\n\n---\n\n".join([joint_section, summary])
 
 # ---------------------------------------------------------------------------
 # Pipeline
