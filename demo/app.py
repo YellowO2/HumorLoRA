@@ -139,12 +139,6 @@ def _load_model():
 # GPU functions
 # ---------------------------------------------------------------------------
 @GPU
-def _preload():
-    print("[preload] called")
-    _load_model()
-    print("[preload] done")
-
-@GPU
 def generate_and_rank(title, body):
     print("[generate] called, _model is None:", _model is None)
     try:
@@ -227,7 +221,6 @@ with gr.Blocks(title="Humor Judge") as demo:
         wrap=True,
     )
 
-    demo.load(fn=_preload, inputs=[], outputs=[])
     fetch_btn.click(
         fn=do_fetch,
         inputs=[subreddit_dd],
