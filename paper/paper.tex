@@ -97,6 +97,8 @@ In fact, it can be argued that this good sense of humor is all you need for a fu
 
 We therefore study whether an LLM judge can acquire this good sense of humor, and what approaches actually work. We evaluate approaches spanning prompting, CoT, persona simulation, crowd simulation, activation probing, and fine-tuning. Such a judge can then further serve as a reward model to train a humorous LLM directly, bypassing the selection step.
 
+Code and demo are available at \url{https://github.com/YellowO2/HumorLoRA} and \url{https://huggingface.co/spaces/potato-bug/humor-judge}.
+
 Key findings: (1) prompting-based approaches all plateau at 50--57\% regardless of framing, CoT, few-shot (5 examples), or model size, and (2) crowd-supervised Low-Rank Adaptation (LoRA) fine-tuning reliably improves over zero-shot. A single-dataset LoRA accuracy (65.7\%) matches average human accuracy (64.6\%) on NYCC, and a joint LoRA across all five datasets achieves 65.2\% on HaHa and 63.2\% on NYCC.
 
 \section{Related Work}
