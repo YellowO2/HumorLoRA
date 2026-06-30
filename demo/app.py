@@ -192,19 +192,18 @@ def generate_and_rank(title, body, num_funny):
     context = f"Title: {title}\n\n{body}"
     t0 = time.time()
 
-    # Step 1: brainstorm angles (ask 3x to ensure we get enough after parsing)
-    n_request = min(num_funny * 3, 60)
-    print(f"[generate] brainstorming {n_request} angles...")
+    # Step 1: brainstorm angles naturally (ask for ~20, use whatever parses)
+    print(f"[generate] brainstorming angles...")
     brainstorm_messages = [
         {"role": "system", "content": "You are someone who likes to joke around."},
         {"role": "user", "content": (
             f"Someone posted this on Reddit:\n\n{context}\n\n"
-            f"List {n_request} distinct, specific funny angles or observations about this situation. "
+            f"List funny angles or observations about this situation. "
             f"Each should be a concrete comedic hook, not a generic comment. "
-            f"Number them 1-{n_request}, one per line. /no_think"
+            f"Number them, one per line. /no_think"
         )},
     ]
-    raw_angles = _generate(brainstorm_messages, max_new_tokens=max(400, n_request * 20))
+    raw_angles = _generate(brainstorm_messages, max_new_tokens=600)
     angles = []
     for line in raw_angles.splitlines():
         m = re.match(r'^\d+[\.\)]\s*(.+)', line.strip())
@@ -212,14 +211,16 @@ def generate_and_rank(title, body, num_funny):
             angles.append(m.group(1).strip())
     if not angles:
         angles = [l.strip() for l in raw_angles.splitlines() if l.strip()]
-    angles = angles[:num_funny]
-    print(f"[generate] parsed {len(angles)} angles")
+    print(f"[generate] parsed {len(angles)} angles, generating {num_funny} replies by cycling")
+    if not angles:
+        raise gr.Error("Failed to brainstorm angles.")
 
-    # Step 2: funny replies (brainstorm + reddit tone variation)
+    # Step 2: cycle through angles+tones until we have num_funny replies
     scored = []
-    for i, angle in enumerate(angles):
+    for i in range(num_funny):
+        angle = angles[i % len(angles)]
         tone = REDDIT_TONES[i % len(REDDIT_TONES)]
-        print(f"[generate] funny {i+1}/{len(angles)} [{tone}]: {angle[:50]}")
+        print(f"[generate] funny {i+1}/{num_funny} [{tone}]: {angle[:50]}")
         msgs = [
             {"role": "system", "content": f"You are a Reddit user {tone}. Write casually."},
             {"role": "user", "content": (
