@@ -109,14 +109,14 @@ import time
 
 N_ANGLES = 7
 
-HUMOR_PERSONAS = [
-    ("Dry wit",          "You are a deadpan comedian. Short, no exclamation marks."),
-    ("Absurdist",        "You are an absurdist comic. Escalate one detail to something surreal."),
-    ("Self-deprecating", "You are self-deprecating. This happened to you too, but worse."),
-    ("Dad joke",         "You are a dad. Find the worst pun and commit to it."),
-    ("Roast",            "You lovingly roast the person. Punchy, not mean."),
-    ("Oversharer",       "You overshare a tangentially related story with an unexpected ending."),
-    ("Armchair expert",  "You give unsolicited authoritative advice that misses the point."),
+REDDIT_TONES = [
+    "who tends to be sarcastic",
+    "who keeps things short and dry",
+    "who overshares slightly",
+    "who gives unsolicited opinions",
+    "who makes light of everything",
+    "who sounds genuinely surprised",
+    "who relates everything back to themselves",
 ]
 
 def _load_model():
@@ -160,7 +160,16 @@ def _generate(messages, max_new_tokens=80):
             pad_token_id=_tokenizer.eos_token_id,
         )
     text = _tokenizer.decode(output_ids[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
-    return re.sub(r'\*+', '', text).strip()
+    text = re.sub(r'\*+', '', text).strip()
+    return text
+
+def _generate_reply(messages):
+    reply = _generate(messages)
+    if "—" in reply or "–" in reply:
+        reply = _generate(messages)
+    # fallback: replace any remaining em/en dashes with comma
+    reply = reply.replace("—", ",").replace("–", ",")
+    return reply
 
 def _score(context, reply):
     score_prompt = f"Consider the amount of funniness in the following:\n\nQuestion: {context}\n\nReply: {reply}"
@@ -206,20 +215,20 @@ def generate_and_rank(title, body, num_funny):
     angles = angles[:num_funny]
     print(f"[generate] parsed {len(angles)} angles")
 
-    # Step 2: funny replies (brainstorm + persona)
+    # Step 2: funny replies (brainstorm + reddit tone variation)
     scored = []
     for i, angle in enumerate(angles):
-        persona_name, persona_instruction = HUMOR_PERSONAS[i % len(HUMOR_PERSONAS)]
-        print(f"[generate] funny {i+1}/{len(angles)} [{persona_name}]: {angle[:50]}")
+        tone = REDDIT_TONES[i % len(REDDIT_TONES)]
+        print(f"[generate] funny {i+1}/{len(angles)} [{tone}]: {angle[:50]}")
         msgs = [
-            {"role": "system", "content": persona_instruction},
+            {"role": "system", "content": f"You are a Reddit user {tone}. Write casually."},
             {"role": "user", "content": (
                 f"Someone posted this on Reddit:\n\n{context}\n\n"
                 f"Use this comedic angle: {angle}\n\n"
-                f"Write a single short reply (1-3 sentences). Sound like a real person. /no_think"
+                f"Write a single short reply (1-3 sentences). /no_think"
             )},
         ]
-        reply = _generate(msgs, max_new_tokens=80)
+        reply = _generate_reply(msgs)
         s = _score(context, reply)
         print(f"[generate]   score={s:.4f} reply={reply[:60]!r}")
         scored.append(("funny", reply, s))
@@ -228,10 +237,10 @@ def generate_and_rank(title, body, num_funny):
     print(f"[generate] generating {N_PLAIN} plain replies...")
     for i in range(N_PLAIN):
         msgs = [
-            {"role": "system", "content": "You are a Reddit user."},
+            {"role": "system", "content": "You are a Reddit user. Write casually."},
             {"role": "user", "content": f"Someone posted this on Reddit:\n\n{context}\n\nWrite a reply. /no_think"},
         ]
-        reply = _generate(msgs, max_new_tokens=80)
+        reply = _generate_reply(msgs)
         s = _score(context, reply)
         print(f"[generate]   plain score={s:.4f} reply={reply[:60]!r}")
         scored.append(("plain", reply, s))
@@ -288,9 +297,9 @@ def compare_approaches(title, body):
     print("[compare] === APPROACH A: brainstorm + persona ===")
     a_scores, a_replies = [], []
     for i, angle in enumerate(angles):
-        persona_name, persona_instruction = HUMOR_PERSONAS[i % len(HUMOR_PERSONAS)]
+        tone = REDDIT_TONES[i % len(REDDIT_TONES)]
         msgs = [
-            {"role": "system", "content": persona_instruction},
+            {"role": "system", "content": f"You are a Reddit user {tone}. Write casually."},
             {"role": "user", "content": (
                 f"Someone posted this on Reddit:\n\n{context}\n\n"
                 f"Use this comedic angle: {angle}\n\n"
