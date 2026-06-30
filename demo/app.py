@@ -61,11 +61,14 @@ def _fetch_batch(subreddit, after=None):
         title = e.findtext("atom:title", "", _NS).strip()
         content_el = e.find("atom:content", _NS)
         content_html = content_el.text or "" if content_el is not None else ""
+        # extract comment count before stripping html
+        m = re.search(r'(\d+)\s+comment', content_html)
+        num_comments = int(m.group(1)) if m else 0
         body = _strip_html(content_html)
         entry_id = e.findtext("atom:id", "", _NS)
         if entry_id:
             last_id = entry_id.split("_")[-1]
-        if 150 < len(body) < 4000:
+        if 150 < len(body) < 4000 and num_comments >= 20:
             candidates.append((title, body))
     return candidates, last_id
 
