@@ -106,6 +106,7 @@ _tokenizer = None
 _model = None
 _head = None
 _device = None
+_base_cpu = None
 
 N_ANGLES = 7
 
@@ -120,17 +121,23 @@ REDDIT_TONES = [
 ]
 
 def _load_model():
-    global _tokenizer, _model, _head, _device
+    global _tokenizer, _model, _head, _device, _base_cpu
     if _model is not None:
-        print("[load] model already cached, skipping")
+        print("[load] model already loaded, skipping")
         return
-    print(f"[load] starting — {BASE_MODEL_ID}")
     t0 = time.time()
-    _tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_ID)
-    print(f"[load] tokenizer done ({time.time()-t0:.1f}s)")
-    base = AutoModelForCausalLM.from_pretrained(
-        BASE_MODEL_ID, torch_dtype=torch.float16, device_map="auto"
-    )
+    if _base_cpu is not None:
+        # reuse CPU-preloaded weights, move to GPU now that CUDA is available
+        print("[load] moving preloaded base model to GPU...")
+        base = _base_cpu.to("cuda")
+        _base_cpu = None
+    else:
+        print(f"[load] starting — {BASE_MODEL_ID}")
+        _tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_ID)
+        print(f"[load] tokenizer done ({time.time()-t0:.1f}s)")
+        base = AutoModelForCausalLM.from_pretrained(
+            BASE_MODEL_ID, torch_dtype=torch.float16, device_map="auto"
+        )
     print(f"[load] base model done ({time.time()-t0:.1f}s)")
     _model = PeftModel.from_pretrained(base, LORA_MODEL_ID)
     _model.eval()
@@ -143,10 +150,16 @@ def _load_model():
     _head.eval()
     print(f"[load] head done — total {time.time()-t0:.1f}s")
 
-# On HF Spaces, load at module level so the model is warm for every request.
-# Boot will be slow (~2min) but each generate click will be fast after that.
+# On ZeroGPU, preload tokenizer and base model weights on CPU at module level
+# so they're cached. PeftModel and moving to CUDA must happen inside @GPU.
 if ON_SPACES:
-    _load_model()
+    import time as _t; _t0 = _t.time()
+    print("[preload] loading tokenizer and base weights on CPU...")
+    _tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_ID)
+    _base_cpu = AutoModelForCausalLM.from_pretrained(
+        BASE_MODEL_ID, torch_dtype=torch.float16, device_map="cpu"
+    )
+    print(f"[preload] done ({_t.time()-_t0:.1f}s)")
 
 # ---------------------------------------------------------------------------
 # GPU functions
