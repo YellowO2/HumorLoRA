@@ -172,9 +172,12 @@ def _score(context, reply):
         h = outputs.hidden_states[TARGET_LAYER][:, -1, :].float()
         return _head(h).squeeze(-1).item()
 
+N_PLAIN = 3
+
 @GPU
-def generate_and_rank(title, body):
-    print("[generate] called, _model is None:", _model is None)
+def generate_and_rank(title, body, num_funny):
+    num_funny = int(num_funny)
+    print(f"[generate] called, num_funny={num_funny}, _model is None:", _model is None)
     try:
         _load_model()
     except Exception as e:
@@ -182,55 +185,75 @@ def generate_and_rank(title, body):
     context = f"Title: {title}\n\n{body}"
     t0 = time.time()
 
-    # Step 1: brainstorm funny angles
-    print("[generate] brainstorming angles...")
+    # Step 1: brainstorm angles (ask for more to ensure enough parse)
+    n_request = min(int(num_funny * 1.5), 60)
+    print(f"[generate] brainstorming {n_request} angles...")
     brainstorm_messages = [
         {"role": "system", "content": "You are a comedy writer."},
         {"role": "user", "content": (
             f"Someone posted this on Reddit:\n\n{context}\n\n"
-            f"List {N_ANGLES} distinct, specific funny angles or observations about this situation. "
+            f"List {n_request} distinct, specific funny angles or observations about this situation. "
             f"Each should be a concrete comedic hook, not a generic comment. "
-            f"Number them 1-{N_ANGLES}, one per line. /no_think"
+            f"Number them 1-{n_request}, one per line. /no_think"
         )},
     ]
-    raw_angles = _generate(brainstorm_messages, max_new_tokens=300)
-    print(f"[generate] angles ({time.time()-t0:.1f}s):\n{raw_angles}")
-
-    # parse numbered lines
+    raw_angles = _generate(brainstorm_messages, max_new_tokens=max(300, n_request * 15))
     angles = []
     for line in raw_angles.splitlines():
-        line = line.strip()
-        m = re.match(r'^\d+[\.\)]\s*(.+)', line)
+        m = re.match(r'^\d+[\.\)]\s*(.+)', line.strip())
         if m:
             angles.append(m.group(1).strip())
     if not angles:
-        angles = [l.strip() for l in raw_angles.splitlines() if l.strip()][:N_ANGLES]
-    angles = angles[:N_ANGLES]
+        angles = [l.strip() for l in raw_angles.splitlines() if l.strip()]
+    angles = angles[:num_funny]
     print(f"[generate] parsed {len(angles)} angles")
 
-    # Step 2: generate one reply per angle
+    # Step 2: funny replies (brainstorm + persona)
     scored = []
     for i, angle in enumerate(angles):
-        print(f"[generate] reply {i+1}/{len(angles)}: {angle[:60]}")
-        reply_messages = [
-            {"role": "system", "content": "You write funny, natural Reddit replies. No markdown formatting."},
+        persona_name, persona_instruction = HUMOR_PERSONAS[i % len(HUMOR_PERSONAS)]
+        print(f"[generate] funny {i+1}/{len(angles)} [{persona_name}]: {angle[:50]}")
+        msgs = [
+            {"role": "system", "content": persona_instruction},
             {"role": "user", "content": (
                 f"Someone posted this on Reddit:\n\n{context}\n\n"
                 f"Use this comedic angle: {angle}\n\n"
-                f"Write a single short reply (1-3 sentences). Sound like a real person, not a comedian performing. /no_think"
+                f"Write a single short reply (1-3 sentences). Sound like a real person. /no_think"
             )},
         ]
-        t1 = time.time()
-        reply = _generate(reply_messages, max_new_tokens=80)
+        reply = _generate(msgs, max_new_tokens=80)
         s = _score(context, reply)
-        print(f"[generate]   ({time.time()-t1:.1f}s) score={s:.4f} reply={reply[:60]!r}")
-        scored.append((angle[:40], reply, s))
+        print(f"[generate]   score={s:.4f} reply={reply[:60]!r}")
+        scored.append(("funny", reply, s))
+
+    # Step 3: plain replies (no humor instruction)
+    print(f"[generate] generating {N_PLAIN} plain replies...")
+    for i in range(N_PLAIN):
+        msgs = [
+            {"role": "system", "content": "You are a Reddit user."},
+            {"role": "user", "content": f"Someone posted this on Reddit:\n\n{context}\n\nWrite a reply. /no_think"},
+        ]
+        reply = _generate(msgs, max_new_tokens=80)
+        s = _score(context, reply)
+        print(f"[generate]   plain score={s:.4f} reply={reply[:60]!r}")
+        scored.append(("plain", reply, s))
 
     print(f"[generate] done — total {time.time()-t0:.1f}s")
     if not scored:
         raise gr.Error("No replies generated.")
     scored.sort(key=lambda x: x[2], reverse=True)
-    return [[f"#{i+1}", a, r] for i, (a, r, _) in enumerate(scored)]
+
+    top = scored[:3]
+    bottom = scored[-3:][::-1]
+
+    def _fmt(entries, label):
+        lines = [f"### {label}"]
+        for i, (kind, reply, s) in enumerate(entries):
+            tag = "😐 Plain" if kind == "plain" else "😂 Funny"
+            lines.append(f"**#{i+1}** {tag} `{s:.4f}`\n{reply}")
+        return "\n\n".join(lines)
+
+    return _fmt(top, "Top 3") + "\n\n---\n\n" + _fmt(bottom, "Bottom 3")
 
 @GPU
 def compare_approaches(title, body):
@@ -356,17 +379,14 @@ with gr.Blocks(title="Humor Judge") as demo:
     _body_state = gr.State(None)
 
     with gr.Row():
-        subreddit_dd = gr.Dropdown(choices=SUBREDDITS, value="singapore", label="Subreddit")
+        subreddit_dd = gr.Dropdown(choices=SUBREDDITS, value="asksingapore", label="Subreddit")
         fetch_btn = gr.Button("Fetch post", variant="secondary")
         rank_btn = gr.Button("Generate & rank replies", variant="primary", interactive=False)
         compare_btn = gr.Button("Compare approaches", variant="secondary", interactive=False)
 
+    num_slider = gr.Slider(minimum=5, maximum=50, value=10, step=1, label="Number of funny replies to generate")
     post_box = gr.Markdown()
-    results_table = gr.Dataframe(
-        headers=["Rank", "Angle", "Reply"],
-        label="Ranked replies (funniest first)",
-        wrap=True,
-    )
+    rank_out = gr.Markdown(label="Results")
     compare_out = gr.Markdown(label="Approach comparison")
 
     fetch_btn.click(
@@ -376,8 +396,8 @@ with gr.Blocks(title="Humor Judge") as demo:
     )
     rank_btn.click(
         fn=generate_and_rank,
-        inputs=[_title_state, _body_state],
-        outputs=[results_table],
+        inputs=[_title_state, _body_state, num_slider],
+        outputs=[rank_out],
     )
     compare_btn.click(
         fn=compare_approaches,
